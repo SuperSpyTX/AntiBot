@@ -1,4 +1,5 @@
- package somebody.is.mad;
+package somebody.is.mad;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -15,8 +16,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
- import org.bukkit.plugin.PluginDescriptionFile;
- import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
  
  public class AntiBot extends JavaPlugin
