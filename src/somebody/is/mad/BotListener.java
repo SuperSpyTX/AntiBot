@@ -86,7 +86,7 @@ public class BotListener implements Listener {
 		 if(reanibo) {
 			   debug("Disabled Reanibios.");
 			   reanibo = false;
-				interval = 15000;
+				interval = botclass.defaultinterval;
 				connected = "";
 				accounts = 4;
 				lasttime = 0;
