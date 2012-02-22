@@ -75,7 +75,7 @@ public class BotListener implements Listener {
 
 	public boolean hasPerms(Player pl) {
 		if (useOp(pl) || useWhitelist(pl)
-				|| botclass.ownPermission("antibot.join", pl, 1)) {
+				|| botclass.ownPermission("AntiBot.join", pl, 1)) {
 			return true;
 		} else {
 			return false;
@@ -89,7 +89,7 @@ public class BotListener implements Listener {
 				reanibo = false;
 				interval = botclass.defaultinterval;
 				connected = "";
-				accounts = 4;
+				accounts = botclass.defaultaccounts;
 				lasttime = 0;
 				botattempt = 0;
 				if (notify) {
@@ -121,14 +121,14 @@ public class BotListener implements Listener {
 		if (hasPerms(event.getPlayer())) { // It's a double check.
 			debug("Whitelisted.");
 			if (reanibo
-					&& botclass.ownPermission("antibot.notify",
+					&& botclass.ownPermission("AntiBot.notify",
 							event.getPlayer(), 1)) {
 				event.getPlayer().sendMessage(
 						"\247f[\247bAntiBot\247f] \247c" + connectInvasion);
 			}
 			if (reanibo
-					&& botclass.ownPermission("antibot.admin.notify",
-							event.getPlayer(), 2) && interval > 120000) {
+					&& botclass.ownPermission("AntiBot.admin.notify",
+							event.getPlayer(), 2) && interval > 100000) {
 				event.getPlayer()
 						.sendMessage(
 								"\247f[\247bAntiBot\247f] \247cThe system needs a flush. Please type /antibot flush. Thanks.");

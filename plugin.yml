@@ -8,6 +8,12 @@ commands:
     usage: |
       /<command> help - Help menu on the AntiBot system.
 permissions:
+  AntiBot.notify:
+    default: false
+    description: Notifies the player if there is a current invasion.
+  AntiBot.join:
+    default: false
+    description: IMPORTANT! Allows players to bypass the spam system and join during invasions.  Works well with AntiBot.notify.
   AntiBot.admin:
     default: false
     description: Full permissions! Don't give this to your admins.  Use the alternatives below.
@@ -26,6 +32,9 @@ permissions:
   AntiBot.admin.info:
     default: false
     description: Check the status of AntiBot.
+  AntiBot.admin.notify:
+    default: false
+    description: Gives extra details during invasions.  Tells this user if a system flush is needed.
   AntiBot.admin.flush:
     default: false
     description: Flush all connection throttling.  This could be on accident.

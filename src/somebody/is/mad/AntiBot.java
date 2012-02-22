@@ -25,6 +25,7 @@ public class AntiBot extends JavaPlugin {
 	private long installdate;
 	private Date install;
 	public int defaultinterval;
+	public int defaultaccounts;
 
 	public void onEnable() {
 
@@ -619,6 +620,7 @@ public class AntiBot extends JavaPlugin {
 			if (load != null && load2 > 2
 					&& !load2.equals(botlistener.accounts)) {
 				botlistener.accounts = load2;
+				this.defaultaccounts = load2;
 			}
 
 			System.out.print("AntiBot: Configuration Loaded Successfully!");
