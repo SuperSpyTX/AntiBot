@@ -1,0 +1,37 @@
+name: AntiBot
+main: somebody.is.mad.AntiBot
+version: 2.2
+description: The ultimate spam protection for Minecraft.
+commands:
+   antibot:
+    description: Usable Antibot Commands
+    usage: |
+      /<command> help - Help menu on the AntiBot system.
+permissions:
+  AntiBot.admin:
+    default: false
+    description: Full permissions! Don't give this to your admins.  Use the alternatives below.
+  AntiBot.admin.root:
+    default: false
+    description: Full permissions! Same as above.
+  AntiBot.admin.plus:
+    default: false
+    description: Gives a bit more access to the AntiBot system.
+  AntiBot.admin.basic:
+    default: false
+    description: Gives basic access to the AntiBot system.
+  AntiBot.admin.reload:
+    default: false
+    description: Ability to reload configuration.
+  AntiBot.admin.info:
+    default: false
+    description: Check the status of AntiBot.
+  AntiBot.admin.flush:
+    default: false
+    description: Flush all connection throttling.  This could be on accident.
+  AntiBot.admin.changeconf:
+    default: false
+    description: Change 2 configuration values ingame.  Amount of accounts and the time interval.
+  AntiBot.admin.toggle:
+    default: false
+    description: Toggle AntiBot to be on or off.  Useful when getting legitimate players.
