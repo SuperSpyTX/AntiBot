@@ -36,7 +36,7 @@ import org.bukkit.plugin.java.JavaPlugin;
      dataFolder = getDataFolder();
      if (!dataFolder.exists())
        {
-      System.out.print("AntiBot: Missing Folder. Creating..");
+       System.out.print("AntiBot: Missing Folder. Creating..");
        dataFolder.mkdir();
        }
      File Config = new File(dataFolder.getAbsolutePath() + File.separator + "c.properties");
@@ -44,9 +44,9 @@ import org.bukkit.plugin.java.JavaPlugin;
      if (!Config.exists())
          {
           System.out.print("AntiBot: Configuration is missing, creating...");
-           try
+          try
           {
-          Config.createNewFile();
+            Config.createNewFile();
             Properties propConfig = new Properties();
             propConfig.setProperty("connect-message", "You are not on the whitelist!");
             propConfig.setProperty("kick-message", "The Ban Hammer has spoken!");
@@ -60,8 +60,8 @@ import org.bukkit.plugin.java.JavaPlugin;
             propConfig.setProperty("joins", "4");
             propConfig.setProperty("install-date", Long.toString(System.currentTimeMillis()));
             BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(Config.getAbsolutePath()));
-           propConfig.store(stream, "AntiBot V2 - The ultimate AntiSpam protection for Minecraft.");
-             System.out.println("done.");
+            propConfig.store(stream, "AntiBot V2 - The ultimate AntiSpam protection for Minecraft.");
+            System.out.println("done.");
       } catch (IOException ex) {
        System.out.println("AntiBot: Configuration creation failed.");
          }
