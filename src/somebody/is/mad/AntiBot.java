@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Properties;
 import java.util.Random;
 
@@ -26,6 +27,7 @@ public class AntiBot extends JavaPlugin {
 	private Date install;
 	public int defaultinterval;
 	public int defaultaccounts;
+	public HashMap<String, IPMap> iplist = new HashMap<String, IPMap>();
 
 	public void onEnable() {
 
@@ -75,7 +77,7 @@ public class AntiBot extends JavaPlugin {
 		// Event.Priority.Normal, this);
 		// pm.registerEvent(Event.Type.PLAYER_JOIN, this.botlistener,
 		// Event.Priority.Normal, this);
-		getServer().getPluginManager().registerEvents(this.botlistener, this);
+		getServer().getPluginManager().registerEvents(botlistener, this);
 		PluginDescriptionFile pdfFile = getDescription();
 		System.out.println(pdfFile.getName() + " version "
 				+ pdfFile.getVersion() + " is enabled!");
@@ -287,6 +289,10 @@ public class AntiBot extends JavaPlugin {
 				sender.sendMessage("\247f[\247bAntiBot\247f] "
 						+ "/antibot info - Check current status of AntiBot.");
 			}
+			if (ownPermission("AntiBot.admin.attack", player, 3)) {
+				sender.sendMessage("\247f[\247bAntiBot\247f] "
+						+ "/antibot run - Turn on invasion mode manually.");
+			}
 			if (ownPermission("AntiBot.admin.flush", player, 2)) {
 				sender.sendMessage("\247f[\247bAntiBot\247f] "
 						+ "/antibot flush - Flush the connection throttling.");
@@ -319,6 +325,23 @@ public class AntiBot extends JavaPlugin {
 				}
 			} else {
 				noPermission(sender);
+			}
+			return true;
+		}
+		if (args[0].compareToIgnoreCase("run") == 0) {
+			if (ownPermission("AntiBot.admin.attack", player, 2)) {
+				if (!botlistener.reanibo) {
+					if (botlistener.notify) {
+						getServer()
+								.broadcastMessage(
+										"\247f[\247bAntiBot\247f] \247cOh no! A minecraft bot invasion has began. Connection Throttling: \247aEnabled");
+					}
+					botlistener.reanibo = true;
+					botlistener.debug("Tripswitched!");
+					botlistener.kickConnected();
+				}
+				botlistener.botattempt = System.currentTimeMillis();
+				botlistener.botcts += 1;
 			}
 			return true;
 		}
@@ -544,7 +567,7 @@ public class AntiBot extends JavaPlugin {
 			if (load != null && load2 > 999
 					&& !load2.equals(botlistener.interval)) {
 				botlistener.interval = load2;
-				this.defaultinterval = load2;
+				this.defaultinterval = botlistener.interval;
 			}
 
 			load = propConfig.getProperty("whitelist-perms");
@@ -620,7 +643,7 @@ public class AntiBot extends JavaPlugin {
 			if (load != null && load2 > 2
 					&& !load2.equals(botlistener.accounts)) {
 				botlistener.accounts = load2;
-				this.defaultaccounts = load2;
+				this.defaultaccounts = botlistener.accounts;
 			}
 
 			System.out.print("AntiBot: Configuration Loaded Successfully!");
