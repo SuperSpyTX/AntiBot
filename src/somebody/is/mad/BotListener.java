@@ -1,5 +1,6 @@
 package somebody.is.mad;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Random;
@@ -17,7 +18,7 @@ public class BotListener implements Listener {
 	public long time;
 	public long lasttime;
 	public long botattempt;
-	public int interval = 30000;
+	public int interval = 15000;
 	public int accounts = 4;
 	public boolean notify = true;
 	public boolean useWhiteListPerms = true;
@@ -25,6 +26,8 @@ public class BotListener implements Listener {
 	public boolean enabled = true;
 	public boolean debugmode = false;
 	public boolean whiteList = false;
+	public ArrayList<String> autokick = new ArrayList<String>();
+	public ArrayList<String> autoipkick = new ArrayList<String>();
 	public String kickMsg = "The Ban Hammer has spoken!";
 	public String connectMsg = "You are not on the whitelist!";
 	public String connectInvasion = "The server is currently under attack.";
@@ -55,18 +58,21 @@ public class BotListener implements Listener {
 
 	public void kickConnected() {
 		try {
-			int kicked = 0;
+			//int kicked = 0;
 			String connected2[] = connected.split(",");
 			debug("Kicking players with method #1");
 			for (String pl : connected2) {
 				if (!hasPerms(botclass.getServer().getPlayerExact(pl))) {
+					autoipkick.add(botclass.getServer().getPlayerExact(pl).getAddress().toString().split(":")[0]);
 					botclass.getServer().getPlayerExact(pl).kickPlayer(kickMsg);
-					kicked += 1;
+					autokick.add(pl);
+					//kicked += 1;
 					debug("Kicked player with method #1");
 				}
 			}
 
 			// kick players if the above method doesn't work :|
+			/*
 			debug("Checking if " + kicked + " is less than 1");
 			if (kicked < 1) {
 				debug("Kicking player with method #2");
@@ -74,10 +80,13 @@ public class BotListener implements Listener {
 				for (Player pl : players) {
 					if (!hasPerms(pl)) {
 						pl.kickPlayer(connectMsg);
+						autokick.add(pl);
 						debug("Kicked player with method #2");
 					}
 				}
 			}
+			
+			*/
 
 		} catch (Exception e) {
 
@@ -147,6 +156,17 @@ public class BotListener implements Listener {
 		if (!enabled) {
 			return;
 		}
+		if(autokick.contains(event.getPlayer().getName())) {
+			event.getPlayer().kickPlayer(kickMsg);
+			return;
+		}
+		
+		if(autoipkick.contains(event.getPlayer().getAddress()
+				.toString().split(":")[0])) {
+			event.getPlayer().kickPlayer(kickMsg);
+			return;
+		}
+		
 		// IP tracking usernames system.
 		trackPlayer(event.getPlayer(), event.getPlayer().getAddress()
 				.toString().split(":")[0]);
@@ -200,6 +220,7 @@ public class BotListener implements Listener {
 							if (botclass.iplist.get(IP).usernames.contains(pl
 									.getName())) {
 								pl.kickPlayer(connectMsg);
+								autokick.add(pl.getName());
 							}
 						}
 						
@@ -207,7 +228,8 @@ public class BotListener implements Listener {
 					}
 				}
 			}
-
+			//still here? add us.
+			botclass.iplist.put(IP, new IPMap(IP, ev.getName()));
 		} else {
 			botclass.iplist.put(IP, new IPMap(IP, ev.getName()));
 		}

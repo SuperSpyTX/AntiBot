@@ -46,19 +46,26 @@ public class AntiBot extends JavaPlugin {
 				Config.createNewFile();
 				Properties propConfig = new Properties();
 				propConfig.setProperty("connect-message",
-						"You are not on the whitelist!");
-				propConfig.setProperty("kick-message",
-						"The Ban Hammer has spoken!");
+						botlistener.connectMsg);
+				propConfig.setProperty("kick-message", botlistener.kickMsg);
 				propConfig.setProperty("connect-join-invasion",
-						"The server is currently under attack.");
-				propConfig.setProperty("joins-sec", "30000");
-				propConfig.setProperty("whitelist-perms", "true");
-				propConfig.setProperty("op-perms", "false");
-				propConfig.setProperty("orgy-notify", "true");
-				propConfig.setProperty("debug-mode", "false");
-				propConfig.setProperty("enable-by-default", "true");
-				propConfig.setProperty("joins", "4");
-				propConfig.setProperty("whitelist-when-triggered", "false");
+						botlistener.connectInvasion);
+				propConfig.setProperty("joins-sec",
+						Integer.toString(botlistener.interval));
+				propConfig.setProperty("whitelist-perms",
+						Boolean.toString(botlistener.useWhiteListPerms));
+				propConfig.setProperty("op-perms",
+						Boolean.toString(botlistener.useOpPerms));
+				propConfig.setProperty("orgy-notify",
+						Boolean.toString(botlistener.notify));
+				propConfig.setProperty("debug-mode",
+						Boolean.toString(botlistener.debugmode));
+				propConfig.setProperty("enable-by-default",
+						Boolean.toString(botlistener.enabled));
+				propConfig.setProperty("joins",
+						Integer.toString(botlistener.accounts));
+				propConfig.setProperty("whitelist-when-triggered",
+						Boolean.toString(botlistener.whiteList));
 				propConfig.setProperty("install-date",
 						Long.toString(System.currentTimeMillis()));
 				BufferedOutputStream stream = new BufferedOutputStream(
@@ -294,6 +301,10 @@ public class AntiBot extends JavaPlugin {
 				sender.sendMessage("\247f[\247bAntiBot\247f] "
 						+ "/antibot run - Turn on invasion mode manually.");
 			}
+			if (ownPermission("AntiBot.admin.remkickplayer", player, 1)) {
+				sender.sendMessage("\247f[\247bAntiBot\247f] "
+						+ "/antibot remkick [player] - Removes a player from the autokick list.");
+			}
 			if (ownPermission("AntiBot.admin.flush", player, 2)) {
 				sender.sendMessage("\247f[\247bAntiBot\247f] "
 						+ "/antibot flush - Flush the connection throttling.");
@@ -346,6 +357,21 @@ public class AntiBot extends JavaPlugin {
 			}
 			return true;
 		}
+		if (args[0].compareToIgnoreCase("remkick") == 0) {
+			if (ownPermission("AntiBot.admin.remkickplayer", player, 1)) {
+				try {
+					botlistener.autokick.remove(args[1]);
+					sender.sendMessage("\247f[\247bAntiBot\247f] "
+							+ "\247aRemoved " + args[1] + " successfully!");
+				} catch (Exception e) {
+					sender.sendMessage("\247f[\247bAntiBot\247f] "
+							+ "\247cFailed to remove kicked player.");
+				}
+			}
+
+			return true;
+		}
+
 		if (args[0].compareToIgnoreCase("flush") == 0) {
 			if (ownPermission("AntiBot.admin.flush", player, 2)) {
 				if (botlistener.flush()) {
@@ -590,7 +616,7 @@ public class AntiBot extends JavaPlugin {
 			if (load != null && !load3.equals(botlistener.useOpPerms)) {
 				botlistener.useOpPerms = load3;
 			}
-			
+
 			load = propConfig.getProperty("whitelist-when-triggered");
 			if (load != null) {
 				load3 = Boolean.parseBoolean(load);
