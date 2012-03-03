@@ -17,7 +17,7 @@ public class IPMap {
 	}
 	
 	public boolean overmax() {
-		return usernames.size() > 3;
+		return usernames.size() > 1;
 	}
 
 }

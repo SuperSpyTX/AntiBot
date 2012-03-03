@@ -58,6 +58,7 @@ public class AntiBot extends JavaPlugin {
 				propConfig.setProperty("debug-mode", "false");
 				propConfig.setProperty("enable-by-default", "true");
 				propConfig.setProperty("joins", "4");
+				propConfig.setProperty("whitelist-when-triggered", "false");
 				propConfig.setProperty("install-date",
 						Long.toString(System.currentTimeMillis()));
 				BufferedOutputStream stream = new BufferedOutputStream(
@@ -588,6 +589,16 @@ public class AntiBot extends JavaPlugin {
 			}
 			if (load != null && !load3.equals(botlistener.useOpPerms)) {
 				botlistener.useOpPerms = load3;
+			}
+			
+			load = propConfig.getProperty("whitelist-when-triggered");
+			if (load != null) {
+				load3 = Boolean.parseBoolean(load);
+			} else {
+				load3 = botlistener.whiteList;
+			}
+			if (load != null && !load3.equals(botlistener.whiteList)) {
+				botlistener.whiteList = load3;
 			}
 
 			load = propConfig.getProperty("orgy-notify");

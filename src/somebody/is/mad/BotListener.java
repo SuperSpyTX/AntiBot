@@ -24,6 +24,7 @@ public class BotListener implements Listener {
 	public boolean useOpPerms = false;
 	public boolean enabled = true;
 	public boolean debugmode = false;
+	public boolean whiteList = false;
 	public String kickMsg = "The Ban Hammer has spoken!";
 	public String connectMsg = "You are not on the whitelist!";
 	public String connectInvasion = "The server is currently under attack.";
@@ -119,7 +120,7 @@ public class BotListener implements Listener {
 				accounts = botclass.defaultaccounts;
 				lasttime = 0;
 				botattempt = 0;
-				if (notify) {
+				if (notify && whiteList) {
 					botclass.getServer()
 							.broadcastMessage(
 									"\247f[\247bAntiBot\247f] \247aThe minecraft bot invasion has ended. Connection Throttling: \247cDisabled");
@@ -255,14 +256,23 @@ public class BotListener implements Listener {
 			debug("Hit #1!");
 			// Incoming invasion.
 			if (!reanibo) {
-				if (notify) {
+				if(whiteList) {
+				if (notify && whiteList) {
 					botclass.getServer()
 							.broadcastMessage(
 									"\247f[\247bAntiBot\247f] \247cOh no! A minecraft bot invasion has began. Connection Throttling: \247aEnabled");
 				}
 				reanibo = true;
+				} else {
+					if(notify) {
+						botclass.getServer()
+						.broadcastMessage(
+								"\247f[\247bAntiBot\247f] \247chas detected minecraft spam!");
+					}
+				}
 				debug("Tripswitched!");
 				kickConnected();
+				flush();
 			}
 			botattempt = System.currentTimeMillis();
 			botcts += 1;
