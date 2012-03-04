@@ -27,6 +27,7 @@ public class AntiBot extends JavaPlugin {
 	private Date install;
 	public int defaultinterval;
 	public int defaultaccounts;
+	public String version = "v2.3a";
 	public HashMap<String, String> iplist = new HashMap<String, String>();
 
 	public void onEnable() {
@@ -89,15 +90,15 @@ public class AntiBot extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(botlistener, this);
 		PluginDescriptionFile pdfFile = getDescription();
 		System.out.println(pdfFile.getName() + " version "
-				+ pdfFile.getVersion() + " is enabled!");
+				+ version + " is enabled!");
 
 	}
 
 	public void returnMotd(CommandSender sender) {
 		install = new Date(installdate);
 		SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy");
-		sender.sendMessage("\247f[\247bAntiBot\247f] "
-				+ "AntiBot 2.3 - Coded By .SuPaH sPii");
+		sender.sendMessage("\247f[\247bAntiBot\247f] " + "AntiBot " + version
+				+ " - Coded By .SuPaH sPii");
 		sender.sendMessage("\247f[\247bAntiBot\247f] "
 				+ "Inspired by Wolflink289 <3");
 		sender.sendMessage("\247f[\247bAntiBot\247f] "
@@ -487,7 +488,7 @@ public class AntiBot extends JavaPlugin {
 				}
 				try {
 					String a = args[1];
-					if(!a.equals("true") && !a.equals("false")) {
+					if (!a.equals("true") && !a.equals("false")) {
 						sender.sendMessage("\247f[\247bAntiBot\247f] "
 								+ ChatColor.RED
 								+ "The value must either be true or false.");
@@ -503,14 +504,14 @@ public class AntiBot extends JavaPlugin {
 								+ ChatColor.RED
 								+ "Error while trying to save notification status to config.");
 					}
-					
-				} catch(Exception e) {
+
+				} catch (Exception e) {
 					e.printStackTrace();
 					sender.sendMessage("\247f[\247bAntiBot\247f] "
 							+ ChatColor.RED
 							+ "Error while trying to change notification status.");
 				}
-				
+
 			} else {
 				noPermission(sender);
 			}
