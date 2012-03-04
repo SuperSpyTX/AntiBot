@@ -1,16 +1,17 @@
 package somebody.is.mad;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map.Entry;
+import java.util.HashMap;
 import java.util.Random;
 
 import org.bukkit.entity.Player;
 //import org.bukkit.event.player.PlayerChatEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
+//import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 
 public class BotListener implements Listener {
 
@@ -20,6 +21,8 @@ public class BotListener implements Listener {
 	public long botattempt;
 	public int interval = 15000;
 	public int accounts = 4;
+	public int spamam = 4;
+	public int spamtime = 1500;
 	public boolean notify = true;
 	public boolean useWhiteListPerms = true;
 	public boolean useOpPerms = false;
@@ -35,7 +38,8 @@ public class BotListener implements Listener {
 	public int spamcts = 0;
 	public int botcts;
 	public boolean reanibo = false;
-	private String connected = "";
+	public ArrayList<String> connected = new ArrayList<String>();
+	public HashMap<String, PlayerChatter> chatmsg = new HashMap<String, PlayerChatter>();
 
 	public BotListener(AntiBot instance) {
 		this.botclass = instance;
@@ -50,47 +54,52 @@ public class BotListener implements Listener {
 
 	public void addConnected(String playerName) {
 		try {
-			connected += playerName + ",";
+			if (!connected.contains(playerName)) {
+				connected.add(playerName);
+			}
 		} catch (Exception e) {
+			e.printStackTrace();
+			debug("Adding new player failed: " + e.getMessage());
+		}
+	}
 
+	public boolean checkIfAdded(String playerName) {
+		if (connected.contains(playerName)) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 
 	public void kickConnected() {
-		try {
-			//int kicked = 0;
-			String connected2[] = connected.split(",");
-			debug("Kicking players with method #1");
-			for (String pl : connected2) {
-				if (!hasPerms(botclass.getServer().getPlayerExact(pl))) {
-					autoipkick.add(botclass.getServer().getPlayerExact(pl).getAddress().toString().split(":")[0]);
-					botclass.getServer().getPlayerExact(pl).kickPlayer(kickMsg);
-					autokick.add(pl);
-					//kicked += 1;
-					debug("Kicked player with method #1");
-				}
+		// int kicked = 0;
+		debug("Kicking players with method #1 Size: " + connected.size());
+		for (String pl : connected) {
+			try {
+				debug("Kicking player..." + pl);
+				autoipkick.add(botclass.getServer().getPlayerExact(pl)
+						.getAddress().toString().split(":")[0]);
+				botclass.getServer().getPlayerExact(pl).kickPlayer(kickMsg);
+				autokick.add(pl);
+				// kicked += 1;
+				debug("Kicked player with method #1");
+				debug("We now have autokick: " + autokick.size() + " ip: "
+						+ autoipkick.size());
+			} catch (Exception e) {
+				// if it fails. go down here.
+				debug("Failed to kick: " + pl);
 			}
-
-			// kick players if the above method doesn't work :|
-			/*
-			debug("Checking if " + kicked + " is less than 1");
-			if (kicked < 1) {
-				debug("Kicking player with method #2");
-				Player[] players = botclass.getServer().getOnlinePlayers();
-				for (Player pl : players) {
-					if (!hasPerms(pl)) {
-						pl.kickPlayer(connectMsg);
-						autokick.add(pl);
-						debug("Kicked player with method #2");
-					}
-				}
-			}
-			
-			*/
-
-		} catch (Exception e) {
-
 		}
+		connected.clear();
+
+		// kick players if the above method doesn't work :|
+		/*
+		 * debug("Checking if " + kicked + " is less than 1"); if (kicked < 1) {
+		 * debug("Kicking player with method #2"); Player[] players =
+		 * botclass.getServer().getOnlinePlayers(); for (Player pl : players) {
+		 * if (!hasPerms(pl)) { pl.kickPlayer(connectMsg); autokick.add(pl);
+		 * debug("Kicked player with method #2"); } } }
+		 */
 
 	}
 
@@ -125,7 +134,7 @@ public class BotListener implements Listener {
 				debug("Disabled Reanibios.");
 				reanibo = false;
 				interval = botclass.defaultinterval;
-				connected = "";
+				connected.clear();
 				accounts = botclass.defaultaccounts;
 				lasttime = 0;
 				botattempt = 0;
@@ -151,44 +160,6 @@ public class BotListener implements Listener {
 		}
 	}
 
-	@EventHandler
-	public void onPlayerJoin(PlayerJoinEvent event) {
-		if (!enabled) {
-			return;
-		}
-		if(autokick.contains(event.getPlayer().getName())) {
-			event.getPlayer().kickPlayer(kickMsg);
-			return;
-		}
-		
-		if(autoipkick.contains(event.getPlayer().getAddress()
-				.toString().split(":")[0])) {
-			event.getPlayer().kickPlayer(kickMsg);
-			return;
-		}
-		
-		// IP tracking usernames system.
-		trackPlayer(event.getPlayer(), event.getPlayer().getAddress()
-				.toString().split(":")[0]);
-		if (hasPerms(event.getPlayer())) { // It's a double check.
-			debug("Whitelisted.");
-			if (reanibo
-					&& botclass.ownPermission("AntiBot.notify",
-							event.getPlayer(), 1)) {
-				event.getPlayer().sendMessage(
-						"\247f[\247bAntiBot\247f] \247c" + connectInvasion);
-			}
-			if (reanibo
-					&& botclass.ownPermission("AntiBot.admin.notify",
-							event.getPlayer(), 2) && interval > 100000) {
-				event.getPlayer()
-						.sendMessage(
-								"\247f[\247bAntiBot\247f] \247cThe system needs a flush. Please type /antibot flush. Thanks.");
-			}
-			return;
-		}
-	}
-
 	public int getRandomInt() {
 		if (!reanibo) {
 			return 0;
@@ -202,125 +173,202 @@ public class BotListener implements Listener {
 		return 0;
 	}
 
-	@SuppressWarnings("rawtypes")
 	public void trackPlayer(Player ev, String IP) {
 		if (!botclass.iplist.isEmpty()) {
 			// check ipmap list.
-			Iterator lulz = botclass.iplist.entrySet().iterator();
-			while (lulz.hasNext()) {
-				Entry l = (Entry) lulz.next();
-				String ip = (String) l.getKey();
-				if (ip.equalsIgnoreCase(IP)) { // uh oh. IPs matched!
-					botclass.iplist.get(IP).addusername(ev.getName());
-					if (botclass.iplist.get(IP).overmax()) {
-						// lets kick its alts.
-						Player[] players = botclass.getServer()
-								.getOnlinePlayers();
-						for (Player pl : players) {
-							if (botclass.iplist.get(IP).usernames.contains(pl
-									.getName())) {
-								pl.kickPlayer(connectMsg);
-								autokick.add(pl.getName());
-							}
-						}
-						
+			boolean kicked = false;
+			try {
+				if (botclass.iplist.containsKey(IP)) {
+					if (!botclass.iplist.get(IP).contains(ev.getName())) {
+						ev.kickPlayer(kickMsg);
+						kicked = true;
+						autokick.add(ev.getName());
+						autoipkick.add(IP);
 						botclass.iplist.remove(IP);
 					}
 				}
+			} catch (Exception e) {
+				// didn't find player.
 			}
-			//still here? add us.
-			botclass.iplist.put(IP, new IPMap(IP, ev.getName()));
+
+			// still here? add us.
+			if (!kicked)
+				botclass.iplist.put(IP, ev.getName());
 		} else {
-			botclass.iplist.put(IP, new IPMap(IP, ev.getName()));
+			botclass.iplist.put(IP, ev.getName());
+		}
+	}
+	
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onPlayerJ(PlayerChatEvent event) {
+		try {
+			String pN = event.getPlayer().getName();
+			if (autokick.contains(event.getPlayer().getName())) {
+				event.getPlayer().kickPlayer(kickMsg);
+				event.setCancelled(true);
+				return;
+			}
+
+			if (autoipkick.contains(event.getPlayer().getAddress()
+					.toString().split(":")[0])) {
+				event.getPlayer().kickPlayer(kickMsg);
+				event.setCancelled(true);
+				return;
+			}
+			
+			if (hasPerms(event.getPlayer())) {
+				return;
+			}
+			
+			if(!chatmsg.containsKey(pN)) {
+				chatmsg.put(pN, new PlayerChatter(pN));
+			} else {
+				try {
+					PlayerChatter pc = chatmsg.get(pN);
+					long math = System.currentTimeMillis() - pc.lastChatMsg;
+					if(pc.amoumt > spamam && math < spamtime) {
+						if (notify) {
+							botclass.getServer()
+									.broadcastMessage(
+											"\247f[\247bAntiBot\247f] \247chas detected chat spam!");
+						}
+						chatmsg.remove(pN);
+						event.getPlayer().kickPlayer(kickMsg);
+						event.setCancelled(true);
+					} else {
+						pc.trig();
+						chatmsg.remove(pN);
+						chatmsg.put(pN, pc);
+					}
+				} catch(Exception e) {
+					
+				}
+			}
+			
+			
+		} catch (Exception e) {
+			// alright, it failed. Don't worry about it.
 		}
 	}
 
 	@EventHandler
-	public void onPlayerLogin(PlayerLoginEvent event) {
+	public void onPlayerJoin(PlayerJoinEvent event) {
 		if (!enabled) {
 			return;
 		}
-		String playerName = event.getPlayer().getName();
-		debug("User is trying to connect..");
-		time = System.currentTimeMillis();
-		if (hasPerms(event.getPlayer())) {
-			debug("Whitelisted.");
-			return;
-		}
+		try {
+			debug("User is trying to connect..");
+			time = System.currentTimeMillis();
 
-		if (botcts > accounts + 2 && reanibo) { // Increase violation levels.
-			accounts = accounts + 2;
-			interval = interval + 5000;
-		}
-
-		// bug workaround
-		if (interval < 1) {
-			// lets try setting this back to default intervals, if not, reload
-			// the configuration.
-			interval = botclass.defaultinterval;
-			if (botclass.defaultinterval < 1) {
-				// have to fix.
-				botclass.loadSekritTools();
+			if (hasPerms(event.getPlayer())) {
+				debug("Whitelisted.");
+				if (reanibo
+						&& botclass.ownPermission("AntiBot.notify",
+								event.getPlayer(), 1)) {
+					event.getPlayer().sendMessage(
+							"\247f[\247bAntiBot\247f] \247c" + connectInvasion);
+				}
+				if (reanibo
+						&& botclass.ownPermission("AntiBot.admin.notify",
+								event.getPlayer(), 2) && interval > 100000) {
+					event.getPlayer()
+							.sendMessage(
+									"\247f[\247bAntiBot\247f] \247cThe system needs a flush. Please type /antibot flush. Thanks.");
+				}
+				return;
 			}
-		}
 
-		long math = time - lasttime;
-		int cb = interval + getRandomInt();
-		debug("Checking....0");
-		debug("Math: " + math);
-		debug("Time: " + time);
-		debug("Current Interval: " + interval);
-		debug("Random Interval: " + cb);
-		debug("Lasttime: " + lasttime);
-		debug("BotCts: " + botcts + " Accs: " + accounts);
-
-		if (botcts > accounts && math < cb) {
-			debug("Hit #1!");
-			// Incoming invasion.
 			if (!reanibo) {
-				if(whiteList) {
-				if (notify && whiteList) {
-					botclass.getServer()
-							.broadcastMessage(
-									"\247f[\247bAntiBot\247f] \247cOh no! A minecraft bot invasion has began. Connection Throttling: \247aEnabled");
+				// IP tracking usernames system.
+				trackPlayer(event.getPlayer(), event.getPlayer().getAddress()
+						.toString().split(":")[0]);
+				debug("Added user to tracking");
+				addConnected(event.getPlayer().getName());
+				debug("Added user to connected");
+			}
+
+			if (botcts > accounts + 2 && reanibo) { // Increase violation
+													// levels.
+				accounts = accounts + 2;
+				interval = interval + 5000;
+			}
+
+			// bug workaround
+			if (interval < 1) {
+				debug("Bug detected! Fixing bug.");
+				// lets try setting this back to default intervals, if not,
+				// reload
+				// the configuration.
+				interval = botclass.defaultinterval;
+				if (botclass.defaultinterval < 1) {
+					// have to fix.
+					botclass.loadSekritTools();
 				}
-				reanibo = true;
-				} else {
-					if(notify) {
-						botclass.getServer()
-						.broadcastMessage(
-								"\247f[\247bAntiBot\247f] \247chas detected minecraft spam!");
+			}
+
+			long math = time - lasttime;
+			int cb = interval + getRandomInt();
+			debug("Checking....0");
+			debug("Math: " + math);
+			debug("Time: " + time);
+			debug("Current Interval: " + interval);
+			debug("Random Interval: " + cb);
+			debug("Lasttime: " + lasttime);
+			debug("BotCts: " + botcts + " Accs: " + accounts);
+
+			if (botcts > accounts && math < cb) {
+				debug("Hit #1!");
+				// Incoming invasion.
+				if (!reanibo) {
+					if (whiteList) {
+						if (notify && whiteList) {
+							botclass.getServer()
+									.broadcastMessage(
+											"\247f[\247bAntiBot\247f] \247cOh no! A minecraft bot invasion has began. Connection Throttling: \247aEnabled");
+						}
+						reanibo = true;
+					} else {
+						if (notify) {
+							botclass.getServer()
+									.broadcastMessage(
+											"\247f[\247bAntiBot\247f] \247chas detected minecraft spam!");
+						}
 					}
+					debug("Tripswitched!");
+					kickConnected();
+					flush();
 				}
-				debug("Tripswitched!");
-				kickConnected();
-				flush();
-			}
-			botattempt = System.currentTimeMillis();
-			botcts += 1;
-			event.disallow(PlayerLoginEvent.Result.KICK_OTHER, connectMsg);
-		} else if (botattempt < interval && reanibo) {
-			debug("Hit #2");
-			// Attempting to connect.
-			botattempt = System.currentTimeMillis();
-			botcts += 1;
-			event.disallow(PlayerLoginEvent.Result.KICK_OTHER, connectMsg);
-		} else {
-			debug("Hit #3");
+				botattempt = System.currentTimeMillis();
+				botcts += 1;
+				event.getPlayer().kickPlayer(connectMsg);
+				event.setJoinMessage("");
+			} else if (botattempt < interval && reanibo) {
+				debug("Hit #2");
+				// Attempting to connect.
+				botattempt = System.currentTimeMillis();
+				botcts += 1;
+				event.getPlayer().kickPlayer(connectMsg);
+				event.setJoinMessage("");
+			} else {
+				debug("Hit #3");
 
-			if (reanibo) {
-				flush();
-			}
-			// No invasion.
-			try {
-				addConnected(playerName);
-				lasttime = System.currentTimeMillis();
-				botcts += 1;
-			} catch (Exception e) {
+				if (reanibo) {
+					flush();
+				}
+				// No invasion.
 				lasttime = System.currentTimeMillis();
 				botcts += 1;
 			}
+			
+			if(!botclass.getServer().getOfflinePlayer(event.getPlayer().getName()).isOnline()) {
+				event.setJoinMessage("");
+			}
+
+		} catch (Exception e) {
+			botclass.getServer()
+					.broadcastMessage(
+							"\247f[\247bAntiBot\247f] \247cAn error had occured! Please check console.");
+			e.printStackTrace();
 		}
-
 	}
 }

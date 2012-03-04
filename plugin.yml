@@ -1,6 +1,6 @@
 name: AntiBot
 main: somebody.is.mad.AntiBot
-version: 2.2
+version: 2.3
 description: The ultimate spam protection for Minecraft.
 commands:
    antibot:
@@ -32,6 +32,12 @@ permissions:
   AntiBot.admin.info:
     default: false
     description: Check the status of AntiBot.
+  AntiBot.admin.attack:
+    default: false
+    description: Turns on Invasion Mode manually.  Good if you know you're about to get attacked.
+  AntiBot.admin.remkickplayer:
+    default: false
+    description: Removes a player from the Auto Kick list. Helpful for users accidentally autokicked.
   AntiBot.admin.notify:
     default: false
     description: Gives extra details during invasions.  Tells this user if a system flush is needed.

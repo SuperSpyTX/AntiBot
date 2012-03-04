@@ -27,7 +27,7 @@ public class AntiBot extends JavaPlugin {
 	private Date install;
 	public int defaultinterval;
 	public int defaultaccounts;
-	public HashMap<String, IPMap> iplist = new HashMap<String, IPMap>();
+	public HashMap<String, String> iplist = new HashMap<String, String>();
 
 	public void onEnable() {
 
@@ -37,6 +37,7 @@ public class AntiBot extends JavaPlugin {
 			System.out.print("AntiBot: Missing Folder. Creating..");
 			dataFolder.mkdir();
 		}
+
 		File Config = new File(dataFolder.getAbsolutePath() + File.separator
 				+ "c.properties");
 
@@ -66,6 +67,10 @@ public class AntiBot extends JavaPlugin {
 						Integer.toString(botlistener.accounts));
 				propConfig.setProperty("whitelist-when-triggered",
 						Boolean.toString(botlistener.whiteList));
+				propConfig.setProperty("spam-time",
+						Integer.toString(botlistener.spamtime));
+				propConfig.setProperty("spam-amount",
+						Integer.toString(botlistener.spamam));
 				propConfig.setProperty("install-date",
 						Long.toString(System.currentTimeMillis()));
 				BufferedOutputStream stream = new BufferedOutputStream(
@@ -73,18 +78,13 @@ public class AntiBot extends JavaPlugin {
 				propConfig
 						.store(stream,
 								"AntiBot V2 - The ultimate AntiSpam protection for Minecraft.");
-				System.out.println("done.");
+				System.out.println("AntiBot: Loaded configuration.....done?");
 			} catch (IOException ex) {
 				System.out.println("AntiBot: Configuration creation failed.");
 			}
 		}
 
 		loadSekritTools();
-
-		// pm.registerEvent(Event.Type.PLAYER_LOGIN, this.botlistener,
-		// Event.Priority.Normal, this);
-		// pm.registerEvent(Event.Type.PLAYER_JOIN, this.botlistener,
-		// Event.Priority.Normal, this);
 		getServer().getPluginManager().registerEvents(botlistener, this);
 		PluginDescriptionFile pdfFile = getDescription();
 		System.out.println(pdfFile.getName() + " version "
@@ -96,9 +96,11 @@ public class AntiBot extends JavaPlugin {
 		install = new Date(installdate);
 		SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy");
 		sender.sendMessage("\247f[\247bAntiBot\247f] "
-				+ "AntiBot 2.2 - Coded By .SuPaH sPii");
+				+ "AntiBot 2.3 - Coded By .SuPaH sPii");
 		sender.sendMessage("\247f[\247bAntiBot\247f] "
-				+ "Inspired by Wolflink289.");
+				+ "Inspired by Wolflink289 <3");
+		sender.sendMessage("\247f[\247bAntiBot\247f] "
+				+ "Continued inspiration by Evenprime & Fafaffy <3");
 		Random random = new Random();
 		switch (random.nextInt(20)) {
 		case 0:
@@ -123,8 +125,8 @@ public class AntiBot extends JavaPlugin {
 			break;
 		case 4:
 			sender.sendMessage("\247f[\247bAntiBot\247f] "
-					+ "Running PWN4G3 Bots since " + ChatColor.GREEN
-					+ sdf.format(install));
+					+ "Running PWN4G3 Bots to the void since "
+					+ ChatColor.GREEN + sdf.format(install));
 			break;
 		case 5:
 			sender.sendMessage("\247f[\247bAntiBot\247f] "
@@ -645,8 +647,29 @@ public class AntiBot extends JavaPlugin {
 			}
 			if (load != null && !load3.equals(botlistener.debugmode)) {
 				botlistener.debugmode = load3;
-				System.out
-						.print("AntiBot: WARNING! You're in Debug Mode! Do not use this on a live environment!");
+				if (botlistener.debugmode)
+					System.out
+							.print("AntiBot: WARNING! You're in Debug Mode! Do not use this on a live environment!");
+			}
+
+			load = propConfig.getProperty("spam-amount");
+			if (load != null) {
+				load2 = Integer.parseInt(load);
+			} else {
+				load2 = botlistener.spamam;
+			}
+			if (load != null && !load2.equals(botlistener.spamam)) {
+				botlistener.spamam = load2;
+			}
+			
+			load = propConfig.getProperty("spam-time");
+			if (load != null) {
+				load2 = Integer.parseInt(load);
+			} else {
+				load2 = botlistener.spamtime;
+			}
+			if (load != null && !load2.equals(botlistener.spamtime)) {
+				botlistener.spamtime = load2;
 			}
 
 			load = propConfig.getProperty("enable-by-default");
