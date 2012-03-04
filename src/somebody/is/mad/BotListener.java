@@ -13,6 +13,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerKickEvent;
+import org.bukkit.event.player.PlayerPreLoginEvent;
+import org.bukkit.event.player.PlayerPreLoginEvent.Result;
 
 public class BotListener implements Listener {
 
@@ -30,8 +33,12 @@ public class BotListener implements Listener {
 	public boolean enabled = true;
 	public boolean debugmode = false;
 	public boolean whiteList = false;
+	public boolean silentChatKick = true;
 	public ArrayList<String> autokick = new ArrayList<String>();
 	public ArrayList<String> autoipkick = new ArrayList<String>();
+	public ArrayList<String> spammyPlayers = new ArrayList<String>();
+	public ArrayList<String> connected = new ArrayList<String>();
+	public HashMap<String, PlayerChatter> chatmsg = new HashMap<String, PlayerChatter>();
 	public String kickMsg = "The Ban Hammer has spoken!";
 	public String connectMsg = "You are not on the whitelist!";
 	public String connectInvasion = "The server is currently under attack.";
@@ -39,8 +46,6 @@ public class BotListener implements Listener {
 	public int spamcts = 0;
 	public int botcts;
 	public boolean reanibo = false;
-	public ArrayList<String> connected = new ArrayList<String>();
-	public HashMap<String, PlayerChatter> chatmsg = new HashMap<String, PlayerChatter>();
 
 	public BotListener(AntiBot instance) {
 		this.botclass = instance;
@@ -71,6 +76,7 @@ public class BotListener implements Listener {
 			return false;
 		}
 	}
+	
 
 	public void kickConnected() {
 		// int kicked = 0;
@@ -78,9 +84,9 @@ public class BotListener implements Listener {
 		for (String pl : connected) {
 			try {
 				debug("Kicking player..." + pl);
-				autoipkick.add(botclass.getServer().getPlayerExact(pl)
-						.getAddress().toString().split(":")[0]);
+				Player p2 = botclass.getServer().getPlayerExact(pl);
 				botclass.getServer().getPlayerExact(pl).kickPlayer(kickMsg);
+				autoipkick.add(p2.getAddress().toString().split(":")[0]);
 				autokick.add(pl);
 				// kicked += 1;
 				debug("Kicked player with method #1");
@@ -151,22 +157,22 @@ public class BotListener implements Listener {
 			return false;
 		}
 	}
-	
+
 	public boolean flush2() {
 		try {
-				reanibo = false;
-				interval = botclass.defaultinterval;
-				connected.clear();
-				autokick.clear();
-				autoipkick.clear();
-				accounts = botclass.defaultaccounts;
-				lasttime = 0;
-				botattempt = 0;
-				if (notify && whiteList) {
-					botclass.getServer()
-							.broadcastMessage(
-									"\247f[\247bAntiBot\247f] \247aThe minecraft bot invasion has ended. Connection Throttling: \247cDisabled");
-				}
+			reanibo = false;
+			interval = botclass.defaultinterval;
+			connected.clear();
+			autokick.clear();
+			autoipkick.clear();
+			accounts = botclass.defaultaccounts;
+			lasttime = 0;
+			botattempt = 0;
+			if (notify && whiteList) {
+				botclass.getServer()
+						.broadcastMessage(
+								"\247f[\247bAntiBot\247f] \247aThe minecraft bot invasion has ended. Connection Throttling: \247cDisabled");
+			}
 			botcts = 0;
 			return true;
 		} catch (Exception e) {
@@ -221,9 +227,44 @@ public class BotListener implements Listener {
 			botclass.iplist.put(IP, ev.getName());
 		}
 	}
-	
+
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onPlayerC(PlayerCommandPreprocessEvent event) {
+	public void onPlayerKick(PlayerKickEvent event) {
+		if (!enabled) {
+			return;
+		}
+
+		// spammy chat kick.
+		if (silentChatKick) {
+			if (event.getReason().contains("C: ")) {
+				event.setReason(event.getReason().replace("C: ", ""));
+				event.setLeaveMessage(null);
+				return;
+			}
+		}
+
+		if (autokick.contains(event.getPlayer().getName())) {
+			event.setLeaveMessage(null);
+			return;
+		}
+
+		if (autoipkick.contains(event.getPlayer().getAddress().toString()
+				.split(":")[0])) {
+			event.setLeaveMessage(null);
+			return;
+		}
+
+	}
+
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onPlayerPreLogin(PlayerPreLoginEvent event) {
+		if (autoipkick.contains(event.getAddress().toString().split(":")[0])) {
+			event.disallow(Result.KICK_BANNED, kickMsg);
+		}
+	}
+
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onPlayerCommand(PlayerCommandPreprocessEvent event) {
 		try {
 			if (!enabled) {
 				return;
@@ -259,7 +300,7 @@ public class BotListener implements Listener {
 											"\247f[\247bAntiBot\247f] \247chas detected chat spam!");
 						}
 						chatmsg.remove(pN);
-						event.getPlayer().kickPlayer(kickMsg);
+						event.getPlayer().kickPlayer("C: " + kickMsg);
 						event.setCancelled(true);
 					} else {
 						pc.trig();
@@ -277,7 +318,7 @@ public class BotListener implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onPlayerJ(PlayerChatEvent event) {
+	public void onPlayerChat(PlayerChatEvent event) {
 		try {
 			if (!enabled) {
 				return;

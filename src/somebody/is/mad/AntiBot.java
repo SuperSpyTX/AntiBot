@@ -71,6 +71,8 @@ public class AntiBot extends JavaPlugin {
 						Integer.toString(botlistener.spamtime));
 				propConfig.setProperty("spam-amount",
 						Integer.toString(botlistener.spamam));
+				propConfig.setProperty("silent-chat-kick",
+						Boolean.toString(botlistener.silentChatKick));
 				propConfig.setProperty("install-date",
 						Long.toString(System.currentTimeMillis()));
 				BufferedOutputStream stream = new BufferedOutputStream(
@@ -78,7 +80,6 @@ public class AntiBot extends JavaPlugin {
 				propConfig
 						.store(stream,
 								"AntiBot V2 - The ultimate AntiSpam protection for Minecraft.");
-				System.out.println("AntiBot: Loaded configuration.....done?");
 			} catch (IOException ex) {
 				System.out.println("AntiBot: Configuration creation failed.");
 			}
@@ -378,7 +379,7 @@ public class AntiBot extends JavaPlugin {
 
 		if (args[0].compareToIgnoreCase("flush") == 0) {
 			if (ownPermission("AntiBot.admin.flush", player, 2)) {
-				if (botlistener.flush2()) {
+				if (botlistener.flush()) {
 					sender.sendMessage("\247f[\247bAntiBot\247f] "
 							+ ChatColor.GREEN + "System flushed successfully!");
 				} else {
@@ -676,7 +677,7 @@ public class AntiBot extends JavaPlugin {
 			} else {
 				load3 = botlistener.notify;
 			}
-			if (load != null && !load3.equals(botlistener.notify)) {
+			if (load != null) {
 				botlistener.notify = load3;
 			}
 
@@ -717,10 +718,10 @@ public class AntiBot extends JavaPlugin {
 			if (load != null) {
 				load3 = Boolean.parseBoolean(load);
 			} else {
-				load3 = botlistener.notify;
+				load3 = botlistener.enabled;
 			}
-			if (load != null && !load3.equals(botlistener.notify)) {
-				botlistener.notify = load3;
+			if (load != null && !load3.equals(botlistener.enabled)) {
+				botlistener.enabled = load3;
 			}
 
 			load = propConfig.getProperty("install-date");
