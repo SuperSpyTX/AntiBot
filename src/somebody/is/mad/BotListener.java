@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class BotListener implements Listener {
@@ -150,6 +151,28 @@ public class BotListener implements Listener {
 			return false;
 		}
 	}
+	
+	public boolean flush2() {
+		try {
+				reanibo = false;
+				interval = botclass.defaultinterval;
+				connected.clear();
+				autokick.clear();
+				autoipkick.clear();
+				accounts = botclass.defaultaccounts;
+				lasttime = 0;
+				botattempt = 0;
+				if (notify && whiteList) {
+					botclass.getServer()
+							.broadcastMessage(
+									"\247f[\247bAntiBot\247f] \247aThe minecraft bot invasion has ended. Connection Throttling: \247cDisabled");
+				}
+			botcts = 0;
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
 	public boolean toggle(Boolean e) {
 		try {
@@ -200,8 +223,11 @@ public class BotListener implements Listener {
 	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onPlayerJ(PlayerChatEvent event) {
+	public void onPlayerC(PlayerCommandPreprocessEvent event) {
 		try {
+			if (!enabled) {
+				return;
+			}
 			String pN = event.getPlayer().getName();
 			if (autokick.contains(event.getPlayer().getName())) {
 				event.getPlayer().kickPlayer(kickMsg);
@@ -209,24 +235,24 @@ public class BotListener implements Listener {
 				return;
 			}
 
-			if (autoipkick.contains(event.getPlayer().getAddress()
-					.toString().split(":")[0])) {
+			if (autoipkick.contains(event.getPlayer().getAddress().toString()
+					.split(":")[0])) {
 				event.getPlayer().kickPlayer(kickMsg);
 				event.setCancelled(true);
 				return;
 			}
-			
+
 			if (hasPerms(event.getPlayer())) {
 				return;
 			}
-			
-			if(!chatmsg.containsKey(pN)) {
+
+			if (!chatmsg.containsKey(pN)) {
 				chatmsg.put(pN, new PlayerChatter(pN));
 			} else {
 				try {
 					PlayerChatter pc = chatmsg.get(pN);
 					long math = System.currentTimeMillis() - pc.lastChatMsg;
-					if(pc.amoumt > spamam && math < spamtime) {
+					if (pc.amoumt > spamam && math < spamtime) {
 						if (notify) {
 							botclass.getServer()
 									.broadcastMessage(
@@ -240,12 +266,65 @@ public class BotListener implements Listener {
 						chatmsg.remove(pN);
 						chatmsg.put(pN, pc);
 					}
-				} catch(Exception e) {
-					
+				} catch (Exception e) {
+
 				}
 			}
-			
-			
+
+		} catch (Exception e) {
+			// alright, it failed. Don't worry about it.
+		}
+	}
+
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onPlayerJ(PlayerChatEvent event) {
+		try {
+			if (!enabled) {
+				return;
+			}
+			String pN = event.getPlayer().getName();
+			if (autokick.contains(event.getPlayer().getName())) {
+				event.getPlayer().kickPlayer(kickMsg);
+				event.setCancelled(true);
+				return;
+			}
+
+			if (autoipkick.contains(event.getPlayer().getAddress().toString()
+					.split(":")[0])) {
+				event.getPlayer().kickPlayer(kickMsg);
+				event.setCancelled(true);
+				return;
+			}
+
+			if (hasPerms(event.getPlayer())) {
+				return;
+			}
+
+			if (!chatmsg.containsKey(pN)) {
+				chatmsg.put(pN, new PlayerChatter(pN));
+			} else {
+				try {
+					PlayerChatter pc = chatmsg.get(pN);
+					long math = System.currentTimeMillis() - pc.lastChatMsg;
+					if (pc.amoumt > spamam && math < spamtime) {
+						if (notify) {
+							botclass.getServer()
+									.broadcastMessage(
+											"\247f[\247bAntiBot\247f] \247chas detected chat spam!");
+						}
+						chatmsg.remove(pN);
+						event.getPlayer().kickPlayer(kickMsg);
+						event.setCancelled(true);
+					} else {
+						pc.trig();
+						chatmsg.remove(pN);
+						chatmsg.put(pN, pc);
+					}
+				} catch (Exception e) {
+
+				}
+			}
+
 		} catch (Exception e) {
 			// alright, it failed. Don't worry about it.
 		}
@@ -275,6 +354,19 @@ public class BotListener implements Listener {
 							.sendMessage(
 									"\247f[\247bAntiBot\247f] \247cThe system needs a flush. Please type /antibot flush. Thanks.");
 				}
+				return;
+			}
+
+			if (autokick.contains(event.getPlayer().getName())) {
+				event.getPlayer().kickPlayer(kickMsg);
+				event.setJoinMessage("");
+				return;
+			}
+
+			if (autoipkick.contains(event.getPlayer().getAddress().toString()
+					.split(":")[0])) {
+				event.getPlayer().kickPlayer(kickMsg);
+				event.setJoinMessage("");
 				return;
 			}
 
@@ -359,8 +451,9 @@ public class BotListener implements Listener {
 				lasttime = System.currentTimeMillis();
 				botcts += 1;
 			}
-			
-			if(!botclass.getServer().getOfflinePlayer(event.getPlayer().getName()).isOnline()) {
+
+			if (!botclass.getServer()
+					.getOfflinePlayer(event.getPlayer().getName()).isOnline()) {
 				event.setJoinMessage("");
 			}
 

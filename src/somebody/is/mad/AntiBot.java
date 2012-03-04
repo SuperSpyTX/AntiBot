@@ -316,6 +316,8 @@ public class AntiBot extends JavaPlugin {
 						+ "/antibot int [val] - Change intervals.");
 				sender.sendMessage("\247f[\247bAntiBot\247f] "
 						+ "/antibot acc [val] - Change accounts.");
+				sender.sendMessage("\247f[\247bAntiBot\247f] "
+						+ "/antibot notify [true/false] - Change whether you get notified or not.");
 			}
 			if (ownPermission("AntiBot.admin.toggle", player, 3)) {
 				sender.sendMessage("\247f[\247bAntiBot\247f] "
@@ -376,7 +378,7 @@ public class AntiBot extends JavaPlugin {
 
 		if (args[0].compareToIgnoreCase("flush") == 0) {
 			if (ownPermission("AntiBot.admin.flush", player, 2)) {
-				if (botlistener.flush()) {
+				if (botlistener.flush2()) {
 					sender.sendMessage("\247f[\247bAntiBot\247f] "
 							+ ChatColor.GREEN + "System flushed successfully!");
 				} else {
@@ -469,6 +471,45 @@ public class AntiBot extends JavaPlugin {
 							+ ChatColor.RED
 							+ "Error while trying to change interval.");
 				}
+			} else {
+				noPermission(sender);
+			}
+			return true;
+		}
+		if (args[0].compareToIgnoreCase("notify") == 0) {
+			if (ownPermission("AntiBot.admin.changeconf", player, 2)) {
+				if (args.length != 2) {
+					sender.sendMessage("\247f[\247bAntiBot\247f] "
+							+ ChatColor.RED
+							+ "Please type true/false after /antibot notify.");
+					return true;
+				}
+				try {
+					String a = args[1];
+					if(!a.equals("true") && !a.equals("false")) {
+						sender.sendMessage("\247f[\247bAntiBot\247f] "
+								+ ChatColor.RED
+								+ "The value must either be true or false.");
+						return true;
+					}
+					botlistener.notify = Boolean.parseBoolean(a);
+					if (saveConfig("orgy-notify", a)) {
+						sender.sendMessage("\247f[\247bAntiBot\247f] "
+								+ ChatColor.GREEN
+								+ "Changed notification status successfully!");
+					} else {
+						sender.sendMessage("\247f[\247bAntiBot\247f] "
+								+ ChatColor.RED
+								+ "Error while trying to save notification status to config.");
+					}
+					
+				} catch(Exception e) {
+					e.printStackTrace();
+					sender.sendMessage("\247f[\247bAntiBot\247f] "
+							+ ChatColor.RED
+							+ "Error while trying to change notification status.");
+				}
+				
 			} else {
 				noPermission(sender);
 			}
@@ -661,7 +702,7 @@ public class AntiBot extends JavaPlugin {
 			if (load != null && !load2.equals(botlistener.spamam)) {
 				botlistener.spamam = load2;
 			}
-			
+
 			load = propConfig.getProperty("spam-time");
 			if (load != null) {
 				load2 = Integer.parseInt(load);
