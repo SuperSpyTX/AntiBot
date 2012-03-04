@@ -288,7 +288,7 @@ public class BotListener implements Listener {
 			}
 
 			if (!chatmsg.containsKey(pN)) {
-				chatmsg.put(pN, new PlayerChatter(pN));
+				chatmsg.put(pN, new PlayerChatter(pN, this));
 			} else {
 				try {
 					PlayerChatter pc = chatmsg.get(pN);
@@ -342,7 +342,7 @@ public class BotListener implements Listener {
 			}
 
 			if (!chatmsg.containsKey(pN)) {
-				chatmsg.put(pN, new PlayerChatter(pN));
+				chatmsg.put(pN, new PlayerChatter(pN, this));
 			} else {
 				try {
 					PlayerChatter pc = chatmsg.get(pN);
