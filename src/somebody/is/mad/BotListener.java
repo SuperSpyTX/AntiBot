@@ -27,6 +27,7 @@ public class BotListener implements Listener {
 	public int accounts = 4;
 	public int spamam = 4;
 	public int spamtime = 1500;
+	public int connectFor = 30000;
 	public boolean notify = true;
 	public boolean useWhiteListPerms = true;
 	public boolean useOpPerms = false;
@@ -38,7 +39,7 @@ public class BotListener implements Listener {
 	public ArrayList<String> autoipkick = new ArrayList<String>();
 	public ArrayList<String> spammyPlayers = new ArrayList<String>();
 	public ArrayList<String> connected = new ArrayList<String>();
-	public HashMap<String, PlayerChatter> chatmsg = new HashMap<String, PlayerChatter>();
+	public HashMap<String, PlayerTrack> chatmsg = new HashMap<String, PlayerTrack>();
 	public String kickMsg = "The Ban Hammer has spoken!";
 	public String connectMsg = "You are not on the whitelist!";
 	public String connectInvasion = "The server is currently under attack.";
@@ -69,14 +70,15 @@ public class BotListener implements Listener {
 		}
 	}
 
-	public boolean checkIfAdded(String playerName) {
-		if (connected.contains(playerName)) {
-			return true;
-		} else {
-			return false;
+	public boolean checkConnection(String usr) {
+		if(chatmsg.containsKey(usr)) {
+			PlayerTrack mp = (PlayerTrack) chatmsg.get(usr);
+			if(mp.connectedForLonger()) {
+				return true;
+			}
 		}
+		return false;
 	}
-	
 
 	public void kickConnected() {
 		// int kicked = 0;
@@ -85,13 +87,15 @@ public class BotListener implements Listener {
 			try {
 				debug("Kicking player..." + pl);
 				Player p2 = botclass.getServer().getPlayerExact(pl);
-				botclass.getServer().getPlayerExact(pl).kickPlayer(kickMsg);
-				autoipkick.add(p2.getAddress().toString().split(":")[0]);
-				autokick.add(pl);
-				// kicked += 1;
-				debug("Kicked player with method #1");
-				debug("We now have autokick: " + autokick.size() + " ip: "
-						+ autoipkick.size());
+				if (!checkConnection(pl)) {
+					botclass.getServer().getPlayerExact(pl).kickPlayer(kickMsg);
+					autoipkick.add(p2.getAddress().toString().split(":")[0]);
+					autokick.add(pl);
+					// kicked += 1;
+					debug("Kicked player with method #1");
+					debug("We now have autokick: " + autokick.size() + " ip: "
+							+ autoipkick.size());
+				}
 			} catch (Exception e) {
 				// if it fails. go down here.
 				debug("Failed to kick: " + pl);
@@ -199,7 +203,7 @@ public class BotListener implements Listener {
 		} else if (interval > 45000) {
 			return rdm.nextInt(25000);
 		}
-		return 0;
+		return rdm.nextInt(5000);
 	}
 
 	public void trackPlayer(Player ev, String IP) {
@@ -288,10 +292,10 @@ public class BotListener implements Listener {
 			}
 
 			if (!chatmsg.containsKey(pN)) {
-				chatmsg.put(pN, new PlayerChatter(pN, this));
+				chatmsg.put(pN, new PlayerTrack(pN, this));
 			} else {
 				try {
-					PlayerChatter pc = chatmsg.get(pN);
+					PlayerTrack pc = chatmsg.get(pN);
 					long math = System.currentTimeMillis() - pc.lastChatMsg;
 					if (pc.amoumt > spamam && math < spamtime) {
 						if (notify) {
@@ -342,10 +346,10 @@ public class BotListener implements Listener {
 			}
 
 			if (!chatmsg.containsKey(pN)) {
-				chatmsg.put(pN, new PlayerChatter(pN, this));
+				chatmsg.put(pN, new PlayerTrack(pN, this));
 			} else {
 				try {
-					PlayerChatter pc = chatmsg.get(pN);
+					PlayerTrack pc = chatmsg.get(pN);
 					long math = System.currentTimeMillis() - pc.lastChatMsg;
 					if (pc.amoumt > spamam && math < spamtime) {
 						if (notify) {
@@ -418,6 +422,8 @@ public class BotListener implements Listener {
 				debug("Added user to tracking");
 				addConnected(event.getPlayer().getName());
 				debug("Added user to connected");
+				chatmsg.put(event.getPlayer().getName(), new PlayerTrack(event.getPlayer().getName(), this));
+				debug("Added user to chatmsgtracking");
 			}
 
 			if (botcts > accounts + 2 && reanibo) { // Increase violation

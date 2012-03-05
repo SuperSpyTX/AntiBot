@@ -1,17 +1,27 @@
 package somebody.is.mad;
 
-public class PlayerChatter {
+public class PlayerTrack {
 
 	public String username = "";
 	public long lastChatMsg = 0;
+	public long connectedFor = 0;
 	public int amoumt = 0;
 	public BotListener botlistener;
 	
-	public PlayerChatter(String usernam, BotListener instance) {
+	public PlayerTrack(String usernam, BotListener instance) {
 		username = usernam;
 		botlistener = instance;
 		lastChatMsg = System.currentTimeMillis();
-		amoumt += 1;
+		connectedFor = System.currentTimeMillis();
+		amoumt = 0;
+	}
+	
+	public boolean connectedForLonger() {
+		if(connectedFor < botlistener.connectFor) {
+			return false;
+		}
+		
+		return true;
 	}
 	
 	public void trig() {
