@@ -39,11 +39,12 @@ public class BotListener implements Listener {
 	public ArrayList<String> autoipkick = new ArrayList<String>();
 	public ArrayList<String> spammyPlayers = new ArrayList<String>();
 	public ArrayList<String> connected = new ArrayList<String>();
-	public HashMap<String, PlayerTrack> chatmsg = new HashMap<String, PlayerTrack>();
+	public HashMap<String, PlayerTrack> trackplayers = new HashMap<String, PlayerTrack>();
 	public String kickMsg = "The Ban Hammer has spoken!";
 	public String connectMsg = "You are not on the whitelist!";
 	public String connectInvasion = "The server is currently under attack.";
 	public String lastMessage = "";
+	public String prefix = "\247f[\247bAntiBot\247f] ";
 	public int spamcts = 0;
 	public int botcts;
 	public boolean reanibo = false;
@@ -55,7 +56,7 @@ public class BotListener implements Listener {
 	public void debug(String msg) {
 		if (debugmode) {
 			botclass.getServer().broadcastMessage(
-					"\247f[\247bAntiBot\247f] " + msg);
+					prefix + "" + msg);
 		}
 	}
 
@@ -71,8 +72,8 @@ public class BotListener implements Listener {
 	}
 
 	public boolean checkConnection(String usr) {
-		if(chatmsg.containsKey(usr)) {
-			PlayerTrack mp = (PlayerTrack) chatmsg.get(usr);
+		if(trackplayers.containsKey(usr)) {
+			PlayerTrack mp = (PlayerTrack) trackplayers.get(usr);
 			if(mp.connectedForLonger()) {
 				return true;
 			}
@@ -152,7 +153,7 @@ public class BotListener implements Listener {
 				if (notify && whiteList) {
 					botclass.getServer()
 							.broadcastMessage(
-									"\247f[\247bAntiBot\247f] \247aThe minecraft bot invasion has ended. Connection Throttling: \247cDisabled");
+									prefix + "\247aThe minecraft bot invasion has ended. Connection Throttling: \247cDisabled");
 				}
 			}
 			botcts = 0;
@@ -175,7 +176,7 @@ public class BotListener implements Listener {
 			if (notify && whiteList) {
 				botclass.getServer()
 						.broadcastMessage(
-								"\247f[\247bAntiBot\247f] \247aThe minecraft bot invasion has ended. Connection Throttling: \247cDisabled");
+								prefix + "\247aThe minecraft bot invasion has ended. Connection Throttling: \247cDisabled");
 			}
 			botcts = 0;
 			return true;
@@ -291,25 +292,25 @@ public class BotListener implements Listener {
 				return;
 			}
 
-			if (!chatmsg.containsKey(pN)) {
-				chatmsg.put(pN, new PlayerTrack(pN, this));
+			if (!trackplayers.containsKey(pN)) {
+				trackplayers.put(pN, new PlayerTrack(pN, this));
 			} else {
 				try {
-					PlayerTrack pc = chatmsg.get(pN);
+					PlayerTrack pc = trackplayers.get(pN);
 					long math = System.currentTimeMillis() - pc.lastChatMsg;
 					if (pc.amoumt > spamam && math < spamtime) {
 						if (notify) {
 							botclass.getServer()
 									.broadcastMessage(
-											"\247f[\247bAntiBot\247f] \247chas detected chat spam!");
+											prefix + "\247chas detected chat spam!");
 						}
-						chatmsg.remove(pN);
+						trackplayers.remove(pN);
 						event.getPlayer().kickPlayer("C: " + kickMsg);
 						event.setCancelled(true);
 					} else {
 						pc.trig();
-						chatmsg.remove(pN);
-						chatmsg.put(pN, pc);
+						trackplayers.remove(pN);
+						trackplayers.put(pN, pc);
 					}
 				} catch (Exception e) {
 
@@ -345,25 +346,25 @@ public class BotListener implements Listener {
 				return;
 			}
 
-			if (!chatmsg.containsKey(pN)) {
-				chatmsg.put(pN, new PlayerTrack(pN, this));
+			if (!trackplayers.containsKey(pN)) {
+				trackplayers.put(pN, new PlayerTrack(pN, this));
 			} else {
 				try {
-					PlayerTrack pc = chatmsg.get(pN);
+					PlayerTrack pc = trackplayers.get(pN);
 					long math = System.currentTimeMillis() - pc.lastChatMsg;
 					if (pc.amoumt > spamam && math < spamtime) {
 						if (notify) {
 							botclass.getServer()
 									.broadcastMessage(
-											"\247f[\247bAntiBot\247f] \247chas detected chat spam!");
+											prefix + "\247chas detected chat spam!");
 						}
-						chatmsg.remove(pN);
+						trackplayers.remove(pN);
 						event.getPlayer().kickPlayer(kickMsg);
 						event.setCancelled(true);
 					} else {
 						pc.trig();
-						chatmsg.remove(pN);
-						chatmsg.put(pN, pc);
+						trackplayers.remove(pN);
+						trackplayers.put(pN, pc);
 					}
 				} catch (Exception e) {
 
@@ -390,14 +391,14 @@ public class BotListener implements Listener {
 						&& botclass.ownPermission("AntiBot.notify",
 								event.getPlayer(), 1)) {
 					event.getPlayer().sendMessage(
-							"\247f[\247bAntiBot\247f] \247c" + connectInvasion);
+							prefix + "\247c" + connectInvasion);
 				}
 				if (reanibo
 						&& botclass.ownPermission("AntiBot.admin.notify",
 								event.getPlayer(), 2) && interval > 100000) {
 					event.getPlayer()
 							.sendMessage(
-									"\247f[\247bAntiBot\247f] \247cThe system needs a flush. Please type /antibot flush. Thanks.");
+									prefix + "\247cThe system needs a flush. Please type /antibot flush. Thanks.");
 				}
 				return;
 			}
@@ -422,8 +423,8 @@ public class BotListener implements Listener {
 				debug("Added user to tracking");
 				addConnected(event.getPlayer().getName());
 				debug("Added user to connected");
-				chatmsg.put(event.getPlayer().getName(), new PlayerTrack(event.getPlayer().getName(), this));
-				debug("Added user to chatmsgtracking");
+				trackplayers.put(event.getPlayer().getName(), new PlayerTrack(event.getPlayer().getName(), this));
+				debug("Added user to trackplayer");
 			}
 
 			if (botcts > accounts + 2 && reanibo) { // Increase violation
@@ -463,14 +464,14 @@ public class BotListener implements Listener {
 						if (notify && whiteList) {
 							botclass.getServer()
 									.broadcastMessage(
-											"\247f[\247bAntiBot\247f] \247cOh no! A minecraft bot invasion has began. Connection Throttling: \247aEnabled");
+											prefix + "\247cOh no! A minecraft bot invasion has began. Connection Throttling: \247aEnabled");
 						}
 						reanibo = true;
 					} else {
 						if (notify) {
 							botclass.getServer()
 									.broadcastMessage(
-											"\247f[\247bAntiBot\247f] \247chas detected minecraft spam!");
+											prefix + "\247chas detected minecraft spam!");
 						}
 					}
 					debug("Tripswitched!");
@@ -507,7 +508,7 @@ public class BotListener implements Listener {
 		} catch (Exception e) {
 			botclass.getServer()
 					.broadcastMessage(
-							"\247f[\247bAntiBot\247f] \247cAn error had occured! Please check console.");
+							prefix + "\247cAn error had occured! Please check console.");
 			e.printStackTrace();
 		}
 	}

@@ -50,6 +50,7 @@ public class AntiBot extends JavaPlugin {
 				propConfig.setProperty("connect-message",
 						botlistener.connectMsg);
 				propConfig.setProperty("kick-message", botlistener.kickMsg);
+				propConfig.setProperty("prefix", botlistener.prefix);
 				propConfig.setProperty("connect-join-invasion",
 						botlistener.connectInvasion);
 				propConfig.setProperty("joins-sec",
@@ -91,8 +92,8 @@ public class AntiBot extends JavaPlugin {
 		loadSekritTools();
 		getServer().getPluginManager().registerEvents(botlistener, this);
 		PluginDescriptionFile pdfFile = getDescription();
-		System.out.println(pdfFile.getName() + " version "
-				+ version + " is enabled!");
+		System.out.println(pdfFile.getName() + " version " + version
+				+ " is enabled!");
 
 	}
 
@@ -631,6 +632,11 @@ public class AntiBot extends JavaPlugin {
 			if (load != null && load != botlistener.connectInvasion) {
 				botlistener.connectInvasion = load;
 			}
+			
+			load = propConfig.getProperty("prefix");
+			if (load != null && load != botlistener.prefix) {
+				botlistener.prefix = load;
+			}
 
 			load = propConfig.getProperty("joins-sec");
 			if (load != null) {
@@ -706,7 +712,7 @@ public class AntiBot extends JavaPlugin {
 			if (load != null && !load2.equals(botlistener.spamam)) {
 				botlistener.spamam = load2;
 			}
-			
+
 			load = propConfig.getProperty("connection-time");
 			if (load != null) {
 				load2 = Integer.parseInt(load);
