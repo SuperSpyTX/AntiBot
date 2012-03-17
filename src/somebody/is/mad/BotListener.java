@@ -16,6 +16,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerPreLoginEvent.Result;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 public class BotListener implements Listener {
 
@@ -23,7 +24,7 @@ public class BotListener implements Listener {
 	public long time;
 	public long lasttime;
 	public long botattempt;
-	public int interval = 15000;
+	public int interval = 5000;
 	public int accounts = 4;
 	public int spamam = 4;
 	public int spamtime = 1500;
@@ -35,6 +36,7 @@ public class BotListener implements Listener {
 	public boolean debugmode = false;
 	public boolean whiteList = false;
 	public boolean silentChatKick = true;
+	public boolean banUsers = false;
 	public ArrayList<String> autokick = new ArrayList<String>();
 	public ArrayList<String> autoipkick = new ArrayList<String>();
 	public ArrayList<String> spammyPlayers = new ArrayList<String>();
@@ -90,12 +92,16 @@ public class BotListener implements Listener {
 				Player p2 = botclass.getServer().getPlayerExact(pl);
 				if (!checkConnection(pl)) {
 					botclass.getServer().getPlayerExact(pl).kickPlayer(kickMsg);
-					autoipkick.add(p2.getAddress().toString().split(":")[0]);
-					autokick.add(pl);
+					if(banUsers) {
+						autoipkick.add(p2.getAddress().toString().split(":")[0]);
+						autokick.add(pl);
+					}
 					// kicked += 1;
 					debug("Kicked player with method #1");
 					debug("We now have autokick: " + autokick.size() + " ip: "
 							+ autoipkick.size());
+				} else {
+					connected.remove(pl);
 				}
 			} catch (Exception e) {
 				// if it fails. go down here.
@@ -216,8 +222,10 @@ public class BotListener implements Listener {
 					if (!botclass.iplist.get(IP).contains(ev.getName())) {
 						ev.kickPlayer(kickMsg);
 						kicked = true;
-						autokick.add(ev.getName());
-						autoipkick.add(IP);
+						if(banUsers) {
+							autokick.add(ev.getName());
+							autoipkick.add(IP);
+						}
 						botclass.iplist.remove(IP);
 					}
 				}
@@ -373,6 +381,17 @@ public class BotListener implements Listener {
 
 		} catch (Exception e) {
 			// alright, it failed. Don't worry about it.
+		}
+	}
+	
+	
+	//falsified antibot trigger bug fix, or brolos bug fix.
+	@EventHandler
+	public void onPlayerQuit(PlayerQuitEvent event) {
+		if(hasPerms(event.getPlayer())) {
+			return;
+		} else {
+			botcts -= 1;
 		}
 	}
 

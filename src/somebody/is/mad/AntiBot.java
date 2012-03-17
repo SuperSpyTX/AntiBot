@@ -77,6 +77,8 @@ public class AntiBot extends JavaPlugin {
 						Boolean.toString(botlistener.silentChatKick));
 				propConfig.setProperty("connection-time",
 						Integer.toString(botlistener.connectFor));
+				propConfig.setProperty("ban-users",
+						Boolean.toString(botlistener.banUsers));
 				propConfig.setProperty("install-date",
 						Long.toString(System.currentTimeMillis()));
 				BufferedOutputStream stream = new BufferedOutputStream(
@@ -688,6 +690,16 @@ public class AntiBot extends JavaPlugin {
 			}
 			if (load != null && !load3.equals(botlistener.notify)) {
 				botlistener.notify = load3;
+			}
+			
+			load = propConfig.getProperty("ban-users");
+			if (load != null) {
+				load3 = Boolean.parseBoolean(load);
+			} else {
+				load3 = botlistener.banUsers;
+			}
+			if (load != null && !load3.equals(botlistener.banUsers)) {
+				botlistener.banUsers = load3;
 			}
 
 			load = propConfig.getProperty("debug-mode");
