@@ -317,8 +317,6 @@ public class BotListener implements Listener {
 						event.setCancelled(true);
 					} else {
 						pc.trig();
-						trackplayers.remove(pN);
-						trackplayers.put(pN, pc);
 					}
 				} catch (Exception e) {
 
@@ -423,13 +421,6 @@ public class BotListener implements Listener {
 			}
 
 			if (autokick.contains(event.getPlayer().getName())) {
-				event.getPlayer().kickPlayer(kickMsg);
-				event.setJoinMessage("");
-				return;
-			}
-
-			if (autoipkick.contains(event.getPlayer().getAddress().toString()
-					.split(":")[0])) {
 				event.getPlayer().kickPlayer(kickMsg);
 				event.setJoinMessage("");
 				return;
