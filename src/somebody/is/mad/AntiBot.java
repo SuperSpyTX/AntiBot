@@ -102,121 +102,121 @@ public class AntiBot extends JavaPlugin {
 	public void returnMotd(CommandSender sender) {
 		install = new Date(installdate);
 		SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy");
-		sender.sendMessage("\247f[\247bAntiBot\247f] " + "AntiBot " + version
+		sender.sendMessage(botlistener.prefix + "AntiBot " + version
 				+ " - Coded By .SuPaH sPii");
-		sender.sendMessage("\247f[\247bAntiBot\247f] "
+		sender.sendMessage(botlistener.prefix
 				+ "Inspired by Wolflink289 <3");
-		sender.sendMessage("\247f[\247bAntiBot\247f] "
+		sender.sendMessage(botlistener.prefix
 				+ "Continued inspiration by Evenprime & Fafaffy <3");
 		Random random = new Random();
 		switch (random.nextInt(20)) {
 		case 0:
-			sender.sendMessage("\247f[\247bAntiBot\247f] "
+			sender.sendMessage(botlistener.prefix
 					+ "System Installed on " + ChatColor.GREEN
 					+ sdf.format(install));
 			break;
 		case 1:
-			sender.sendMessage("\247f[\247bAntiBot\247f] "
+			sender.sendMessage(botlistener.prefix
 					+ "Keeping Pwnage out of game since " + ChatColor.GREEN
 					+ sdf.format(install));
 			break;
 		case 2:
-			sender.sendMessage("\247f[\247bAntiBot\247f] "
+			sender.sendMessage(botlistener.prefix
 					+ "Combatting spam since " + ChatColor.GREEN
 					+ sdf.format(install));
 			break;
 		case 3:
-			sender.sendMessage("\247f[\247bAntiBot\247f] "
+			sender.sendMessage(botlistener.prefix
 					+ "Supporting PWN4G3 Bots since " + ChatColor.GREEN
 					+ sdf.format(install));
 			break;
 		case 4:
-			sender.sendMessage("\247f[\247bAntiBot\247f] "
+			sender.sendMessage(botlistener.prefix
 					+ "Running PWN4G3 Bots to the void since "
 					+ ChatColor.GREEN + sdf.format(install));
 			break;
 		case 5:
-			sender.sendMessage("\247f[\247bAntiBot\247f] "
+			sender.sendMessage(botlistener.prefix
 					+ "Making people mad since " + ChatColor.GREEN
 					+ sdf.format(install));
 			break;
 		case 6:
-			sender.sendMessage("\247f[\247bAntiBot\247f] "
+			sender.sendMessage(botlistener.prefix
 					+ "Trolling spammers since " + ChatColor.GREEN
 					+ sdf.format(install));
 			break;
 		case 7:
-			sender.sendMessage("\247f[\247bAntiBot\247f] "
+			sender.sendMessage(botlistener.prefix
 					+ "Supporting Wolflink289's idea since " + ChatColor.GREEN
 					+ sdf.format(install));
 			break;
 		case 8:
-			sender.sendMessage("\247f[\247bAntiBot\247f] "
+			sender.sendMessage(botlistener.prefix
 					+ "Protecting this server since " + ChatColor.GREEN
 					+ sdf.format(install));
 			break;
 		case 9:
-			sender.sendMessage("\247f[\247bAntiBot\247f] "
+			sender.sendMessage(botlistener.prefix
 					+ "All lights turned green since " + ChatColor.GREEN
 					+ sdf.format(install));
 			break;
 		case 10:
-			sender.sendMessage("\247f[\247bAntiBot\247f] "
+			sender.sendMessage(botlistener.prefix
 					+ "Corrupting ability to spam since " + ChatColor.GREEN
 					+ sdf.format(install));
 			break;
 		case 11:
-			sender.sendMessage("\247f[\247bAntiBot\247f] "
+			sender.sendMessage(botlistener.prefix
 					+ "Minecraft PWN4G3 Dun goof on " + ChatColor.GREEN
 					+ sdf.format(install));
 			break;
 		case 12:
-			sender.sendMessage("\247f[\247bAntiBot\247f] "
+			sender.sendMessage(botlistener.prefix
 					+ "Making .SuPaH sPii proud since " + ChatColor.GREEN
 					+ sdf.format(install));
 			break;
 		case 13:
-			sender.sendMessage("\247f[\247bAntiBot\247f] "
+			sender.sendMessage(botlistener.prefix
 					+ "Injected the Vaccine on " + ChatColor.GREEN
 					+ sdf.format(install));
 			break;
 		case 14:
-			sender.sendMessage("\247f[\247bAntiBot\247f] "
+			sender.sendMessage(botlistener.prefix
 					+ "Giving AIDS to spammers since " + ChatColor.GREEN
 					+ sdf.format(install));
 			break;
 		case 15:
-			sender.sendMessage("\247f[\247bAntiBot\247f] "
+			sender.sendMessage(botlistener.prefix
 					+ "Turning spammer users to WTF faces since "
 					+ ChatColor.GREEN + sdf.format(install));
 			break;
 		case 16:
-			sender.sendMessage("\247f[\247bAntiBot\247f] "
+			sender.sendMessage(botlistener.prefix
 					+ "Chinese secret happened on " + ChatColor.GREEN
 					+ sdf.format(install));
 			break;
 		case 17:
-			sender.sendMessage("\247f[\247bAntiBot\247f] "
+			sender.sendMessage(botlistener.prefix
 					+ "Been in Slim Shady's world since " + ChatColor.GREEN
 					+ sdf.format(install));
 			break;
 		case 18:
-			sender.sendMessage("\247f[\247bAntiBot\247f] "
+			sender.sendMessage(botlistener.prefix
 					+ "Making other communities jelly since " + ChatColor.GREEN
 					+ sdf.format(install));
 			break;
 		case 19:
-			sender.sendMessage("\247f[\247bAntiBot\247f] "
+			sender.sendMessage(botlistener.prefix
 					+ "Didn't have to buy anything since " + ChatColor.GREEN
 					+ sdf.format(install));
 			break;
 		case 20:
-			sender.sendMessage("\247f[\247bAntiBot\247f] "
+			sender.sendMessage(botlistener.prefix
 					+ "Making Reanimation shit his pants since "
 					+ ChatColor.GREEN + sdf.format(install));
 			break;
 		default:
-			sender.sendMessage("\247f[\247bAntiBot\247f] "
+			sender.sendMessage(botlistener.prefix
 					+ "System Installed on " + ChatColor.GREEN
 					+ sdf.format(install));
 			break;
@@ -224,7 +224,7 @@ public class AntiBot extends JavaPlugin {
 	}
 
 	public void noPermission(CommandSender sender) {
-		sender.sendMessage("\247f[\247bAntiBot\247f] "
+		sender.sendMessage(botlistener.prefix
 				+ "\247cSorry, you don't have privileges.");
 	}
 
@@ -294,56 +294,56 @@ public class AntiBot extends JavaPlugin {
 		}
 
 		if (args[0].compareToIgnoreCase("help") == 0) {
-			sender.sendMessage("\247f[\247bAntiBot\247f] " + "AntiBot Help:");
-			sender.sendMessage("\247f[\247bAntiBot\247f] " + "");
-			sender.sendMessage("\247f[\247bAntiBot\247f] "
+			sender.sendMessage(botlistener.prefix + "AntiBot Help:");
+			sender.sendMessage(botlistener.prefix + "");
+			sender.sendMessage(botlistener.prefix
 					+ "/antibot help - Help Menu");
 			if (ownPermission("AntiBot.admin.reload", player, 1)) {
-				sender.sendMessage("\247f[\247bAntiBot\247f] "
+				sender.sendMessage(botlistener.prefix
 						+ "/antibot reload - Reload configuration");
 			}
 			if (ownPermission("AntiBot.admin.info", player, 3)) {
-				sender.sendMessage("\247f[\247bAntiBot\247f] "
+				sender.sendMessage(botlistener.prefix
 						+ "/antibot info - Check current status of AntiBot.");
 			}
 			if (ownPermission("AntiBot.admin.attack", player, 3)) {
-				sender.sendMessage("\247f[\247bAntiBot\247f] "
+				sender.sendMessage(botlistener.prefix
 						+ "/antibot run - Turn on invasion mode manually.");
 			}
 			if (ownPermission("AntiBot.admin.remkickplayer", player, 1)) {
-				sender.sendMessage("\247f[\247bAntiBot\247f] "
+				sender.sendMessage(botlistener.prefix
 						+ "/antibot remkick [player] - Removes a player from the autokick list.");
 			}
 			if (ownPermission("AntiBot.admin.flush", player, 2)) {
-				sender.sendMessage("\247f[\247bAntiBot\247f] "
+				sender.sendMessage(botlistener.prefix
 						+ "/antibot flush - Flush the connection throttling.");
 			}
 			if (ownPermission("AntiBot.admin.changeconf", player, 2)) {
-				sender.sendMessage("\247f[\247bAntiBot\247f] "
+				sender.sendMessage(botlistener.prefix
 						+ "/antibot int [val] - Change intervals.");
-				sender.sendMessage("\247f[\247bAntiBot\247f] "
+				sender.sendMessage(botlistener.prefix
 						+ "/antibot acc [val] - Change accounts.");
-				sender.sendMessage("\247f[\247bAntiBot\247f] "
+				sender.sendMessage(botlistener.prefix
 						+ "/antibot notify [true/false] - Change whether you get notified or not.");
 			}
 			if (ownPermission("AntiBot.admin.toggle", player, 3)) {
-				sender.sendMessage("\247f[\247bAntiBot\247f] "
+				sender.sendMessage(botlistener.prefix
 						+ "/antibot off - Turn off AntiBot.");
-				sender.sendMessage("\247f[\247bAntiBot\247f] "
+				sender.sendMessage(botlistener.prefix
 						+ "/antibot on - Turn on AntiBot.");
 			}
-			sender.sendMessage("\247f[\247bAntiBot\247f] "
+			sender.sendMessage(botlistener.prefix
 					+ "/antibot version - Check this version of AntiBot.");
 			return true;
 		}
 		if (args[0].compareToIgnoreCase("reload") == 0) {
 			if (ownPermission("AntiBot.admin.reload", player, 1)) {
 				if (loadSekritTools()) {
-					sender.sendMessage("\247f[\247bAntiBot\247f] "
+					sender.sendMessage(botlistener.prefix
 							+ ChatColor.GREEN
 							+ "Reloaded configuration successfully!");
 				} else {
-					sender.sendMessage("\247f[\247bAntiBot\247f] "
+					sender.sendMessage(botlistener.prefix
 							+ ChatColor.RED + "Configuration failed to reload.");
 				}
 			} else {
@@ -372,10 +372,10 @@ public class AntiBot extends JavaPlugin {
 			if (ownPermission("AntiBot.admin.remkickplayer", player, 1)) {
 				try {
 					botlistener.autokick.remove(args[1]);
-					sender.sendMessage("\247f[\247bAntiBot\247f] "
+					sender.sendMessage(botlistener.prefix
 							+ "\247aRemoved " + args[1] + " successfully!");
 				} catch (Exception e) {
-					sender.sendMessage("\247f[\247bAntiBot\247f] "
+					sender.sendMessage(botlistener.prefix
 							+ "\247cFailed to remove kicked player.");
 				}
 			}
@@ -386,10 +386,10 @@ public class AntiBot extends JavaPlugin {
 		if (args[0].compareToIgnoreCase("flush") == 0) {
 			if (ownPermission("AntiBot.admin.flush", player, 2)) {
 				if (botlistener.flush()) {
-					sender.sendMessage("\247f[\247bAntiBot\247f] "
+					sender.sendMessage(botlistener.prefix
 							+ ChatColor.GREEN + "System flushed successfully!");
 				} else {
-					sender.sendMessage("\247f[\247bAntiBot\247f] "
+					sender.sendMessage(botlistener.prefix
 							+ ChatColor.RED + "System failed to flush.");
 				}
 			} else {
@@ -401,14 +401,14 @@ public class AntiBot extends JavaPlugin {
 		if (args[0].compareToIgnoreCase("on") == 0) {
 			if (ownPermission("AntiBot.admin.toggle", player, 3)) {
 				if (botlistener.enabled == true) {
-					sender.sendMessage("\247f[\247bAntiBot\247f] "
+					sender.sendMessage(botlistener.prefix
 							+ "The system is already enabled!");
 				} else {
 					if (botlistener.toggle(true)) {
-						sender.sendMessage("\247f[\247bAntiBot\247f] "
+						sender.sendMessage(botlistener.prefix
 								+ ChatColor.GREEN + "System has been enabled!");
 					} else {
-						sender.sendMessage("\247f[\247bAntiBot\247f] "
+						sender.sendMessage(botlistener.prefix
 								+ ChatColor.RED
 								+ "Error while trying to enable AntiBot.");
 					}
@@ -423,14 +423,14 @@ public class AntiBot extends JavaPlugin {
 		if (args[0].compareToIgnoreCase("off") == 0) {
 			if (ownPermission("AntiBot.admin.toggle", player, 3)) {
 				if (botlistener.enabled == false) {
-					sender.sendMessage("\247f[\247bAntiBot\247f] "
+					sender.sendMessage(botlistener.prefix
 							+ "The system is already disabled!");
 				} else {
 					if (botlistener.toggle(false)) {
-						sender.sendMessage("\247f[\247bAntiBot\247f] "
+						sender.sendMessage(botlistener.prefix
 								+ ChatColor.RED + "System has been disabled!");
 					} else {
-						sender.sendMessage("\247f[\247bAntiBot\247f] "
+						sender.sendMessage(botlistener.prefix
 								+ ChatColor.RED
 								+ "Error while trying to disable AntiBot.");
 					}
@@ -444,7 +444,7 @@ public class AntiBot extends JavaPlugin {
 		if (args[0].compareToIgnoreCase("int") == 0) {
 			if (ownPermission("AntiBot.admin.changeconf", player, 2)) {
 				if (args.length < 2) {
-					sender.sendMessage("\247f[\247bAntiBot\247f] "
+					sender.sendMessage(botlistener.prefix
 							+ ChatColor.RED
 							+ "Please type an interval after /antibot int.");
 					return true;
@@ -452,12 +452,12 @@ public class AntiBot extends JavaPlugin {
 				try {
 					Integer toval = Integer.parseInt(args[1]);
 					if (toval < 1) {
-						sender.sendMessage("\247f[\247bAntiBot\247f] "
+						sender.sendMessage(botlistener.prefix
 								+ ChatColor.RED
 								+ "You cannot set this value less than 1.");
 					}
 					if (toval > 60) {
-						sender.sendMessage("\247f[\247bAntiBot\247f] "
+						sender.sendMessage(botlistener.prefix
 								+ ChatColor.RED
 								+ "You cannot set this value greater than 60.");
 					}
@@ -465,16 +465,16 @@ public class AntiBot extends JavaPlugin {
 
 					botlistener.interval = toval;
 					if (saveConfig("joins-sec", Integer.toString(toval))) {
-						sender.sendMessage("\247f[\247bAntiBot\247f] "
+						sender.sendMessage(botlistener.prefix
 								+ ChatColor.GREEN
 								+ "Changed intervals successfully!");
 					} else {
-						sender.sendMessage("\247f[\247bAntiBot\247f] "
+						sender.sendMessage(botlistener.prefix
 								+ ChatColor.RED
 								+ "Error while trying to save interval to config.");
 					}
 				} catch (Exception e) {
-					sender.sendMessage("\247f[\247bAntiBot\247f] "
+					sender.sendMessage(botlistener.prefix
 							+ ChatColor.RED
 							+ "Error while trying to change interval.");
 				}
@@ -486,7 +486,7 @@ public class AntiBot extends JavaPlugin {
 		if (args[0].compareToIgnoreCase("notify") == 0) {
 			if (ownPermission("AntiBot.admin.changeconf", player, 2)) {
 				if (args.length != 2) {
-					sender.sendMessage("\247f[\247bAntiBot\247f] "
+					sender.sendMessage(botlistener.prefix
 							+ ChatColor.RED
 							+ "Please type true/false after /antibot notify.");
 					return true;
@@ -494,25 +494,25 @@ public class AntiBot extends JavaPlugin {
 				try {
 					String a = args[1];
 					if (!a.equals("true") && !a.equals("false")) {
-						sender.sendMessage("\247f[\247bAntiBot\247f] "
+						sender.sendMessage(botlistener.prefix
 								+ ChatColor.RED
 								+ "The value must either be true or false.");
 						return true;
 					}
 					botlistener.notify = Boolean.parseBoolean(a);
 					if (saveConfig("orgy-notify", a)) {
-						sender.sendMessage("\247f[\247bAntiBot\247f] "
+						sender.sendMessage(botlistener.prefix
 								+ ChatColor.GREEN
 								+ "Changed notification status successfully!");
 					} else {
-						sender.sendMessage("\247f[\247bAntiBot\247f] "
+						sender.sendMessage(botlistener.prefix
 								+ ChatColor.RED
 								+ "Error while trying to save notification status to config.");
 					}
 
 				} catch (Exception e) {
 					e.printStackTrace();
-					sender.sendMessage("\247f[\247bAntiBot\247f] "
+					sender.sendMessage(botlistener.prefix
 							+ ChatColor.RED
 							+ "Error while trying to change notification status.");
 				}
@@ -525,7 +525,7 @@ public class AntiBot extends JavaPlugin {
 		if (args[0].compareToIgnoreCase("acc") == 0) {
 			if (ownPermission("AntiBot.admin.changeconf", player, 2)) {
 				if (args.length < 2) {
-					sender.sendMessage("\247f[\247bAntiBot\247f] "
+					sender.sendMessage(botlistener.prefix
 							+ ChatColor.RED
 							+ "Please type an # of accounts after /antibot acc.");
 					return true;
@@ -533,28 +533,28 @@ public class AntiBot extends JavaPlugin {
 				try {
 					Integer toval = Integer.parseInt(args[1]);
 					if (toval > 10) {
-						sender.sendMessage("\247f[\247bAntiBot\247f] "
+						sender.sendMessage(botlistener.prefix
 								+ ChatColor.RED
 								+ "You cannot set this value greater than 10.");
 					}
 					if (toval < 3) {
-						sender.sendMessage("\247f[\247bAntiBot\247f] "
+						sender.sendMessage(botlistener.prefix
 								+ ChatColor.RED
 								+ "You cannot set this value less than 3.");
 					}
 
 					botlistener.accounts = toval;
 					if (saveConfig("joins", Integer.toString(toval))) {
-						sender.sendMessage("\247f[\247bAntiBot\247f] "
+						sender.sendMessage(botlistener.prefix
 								+ ChatColor.GREEN
 								+ "Changed # of accounts successfully!");
 					} else {
-						sender.sendMessage("\247f[\247bAntiBot\247f] "
+						sender.sendMessage(botlistener.prefix
 								+ ChatColor.RED
 								+ "Error while trying to save # of accounts to config.");
 					}
 				} catch (Exception e) {
-					sender.sendMessage("\247f[\247bAntiBot\247f] "
+					sender.sendMessage(botlistener.prefix
 							+ ChatColor.RED
 							+ "Error while trying to change # of accounts.");
 				}
@@ -565,22 +565,22 @@ public class AntiBot extends JavaPlugin {
 		}
 		if (args[0].compareToIgnoreCase("info") == 0) {
 			if (ownPermission("AntiBot.admin.info", player, 3)) {
-				sender.sendMessage("\247f[\247bAntiBot\247f] "
+				sender.sendMessage(botlistener.prefix
 						+ "AntiBot System Info:");
-				sender.sendMessage("\247f[\247bAntiBot\247f] " + "");
+				sender.sendMessage(botlistener.prefix + "");
 				if (botlistener.interval > 100000) {
-					sender.sendMessage("\247f[\247bAntiBot\247f] "
+					sender.sendMessage(botlistener.prefix
 							+ "\247cSystem currently needs flushing.");
-					sender.sendMessage("\247f[\247bAntiBot\247f] "
+					sender.sendMessage(botlistener.prefix
 							+ "\247cTo remove this message, type /antibot flush");
-					sender.sendMessage("\247f[\247bAntiBot\247f] " + "");
+					sender.sendMessage(botlistener.prefix + "");
 				}
 				long math = botlistener.time - botlistener.lasttime;
 				debug("Secs between last login: " + math, sender);
 				debug("Current Intervals: " + botlistener.interval, sender);
 				debug("Logged in: " + botlistener.botcts, sender);
 				debug("# of Accounts: " + botlistener.accounts, sender);
-				sender.sendMessage("\247f[\247bAntiBot\247f] " + "");
+				sender.sendMessage(botlistener.prefix + "");
 				if (botlistener.reanibo) {
 					debug("Connection Throttling: " + ChatColor.GREEN
 							+ "Enabled", sender);
@@ -598,13 +598,13 @@ public class AntiBot extends JavaPlugin {
 			returnMotd(sender);
 			return true;
 		}
-		sender.sendMessage("\247f[\247bAntiBot\247f] "
+		sender.sendMessage(botlistener.prefix
 				+ "Unknown system command.");
 		return false;
 	}
 
 	public void debug(String msg, CommandSender sender) {
-		sender.sendMessage("\247f[\247bAntiBot\247f] " + msg);
+		sender.sendMessage(botlistener.prefix + msg);
 	}
 
 	public boolean loadSekritTools() {
