@@ -1,4 +1,4 @@
-package somebody.is.madbro.handler;
+package somebody.is.madbro.handlers;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

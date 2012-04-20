@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import somebody.is.madbro.handler.HandlerCore;
+import somebody.is.madbro.handlers.HandlerCore;
 import somebody.is.madbro.listeners.BotListener;
 import somebody.is.madbro.settings.Settings;
 import somebody.is.madbro.settings.SettingsCore;

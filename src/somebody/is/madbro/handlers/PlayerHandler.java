@@ -1,4 +1,4 @@
-package somebody.is.madbro.handler;
+package somebody.is.madbro.handlers;
 
 import somebody.is.madbro.AntiBotCore;
 import somebody.is.madbro.listeners.BotListener;

@@ -25,32 +25,32 @@ public class BotListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerKick(PlayerKickEvent event) {
-		
+		antibot.getHandler().getBotHandler().onPlayerKick(event);
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerPreLogin(PlayerPreLoginEvent event) {
-		
+		antibot.getHandler().getBotHandler().onPlayerPreLogin(event);
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerCommand(PlayerCommandPreprocessEvent event) {
-		
+		antibot.getHandler().getChatSpamHandler().handle(event.getPlayer(), (PlayerChatEvent) event);
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerChat(PlayerChatEvent event) {
-		
+		antibot.getHandler().getChatSpamHandler().handle(event.getPlayer(), (PlayerChatEvent) event);
 	}
 
 	// falsified antibot trigger bug fix, or brolos bug fix.
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent event) {
-		
+		antibot.getHandler().getBotHandler().onPlayerQuit(event);
 	}
 
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		
+		antibot.getHandler().getBotHandler().onPlayerJoin(event);
 	}
 }

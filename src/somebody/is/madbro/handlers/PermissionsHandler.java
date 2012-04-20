@@ -1,4 +1,4 @@
-package somebody.is.madbro.handler;
+package somebody.is.madbro.handlers;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -168,6 +168,32 @@ public class PermissionsHandler extends HandlerCore {
 
 		return false;
 
+	}
+	
+	public boolean useWhitelist(Player pl) {
+		if (Settings.useWhiteListPerms) {
+			return pl.isWhitelisted();
+		} else {
+			return false;
+		}
+	}
+
+	public boolean useOp(Player pl) {
+		if (Settings.useOpPerms) {
+			return pl.isOp();
+		} else {
+			return false;
+		}
+	}
+
+	public boolean hasPerms(Player pl) {
+		if (useOp(pl)
+				|| useWhitelist(pl)
+				|| ownPermission("AntiBot.join", pl, 1)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

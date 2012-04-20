@@ -1,6 +1,6 @@
 name: AntiBot
-main: somebody.is.mad.AntiBot
-version: 2.3
+main: somebody.is.madbro.AntiBotCore
+version: 2.5
 description: The ultimate spam protection for Minecraft.
 commands:
    antibot:

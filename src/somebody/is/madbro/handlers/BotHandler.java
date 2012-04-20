@@ -1,12 +1,10 @@
-package somebody.is.madbro.handler;
+package somebody.is.madbro.handlers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerChatEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerPreLoginEvent;
@@ -108,33 +106,6 @@ public class BotHandler extends HandlerCore {
 		 * ); } } }
 		 */
 
-	}
-
-	public boolean useWhitelist(Player pl) {
-		if (Settings.useWhiteListPerms) {
-			return pl.isWhitelisted();
-		} else {
-			return false;
-		}
-	}
-
-	public boolean useOp(Player pl) {
-		if (Settings.useOpPerms) {
-			return pl.isOp();
-		} else {
-			return false;
-		}
-	}
-
-	public boolean hasPerms(Player pl) {
-		if (useOp(pl)
-				|| useWhitelist(pl)
-				|| botclass.getHandler().getPermissions()
-						.ownPermission("AntiBot.join", pl, 1)) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 	public boolean flush() {
@@ -241,7 +212,7 @@ public class BotHandler extends HandlerCore {
 		}
 
 		// spammy chat kick.
-		if (Settings.silentChatKick) {
+		if (Settings.silentChatKick && !Settings.chatMute) {
 			if (event.getReason().contains("C: ")) {
 				event.setReason(event.getReason().replace("C: ", ""));
 				event.setLeaveMessage(null);
@@ -269,138 +240,10 @@ public class BotHandler extends HandlerCore {
 		}
 	}
 
-	
-	public void onPlayerCommand(PlayerCommandPreprocessEvent event) {
-		try {
-			if (!Settings.enabled) {
-				return;
-			}
-			String pN = event.getPlayer().getName();
-			if (autokick.contains(event.getPlayer().getName())) {
-				event.getPlayer().kickPlayer(Settings.kickMsg);
-				event.setCancelled(true);
-				return;
-			}
-
-			if (autoipkick.contains(event.getPlayer().getAddress().toString()
-					.split(":")[0])) {
-				event.getPlayer().kickPlayer(Settings.kickMsg);
-				event.setCancelled(true);
-				return;
-			}
-
-			if (spammyPlayers.contains(pN)) {
-				event.setCancelled(true);
-				return;
-			}
-
-			if (hasPerms(event.getPlayer()) || !Settings.enableAntiSpam) {
-				return;
-			}
-
-			if (!trackplayers.containsKey(pN)) {
-				trackplayers.put(pN, botclass.getHandler().getPlayer(pN, this));
-			} else {
-				try {
-					PlayerHandler pc = trackplayers.get(pN);
-					long math = System.currentTimeMillis() - pc.lastChatMsg;
-					if (pc.amoumt > Settings.spamam && math < Settings.spamtime) {
-						if (Settings.notify) {
-							botclass.getServer().broadcastMessage(
-									Settings.prefix
-											+ "\247chas detected chat spam!");
-						}
-						if (!Settings.chatMute) {
-							trackplayers.remove(pN);
-							event.getPlayer().kickPlayer(
-									"C: " + Settings.kickMsg);
-							event.setCancelled(true);
-						} else {
-							trackplayers.remove(pN);
-							spammyPlayers.add(pN);
-							event.setCancelled(true);
-						}
-					} else {
-						pc.trig();
-					}
-				} catch (Exception e) {
-
-				}
-			}
-
-		} catch (Exception e) {
-			// alright, it failed. Don't worry about it.
-		}
-	}
-
-	
-	public void onPlayerChat(PlayerChatEvent event) {
-		try {
-			if (!Settings.enabled) {
-				return;
-			}
-			String pN = event.getPlayer().getName();
-			if (autokick.contains(event.getPlayer().getName())) {
-				event.getPlayer().kickPlayer(Settings.kickMsg);
-				event.setCancelled(true);
-				return;
-			}
-
-			if (autoipkick.contains(event.getPlayer().getAddress().toString()
-					.split(":")[0])) {
-				event.getPlayer().kickPlayer(Settings.kickMsg);
-				event.setCancelled(true);
-				return;
-			}
-
-			if (spammyPlayers.contains(pN)) {
-				event.setCancelled(true);
-				return;
-			}
-
-			if (hasPerms(event.getPlayer()) || !Settings.enableAntiSpam) {
-				return;
-			}
-
-			if (!trackplayers.containsKey(pN)) {
-				trackplayers.put(pN, botclass.getHandler().getPlayer(pN, this));
-			} else {
-				try {
-					PlayerHandler pc = trackplayers.get(pN);
-					long math = System.currentTimeMillis() - pc.lastChatMsg;
-					if (pc.amoumt > Settings.spamam && math < Settings.spamtime) {
-						if (Settings.notify) {
-							botclass.getServer().broadcastMessage(
-									Settings.prefix
-											+ "\247chas detected chat spam!");
-						}
-						if (!Settings.chatMute) {
-							trackplayers.remove(pN);
-							event.getPlayer().kickPlayer(
-									"C: " + Settings.kickMsg);
-							event.setCancelled(true);
-						} else {
-							trackplayers.remove(pN);
-							spammyPlayers.add(pN);
-							event.setCancelled(true);
-						}
-					} else {
-						pc.trig();
-					}
-				} catch (Exception e) {
-
-				}
-			}
-
-		} catch (Exception e) {
-			// alright, it failed. Don't worry about it.
-		}
-	}
-
 	// falsified antibot trigger bug fix, or brolos bug fix.
 	
 	public void onPlayerQuit(PlayerQuitEvent event) {
-		if (hasPerms(event.getPlayer())) {
+		if (getPermissions().hasPerms(event.getPlayer())) {
 			return;
 		} else {
 			botcts -= 1;
@@ -417,7 +260,7 @@ public class BotHandler extends HandlerCore {
 					.debug("User is trying to connect..");
 			time = System.currentTimeMillis();
 
-			if (hasPerms(event.getPlayer())) {
+			if (getPermissions().hasPerms(event.getPlayer())) {
 				botclass.getUtility().getDebugUtility().debug("Whitelisted.");
 				if (reanibo
 						&& botclass
