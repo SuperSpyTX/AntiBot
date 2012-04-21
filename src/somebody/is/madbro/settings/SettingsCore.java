@@ -50,6 +50,8 @@ public class SettingsCore {
 						Integer.toString(Settings.accounts));
 				propConfig.setProperty("enable-antispam",
 						Boolean.toString(Settings.enableAntiSpam));
+				propConfig.setProperty("enable-multiacc-detection",
+						Boolean.toString(Settings.enableMultiAccs));
 				propConfig.setProperty("chat-mute",
 						Boolean.toString(Settings.chatMute));
 				propConfig.setProperty("whitelist-when-triggered",
@@ -58,8 +60,6 @@ public class SettingsCore {
 						Integer.toString(Settings.spamtime));
 				propConfig.setProperty("spam-amount",
 						Integer.toString(Settings.spamam));
-				propConfig.setProperty("silent-chat-kick",
-						Boolean.toString(Settings.silentChatKick));
 				propConfig.setProperty("connection-time",
 						Integer.toString(Settings.connectFor));
 				propConfig.setProperty("ban-users",
@@ -182,6 +182,16 @@ public class SettingsCore {
 			}
 			if (load != null && !load3.equals(Settings.enableAntiSpam)) {
 				Settings.enableAntiSpam = load3;
+			}
+			
+			load = propConfig.getProperty("enable-multiacc-detection");
+			if (load != null) {
+				load3 = Boolean.parseBoolean(load);
+			} else {
+				load3 = Settings.enableMultiAccs;
+			}
+			if (load != null && !load3.equals(Settings.enableMultiAccs)) {
+				Settings.enableMultiAccs = load3;
 			}
 
 			load = propConfig.getProperty("chat-mute");

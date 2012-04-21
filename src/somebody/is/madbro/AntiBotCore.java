@@ -1,13 +1,15 @@
 package somebody.is.madbro;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
-import java.util.HashMap;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import somebody.is.madbro.Metrics.Graph;
+import somebody.is.madbro.datatrack.DataTrackCore;
 import somebody.is.madbro.handlers.HandlerCore;
 import somebody.is.madbro.listeners.BotListener;
 import somebody.is.madbro.settings.Settings;
@@ -25,6 +27,9 @@ public class AntiBotCore extends JavaPlugin {
 	// handlers
 	private HandlerCore handlercore = null;
 
+	// data trackers
+	private DataTrackCore datatrackcore = null;
+
 	// settings
 	private SettingsCore settings = null;
 	private File dataFolder;
@@ -32,8 +37,7 @@ public class AntiBotCore extends JavaPlugin {
 	private Date install;
 	private int defaultinterval;
 	private int defaultaccounts;
-	private String version = "v2.5";
-	public HashMap<String, String> iplist = new HashMap<String, String>();
+	private String version = null;
 
 	public void onEnable() {
 
@@ -50,13 +54,43 @@ public class AntiBotCore extends JavaPlugin {
 
 		botlistener = new BotListener(this);
 
-		handlercore = new HandlerCore(this);
+		datatrackcore = new DataTrackCore(this);
+
+		handlercore = new HandlerCore(this, datatrackcore);
 
 		utilitycore = new UtilityCore(this);
+
+		try {
+			Metrics metrics = new Metrics(this);
+
+			Graph graph = metrics.createGraph("Bot Blocking Data");
+
+			graph.addPlotter(new Metrics.Plotter("Bots Blocked") {
+
+				@Override
+				public int getValue() {
+					return getDataTrack().getBotTracker().spambotsblocked;
+				}
+
+			});
+
+			graph.addPlotter(new Metrics.Plotter("Chat Spam Blocked") {
+
+				@Override
+				public int getValue() {
+					return getHandler().getChatSpamHandler().chatspamblocked;
+				}
+
+			});
+			metrics.start();
+		} catch (IOException e) {
+			System.out.println("Metrics haz failed.");
+		}
 
 		// register listeners
 		getServer().getPluginManager().registerEvents(botlistener, this);
 		PluginDescriptionFile pdfFile = getDescription();
+		version = pdfFile.getVersion();
 		System.out.println(pdfFile.getName() + " version " + getVersion()
 				+ " is enabled!");
 
@@ -64,7 +98,8 @@ public class AntiBotCore extends JavaPlugin {
 
 	public boolean onCommand(CommandSender sender, Command cmd,
 			String commandLabel, String[] args) {
-		return getHandler().getCommands().handle(sender, cmd, commandLabel, args);
+		return getHandler().getCommands().handle(sender, cmd, commandLabel,
+				args);
 	}
 
 	public void debug(String msg, CommandSender sender) {
@@ -87,6 +122,10 @@ public class AntiBotCore extends JavaPlugin {
 
 	public HandlerCore getHandler() {
 		return handlercore;
+	}
+
+	public DataTrackCore getDataTrack() {
+		return datatrackcore;
 	}
 
 	public SettingsCore getSettings() {

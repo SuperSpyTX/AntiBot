@@ -10,10 +10,12 @@ import org.bukkit.entity.Player;
 import somebody.is.madbro.AntiBotCore;
 import somebody.is.madbro.settings.Settings;
 
-public class PermissionsHandler extends HandlerCore {
+public class PermissionsHandler {
 
+	public AntiBotCore antibot = null;
+	
 	public PermissionsHandler(AntiBotCore instance) {
-		super(instance);
+		antibot = instance;
 		// TODO Auto-generated constructor stub
 	}
 
