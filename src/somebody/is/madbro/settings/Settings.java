@@ -2,8 +2,8 @@ package somebody.is.madbro.settings;
 
 public class Settings {
 	
-	public static int interval = 15000;
-	public static int accounts = 4;
+	public static int interval = 5000;
+	public static int accounts = 2;
 	public static int spamam = 4;
 	public static int spamtime = 1500;
 	public static int connectFor = 30000;

@@ -61,6 +61,7 @@ public class ChatSpamHandler {
 							.get(pN);
 					long math = System.currentTimeMillis() - pc.lastChatMsg;
 					if (pc.amoumt > Settings.spamam && math < Settings.spamtime) {
+						chatspamblocked += 1;
 						if (Settings.notify) {
 							antibot.getServer().broadcastMessage(
 									Settings.prefix

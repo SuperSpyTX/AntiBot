@@ -275,7 +275,7 @@ public class SettingsCore {
 			} else {
 				load2 = Settings.accounts;
 			}
-			if (load != null && load2 > 2
+			if (load != null && load2 > 0
 					&& !load2.equals(Settings.accounts)) {
 				Settings.accounts = load2;
 				antibot.setDefaultaccounts(Settings.accounts);
