@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Date;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -12,6 +13,8 @@ import somebody.is.madbro.Metrics.Graph;
 import somebody.is.madbro.datatrack.DataTrackCore;
 import somebody.is.madbro.handlers.HandlerCore;
 import somebody.is.madbro.listeners.BotListener;
+import somebody.is.madbro.listeners.ChatListener;
+import somebody.is.madbro.listeners.CountryListener;
 import somebody.is.madbro.settings.Settings;
 import somebody.is.madbro.settings.SettingsCore;
 import somebody.is.madbro.toolbox.UtilityCore;
@@ -20,6 +23,8 @@ public class AntiBotCore extends JavaPlugin {
 
 	// listeners
 	private BotListener botlistener = null;
+	private ChatListener chatlistener = null;
+	private CountryListener countrylistener = null;
 
 	// utilities
 	private UtilityCore utilitycore = null;
@@ -48,18 +53,19 @@ public class AntiBotCore extends JavaPlugin {
 			dataFolder.mkdir();
 		}
 
-		settings = new SettingsCore(this);
-		settings.saveSettings(dataFolder);
-		settings.loadSettings(dataFolder);
-
+		// listeners
 		botlistener = new BotListener(this);
+		chatlistener = new ChatListener(this);
+		countrylistener = new CountryListener(this);
 
+		// cores
+		settings = new SettingsCore(this);
 		datatrackcore = new DataTrackCore(this);
-
 		handlercore = new HandlerCore(this, datatrackcore);
-
 		utilitycore = new UtilityCore(this);
 
+		settings.saveSettings(dataFolder);
+		settings.loadSettings(dataFolder);
 		try {
 			Metrics metrics = new Metrics(this);
 
@@ -87,8 +93,17 @@ public class AntiBotCore extends JavaPlugin {
 			System.out.println("Metrics haz failed.");
 		}
 
+		// load geoip if our memogram tells us to.
+		if (Settings.geoIP) {
+			utilitycore.getGeoIP().initialize();
+		}
+
 		// register listeners
 		getServer().getPluginManager().registerEvents(botlistener, this);
+		getServer().getPluginManager().registerEvents(chatlistener, this);
+		getServer().getPluginManager().registerEvents(countrylistener, this);
+
+		// all finished.
 		PluginDescriptionFile pdfFile = getDescription();
 		version = pdfFile.getVersion();
 		System.out.println(pdfFile.getName() + " version " + getVersion()
@@ -98,8 +113,13 @@ public class AntiBotCore extends JavaPlugin {
 
 	public boolean onCommand(CommandSender sender, Command cmd,
 			String commandLabel, String[] args) {
-		return getHandler().getCommands().handle(sender, cmd, commandLabel,
+		if(sender instanceof Player) {
+			return getHandler().getCommands().handle(sender, cmd, commandLabel,
 				args);
+		} else {
+			return getHandler().getCommands().handle(sender, cmd, commandLabel,
+					args);
+		}
 	}
 
 	public void debug(String msg, CommandSender sender) {
@@ -130,10 +150,6 @@ public class AntiBotCore extends JavaPlugin {
 
 	public SettingsCore getSettings() {
 		return settings;
-	}
-
-	public File getFolder() {
-		return dataFolder;
 	}
 
 	public long getInstalldate() {

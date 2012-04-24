@@ -27,7 +27,7 @@ public class BotUtility {
 	public boolean flush() {
 		try {
 			if (antibot.getDataTrack().getBotTracker().reanibo) {
-				antibot.getUtility().getDebugUtility()
+				antibot.getUtility().getDebug()
 						.debug("Disabled Reanibios.");
 				antibot.getDataTrack().getBotTracker().reanibo = false;
 				Settings.interval = antibot.getDefaultinterval();
@@ -56,7 +56,7 @@ public class BotUtility {
 			antibot.getDataTrack().getBotTracker().connected.clear();
 			antibot.getDataTrack().getBotTracker().autokick.clear();
 			antibot.getDataTrack().getBotTracker().autoipkick.clear();
-			antibot.getDataTrack().getBotTracker().spammyPlayers.clear();
+			antibot.getDataTrack().getChatTracker().spammyPlayers.clear();
 			antibot.getDataTrack().getBotTracker().ipList.clear();
 			Settings.accounts = antibot.getDefaultaccounts();
 			antibot.getDataTrack().getBotTracker().lasttime = 0;
@@ -95,17 +95,17 @@ public class BotUtility {
 	public void kickConnected() {
 		// int kicked = 0;
 		antibot.getUtility()
-				.getDebugUtility()
+				.getDebug()
 				.debug("Kicking players with method #1 Size: "
 						+ antibot.getDataTrack().getBotTracker().connected
 								.size());
 		for (String pl : antibot.getDataTrack().getBotTracker().connected) {
 			try {
-				antibot.getUtility().getDebugUtility()
+				antibot.getUtility().getDebug()
 						.debug("Checking if kick possible for player..." + pl);
 				Player p2 = antibot.getServer().getPlayerExact(pl);
-				if (!antibot.getDataTrack().getBotTracker().checkConnection(pl)) {
-					antibot.getUtility().getDebugUtility()
+				if (!antibot.getDataTrack().getChatTracker().checkConnection(pl)) {
+					antibot.getUtility().getDebug()
 							.debug("Yes, Kicking player..." + pl);
 					antibot.getServer().getPlayerExact(pl)
 							.kickPlayer(Settings.kickMsg);
@@ -116,10 +116,10 @@ public class BotUtility {
 						antibot.getDataTrack().getBotTracker().autokick.add(pl);
 					}
 					// kicked += 1;
-					antibot.getUtility().getDebugUtility()
+					antibot.getUtility().getDebug()
 							.debug("Kicked player with method #1");
 					antibot.getUtility()
-							.getDebugUtility()
+							.getDebug()
 							.debug("We now have autokick: "
 									+ antibot.getDataTrack().getBotTracker().autokick
 											.size()
@@ -127,14 +127,14 @@ public class BotUtility {
 									+ antibot.getDataTrack().getBotTracker().autoipkick
 											.size());
 				} else {
-					antibot.getUtility().getDebugUtility()
+					antibot.getUtility().getDebug()
 							.debug("Not possible for player ...." + pl);
 					antibot.getDataTrack().getBotTracker().connected.remove(pl);
 				}
 			} catch (Exception e) {
 				// if it fails. go down here.
 				e.printStackTrace();
-				antibot.getUtility().getDebugUtility()
+				antibot.getUtility().getDebug()
 						.debug("Failed to kick: " + pl);
 			}
 		}
@@ -142,13 +142,13 @@ public class BotUtility {
 
 		// kick players if the above method doesn't work :|
 		/*
-		 * antibot.getUtility().getDebugUtility().debug("Checking if " + kicked
+		 * antibot.getUtility().getDebug().debug("Checking if " + kicked
 		 * + " is less than 1"); if (kicked < 1) {
-		 * antibot.getUtility().getDebugUtility()
+		 * antibot.getUtility().getDebug()
 		 * .debug("Kicking player with method #2"); Player[] players =
 		 * antibot.getServer().getOnlinePlayers(); for (Player pl : players) {
 		 * if (!hasPerms(pl)) { pl.kickPlayer(Settings.connectMsg);
-		 * autokick.add(pl); antibot.getUtility().getDebugUtility().debug(
+		 * autokick.add(pl); antibot.getUtility().getDebug().debug(
 		 * "Kicked player with method #2" ); } } }
 		 */
 

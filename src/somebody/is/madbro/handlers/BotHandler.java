@@ -44,6 +44,11 @@ public class BotHandler {
 		if (botclass.getHandler().getPermissions().hasPerms(event.getPlayer())) {
 			return;
 		} else {
+			// TODO: organize tracker removals/unregisterers.
+			botclass.getDataTrack().getBotTracker()
+					.removeConnected(event.getPlayer().getName());
+			botclass.getDataTrack().getChatTracker().trackplayers.remove(event
+					.getPlayer().getName());
 			if (data.getBotTracker().botcts < 1) {
 				return;
 			} else {
@@ -58,14 +63,14 @@ public class BotHandler {
 		}
 		try {
 			String pl = event.getPlayer().getName();
-			if (data.getBotTracker().trackplayers.containsKey(pl)) {
-				if (!(data.getBotTracker().trackplayers.get(pl)).hasMoved) {
-					(data.getBotTracker().trackplayers.get(pl)).moved();
+			if (data.getChatTracker().trackplayers.containsKey(pl)) {
+				if (!(data.getChatTracker().trackplayers.get(pl)).hasMoved) {
+					(data.getChatTracker().trackplayers.get(pl)).moved();
 				}
 			}
 		} catch (Exception e) {
 			botclass.getUtility()
-					.getDebugUtility()
+					.getDebug()
 					.debug("Player " + event.getPlayer().getName()
 							+ " did not get updated successfully for move.");
 		}
@@ -76,13 +81,13 @@ public class BotHandler {
 			return;
 		}
 		try {
-			botclass.getUtility().getDebugUtility()
+			botclass.getUtility().getDebug()
 					.debug("User is trying to connect..");
 			data.getBotTracker().time = System.currentTimeMillis();
 
 			if (botclass.getHandler().getPermissions()
 					.hasPerms(event.getPlayer())) {
-				botclass.getUtility().getDebugUtility().debug("Whitelisted.");
+				botclass.getUtility().getDebug().debug("Whitelisted.");
 				if (data.getBotTracker().reanibo
 						&& botclass
 								.getHandler()
@@ -122,16 +127,16 @@ public class BotHandler {
 								event.getPlayer(),
 								event.getPlayer().getAddress().toString()
 										.split(":")[0]);
-				botclass.getUtility().getDebugUtility()
+				botclass.getUtility().getDebug()
 						.debug("Added user to tracking");
 				data.getBotTracker().addConnected(event.getPlayer().getName());
-				botclass.getUtility().getDebugUtility()
+				botclass.getUtility().getDebug()
 						.debug("Added user to connected");
-				data.getBotTracker().trackplayers.put(
+				data.getChatTracker().trackplayers.put(
 						event.getPlayer().getName(),
 						botclass.getDataTrack().getPlayer(
 								event.getPlayer().getName(), this));
-				botclass.getUtility().getDebugUtility()
+				botclass.getUtility().getDebug()
 						.debug("Added user to trackplayer");
 			}
 
@@ -143,7 +148,7 @@ public class BotHandler {
 
 			// bug workaround
 			if (Settings.interval < 1) {
-				botclass.getUtility().getDebugUtility()
+				botclass.getUtility().getDebug()
 						.debug("Bug detected! Fixing bug.");
 				// lets try setting this back to default Settings.intervals, if
 				// not,
@@ -160,25 +165,23 @@ public class BotHandler {
 			long math = data.getBotTracker().time
 					- data.getBotTracker().lasttime;
 			int cb = Settings.interval
-					+ botclass.getUtility().getBotUtility()
-							.getRandomIntInvasion();
-			botclass.getUtility().getDebugUtility().debug("Checking....0");
-			botclass.getUtility().getDebugUtility().debug("Math: " + math);
-			botclass.getUtility().getDebugUtility()
+					+ botclass.getUtility().getBot().getRandomIntInvasion();
+			botclass.getUtility().getDebug().debug("Checking....0");
+			botclass.getUtility().getDebug().debug("Math: " + math);
+			botclass.getUtility().getDebug()
 					.debug("Time: " + data.getBotTracker().time);
-			botclass.getUtility().getDebugUtility()
+			botclass.getUtility().getDebug()
 					.debug("Current Interval: " + Settings.interval);
-			botclass.getUtility().getDebugUtility()
-					.debug("Random Interval: " + cb);
-			botclass.getUtility().getDebugUtility()
+			botclass.getUtility().getDebug().debug("Random Interval: " + cb);
+			botclass.getUtility().getDebug()
 					.debug("Lasttime: " + data.getBotTracker().lasttime);
 			botclass.getUtility()
-					.getDebugUtility()
+					.getDebug()
 					.debug("BotCts: " + data.getBotTracker().botcts + " Accs: "
 							+ Settings.accounts);
 
 			if (data.getBotTracker().botcts > Settings.accounts && math < cb) {
-				botclass.getUtility().getDebugUtility().debug("Hit #1!");
+				botclass.getUtility().getDebug().debug("Hit #1!");
 				// Incoming invasion.
 				if (!data.getBotTracker().reanibo) {
 					if (Settings.whiteList) {
@@ -197,10 +200,9 @@ public class BotHandler {
 													+ "\247chas detected minecraft spam!");
 						}
 					}
-					botclass.getUtility().getDebugUtility()
-							.debug("Tripswitched!");
-					botclass.getUtility().getBotUtility().kickConnected();
-					botclass.getUtility().getBotUtility().flush();
+					botclass.getUtility().getDebug().debug("Tripswitched!");
+					botclass.getUtility().getBot().kickConnected();
+					botclass.getUtility().getBot().flush();
 				}
 				data.getBotTracker().botattempt = System.currentTimeMillis();
 				data.getBotTracker().botcts += 1;
@@ -208,17 +210,17 @@ public class BotHandler {
 				event.setJoinMessage("");
 			} else if (data.getBotTracker().botattempt < Settings.interval
 					&& data.getBotTracker().reanibo) {
-				botclass.getUtility().getDebugUtility().debug("Hit #2");
+				botclass.getUtility().getDebug().debug("Hit #2");
 				// Attempting to connect.
 				data.getBotTracker().botattempt = System.currentTimeMillis();
 				data.getBotTracker().botcts += 1;
 				event.getPlayer().kickPlayer(Settings.connectMsg);
 				event.setJoinMessage("");
 			} else {
-				botclass.getUtility().getDebugUtility().debug("Hit #3");
+				botclass.getUtility().getDebug().debug("Hit #3");
 
 				if (data.getBotTracker().reanibo) {
-					botclass.getUtility().getBotUtility().flush();
+					botclass.getUtility().getBot().flush();
 				}
 				// No invasion.
 				data.getBotTracker().lasttime = System.currentTimeMillis();

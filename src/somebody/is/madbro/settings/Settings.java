@@ -17,10 +17,11 @@ public class Settings {
 	public static boolean chatMute = false;
 	public static boolean enableMultiAccs = true;
 	public static boolean banUsers = false;
+	public static boolean geoIP = true;
 	public static String kickMsg = "The Ban Hammer has spoken!";
+	public static String countryBanMsg = "Your country is banned from this server!";
 	public static String connectMsg = "You are not on the whitelist!";
 	public static String connectInvasion = "The server is currently under attack.";
-	public static String lastMessage = "";
 	public static String prefix = "\247f[\247bAntiBot\247f] ";
 
 }

@@ -23,7 +23,7 @@ public class CommandHandler {
 		try {
 			player = (Player) sender;
 		} catch (Exception e) {
-			return true;
+			// console!
 		}
 
 		if (args.length < 1) {
@@ -113,9 +113,8 @@ public class CommandHandler {
 										"\247f[\247bAntiBot\247f] \247cOh no! A minecraft bot invasion has began. Connection Throttling: \247aEnabled");
 					}
 					antibot.getDataTrack().getBotTracker().reanibo = true;
-					antibot.getUtility().getDebugUtility()
-							.debug("Tripswitched!");
-					antibot.getUtility().getBotUtility().kickConnected();
+					antibot.getUtility().getDebug().debug("Tripswitched!");
+					antibot.getUtility().getBot().kickConnected();
 				}
 				antibot.getDataTrack().getBotTracker().botattempt = System
 						.currentTimeMillis();
@@ -143,7 +142,7 @@ public class CommandHandler {
 		if (args[0].compareToIgnoreCase("flush") == 0) {
 			if (antibot.getHandler().getPermissions()
 					.ownPermission("AntiBot.admin.flush", player, 2)) {
-				if (antibot.getUtility().getBotUtility().flush2()) {
+				if (antibot.getUtility().getBot().flush2()) {
 					sender.sendMessage(Settings.prefix + ChatColor.GREEN
 							+ "System flushed successfully!");
 				} else {
@@ -163,7 +162,7 @@ public class CommandHandler {
 					sender.sendMessage(Settings.prefix
 							+ "The system is already enabled!");
 				} else {
-					if (antibot.getUtility().getBotUtility().toggle(true)) {
+					if (antibot.getUtility().getBot().toggle(true)) {
 						sender.sendMessage(Settings.prefix + ChatColor.GREEN
 								+ "System has been enabled!");
 					} else {
@@ -185,7 +184,7 @@ public class CommandHandler {
 					sender.sendMessage(Settings.prefix
 							+ "The system is already disabled!");
 				} else {
-					if (antibot.getUtility().getBotUtility().toggle(false)) {
+					if (antibot.getUtility().getBot().toggle(false)) {
 						sender.sendMessage(Settings.prefix + ChatColor.RED
 								+ "System has been disabled!");
 					} else {

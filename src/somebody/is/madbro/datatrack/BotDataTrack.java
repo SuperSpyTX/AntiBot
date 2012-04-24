@@ -20,10 +20,8 @@ public class BotDataTrack {
 	
 	public ArrayList<String> autokick = new ArrayList<String>();
 	public ArrayList<String> autoipkick = new ArrayList<String>();
-	public ArrayList<String> spammyPlayers = new ArrayList<String>();
 	public HashMap<String, String> ipList = new HashMap<String, String>();
 	public List< String > connected = new CopyOnWriteArrayList< String >();
-	public HashMap<String, PlayerData> trackplayers = new HashMap<String, PlayerData>();
 	public long time;
 	public long lasttime;
 	public long botattempt;
@@ -76,19 +74,21 @@ public class BotDataTrack {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			botclass.getUtility().getDebugUtility()
+			botclass.getUtility().getDebug()
 					.debug("Adding new player failed: " + e.getMessage());
 		}
 	}
-
-	public boolean checkConnection(String usr) {
-		if (trackplayers.containsKey(usr)) {
-			PlayerData mp = (PlayerData) trackplayers.get(usr);
-			if (mp.connectedForLonger()) {
-				return true;
+	
+	public void removeConnected(String playerName) {
+		try {
+			if (connected.contains(playerName)) {
+				connected.remove(playerName);
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			botclass.getUtility().getDebug()
+					.debug("Removing player failed: " + e.getMessage());
 		}
-		return false;
 	}
 
 }

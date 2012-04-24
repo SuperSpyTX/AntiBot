@@ -26,7 +26,7 @@ public class ChatSpamHandler {
 
 			String pN = player.getName();
 
-			if (antibot.getHandler().getPermissions().hasPerms(player)
+			if (antibot.getHandler().getPermissions().hasPermission("AntiBot.chatspam", player)
 					|| !Settings.enableAntiSpam) {
 				return;
 			}
@@ -45,19 +45,19 @@ public class ChatSpamHandler {
 				return;
 			}
 
-			if (antibot.getDataTrack().getBotTracker().spammyPlayers
+			if (antibot.getDataTrack().getChatTracker().spammyPlayers
 					.contains(pN)) {
 				event.setCancelled(true);
 				return;
 			}
 
-			if (!antibot.getDataTrack().getBotTracker().trackplayers
+			if (!antibot.getDataTrack().getChatTracker().trackplayers
 					.containsKey(pN)) {
-				antibot.getDataTrack().getBotTracker().trackplayers.put(pN,
+				antibot.getDataTrack().getChatTracker().trackplayers.put(pN,
 						antibot.getDataTrack().getPlayer(pN, this));
 			} else {
 				try {
-					PlayerData pc = antibot.getDataTrack().getBotTracker().trackplayers
+					PlayerData pc = antibot.getDataTrack().getChatTracker().trackplayers
 							.get(pN);
 					long math = System.currentTimeMillis() - pc.lastChatMsg;
 					if (pc.amoumt > Settings.spamam && math < Settings.spamtime) {
@@ -68,14 +68,14 @@ public class ChatSpamHandler {
 											+ "\247chas detected chat spam!");
 						}
 						if (!Settings.chatMute) {
-							antibot.getDataTrack().getBotTracker().trackplayers
+							antibot.getDataTrack().getChatTracker().trackplayers
 									.remove(pN);
 							player.kickPlayer(Settings.kickMsg);
 							event.setCancelled(true);
 						} else {
-							antibot.getDataTrack().getBotTracker().trackplayers
+							antibot.getDataTrack().getChatTracker().trackplayers
 									.remove(pN);
-							antibot.getDataTrack().getBotTracker().spammyPlayers
+							antibot.getDataTrack().getChatTracker().spammyPlayers
 									.add(pN);
 							event.setCancelled(true);
 						}

@@ -1,6 +1,6 @@
 name: AntiBot
 main: somebody.is.madbro.AntiBotCore
-version: 2.5
+version: 2.6
 description: The ultimate spam protection for Minecraft.
 commands:
    antibot:
@@ -13,7 +13,13 @@ permissions:
     description: Notifies the player if there is a current invasion.
   AntiBot.join:
     default: false
-    description: IMPORTANT! Allows players to bypass the spam system and join during invasions.  Works well with AntiBot.notify.
+    description: Allow users to bypass anti bot spam.
+  AntiBot.chatspam:
+    default: false
+    description: Allows users to bypass anti chat spam.
+  AntiBot.countryban:
+    default: false
+    description: Users with this permission can join the server if their home country is banned from the server.
   AntiBot.admin:
     default: false
     description: Full permissions! Don't give this to your admins.  Use the alternatives below.

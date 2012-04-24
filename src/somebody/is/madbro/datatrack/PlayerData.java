@@ -39,7 +39,7 @@ public class PlayerData {
 	public void moved() {
 		hasMoved = true;
 		antibot.getUtility()
-				.getDebugUtility()
+				.getDebug()
 				.debug("Player " + username
 						+ " has moved! Exempt from false antibot kicks!");
 	}

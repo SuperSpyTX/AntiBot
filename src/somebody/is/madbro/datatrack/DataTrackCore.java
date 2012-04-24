@@ -8,11 +8,16 @@ public class DataTrackCore {
 	
 	public AntiBotCore antibot = null;
 	
+	// trackers
 	public BotDataTrack botdata = null;
+	public ChatDataTrack chatdata = null;
+	public CountryDataTrack countrydata = null;
 	
 	public DataTrackCore(AntiBotCore instance) {
 		antibot = instance;
 		botdata = new BotDataTrack(instance);
+		chatdata = new ChatDataTrack(instance);
+		countrydata = new CountryDataTrack(instance);
 	}
 	
 	public PlayerData getPlayer(String username, ChatSpamHandler thi) {
@@ -25,6 +30,14 @@ public class DataTrackCore {
 	
 	public BotDataTrack getBotTracker() {
 		return botdata;
+	}
+	
+	public ChatDataTrack getChatTracker() {
+		return chatdata;
+	}
+	
+	public CountryDataTrack getCountryTracker() {
+		return countrydata;
 	}
 
 }

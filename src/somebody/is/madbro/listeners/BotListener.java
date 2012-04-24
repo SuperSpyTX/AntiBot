@@ -5,8 +5,6 @@ package somebody.is.madbro.listeners;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChatEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -30,22 +28,6 @@ public class BotListener implements Listener {
 			return;
 		}
 		antibot.getHandler().getBotHandler().onPlayerKick(event);
-	}
-
-	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onPlayerCommand(PlayerCommandPreprocessEvent event) {
-		if (!Settings.enabled) {
-			return;
-		}
-		antibot.getHandler().getChatSpamHandler().handle(event.getPlayer(), (PlayerChatEvent) event);
-	}
-
-	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onPlayerChat(PlayerChatEvent event) {
-		if (!Settings.enabled) {
-			return;
-		}
-		antibot.getHandler().getChatSpamHandler().handle(event.getPlayer(), (PlayerChatEvent) event);
 	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST)

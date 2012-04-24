@@ -28,10 +28,12 @@ public class SettingsCore {
 			try {
 				Config.createNewFile();
 				Properties propConfig = new Properties();
-				propConfig.setProperty("connect-message",
-						Settings.connectMsg);
+				propConfig.setProperty("connect-message", Settings.connectMsg);
 				propConfig.setProperty("kick-message", Settings.kickMsg);
 				propConfig.setProperty("prefix", Settings.prefix);
+				propConfig.setProperty("countryban-message",
+						Settings.countryBanMsg);
+				propConfig.setProperty("countrybans", "");
 				propConfig.setProperty("connect-join-invasion",
 						Settings.connectInvasion);
 				propConfig.setProperty("joins-sec",
@@ -64,6 +66,8 @@ public class SettingsCore {
 						Integer.toString(Settings.connectFor));
 				propConfig.setProperty("ban-users",
 						Boolean.toString(Settings.banUsers));
+				propConfig.setProperty("enable-geoip",
+						Boolean.toString(Settings.geoIP));
 				propConfig.setProperty("install-date",
 						Long.toString(System.currentTimeMillis()));
 				BufferedOutputStream stream = new BufferedOutputStream(
@@ -101,6 +105,16 @@ public class SettingsCore {
 			if (load != null && load != Settings.kickMsg) {
 				Settings.kickMsg = load;
 			}
+			
+			load = propConfig.getProperty("countryban-message");
+			if (load != null && load != Settings.countryBanMsg) {
+				Settings.countryBanMsg = load;
+			}
+			
+			load = propConfig.getProperty("countrybans");
+			if (load != null) {
+				antibot.getUtility().getGeoIP().loadCountryBanList(load);
+			}
 
 			load = propConfig.getProperty("connect-join-invasion");
 			if (load != null && load != Settings.connectInvasion) {
@@ -118,8 +132,7 @@ public class SettingsCore {
 			} else {
 				load2 = Settings.interval;
 			}
-			if (load != null && load2 > 999
-					&& !load2.equals(Settings.interval)) {
+			if (load != null && load2 > 999 && !load2.equals(Settings.interval)) {
 				Settings.interval = load2;
 				antibot.setDefaultinterval(Settings.interval);
 			}
@@ -173,6 +186,16 @@ public class SettingsCore {
 			if (load != null && !load3.equals(Settings.banUsers)) {
 				Settings.banUsers = load3;
 			}
+			
+			load = propConfig.getProperty("enable-geoip");
+			if (load != null) {
+				load3 = Boolean.parseBoolean(load);
+			} else {
+				load3 = Settings.geoIP;
+			}
+			if (load != null && !load3.equals(Settings.geoIP)) {
+				Settings.geoIP = load3;
+			}
 
 			load = propConfig.getProperty("enable-antispam");
 			if (load != null) {
@@ -183,7 +206,7 @@ public class SettingsCore {
 			if (load != null && !load3.equals(Settings.enableAntiSpam)) {
 				Settings.enableAntiSpam = load3;
 			}
-			
+
 			load = propConfig.getProperty("enable-multiacc-detection");
 			if (load != null) {
 				load3 = Boolean.parseBoolean(load);
@@ -275,8 +298,7 @@ public class SettingsCore {
 			} else {
 				load2 = Settings.accounts;
 			}
-			if (load != null && load2 > 0
-					&& !load2.equals(Settings.accounts)) {
+			if (load != null && load2 > 0 && !load2.equals(Settings.accounts)) {
 				Settings.accounts = load2;
 				antibot.setDefaultaccounts(Settings.accounts);
 			}
@@ -289,18 +311,22 @@ public class SettingsCore {
 			return false;
 		}
 	}
-	
+
 	public boolean saveConfig(String prp, String val) {
 		try {
 			Properties propConfig = new Properties();
 			BufferedInputStream stream = new BufferedInputStream(
-					new FileInputStream(antibot.getDataFolder().getAbsolutePath()
-							+ File.separator + "c.properties"));
+					new FileInputStream(antibot.getDataFolder()
+							.getAbsolutePath()
+							+ File.separator
+							+ "c.properties"));
 			propConfig.load(stream);
 			propConfig.setProperty(prp, val);
 			BufferedOutputStream strea2m = new BufferedOutputStream(
-					new FileOutputStream(antibot.getDataFolder().getAbsolutePath()
-							+ File.separator + "c.properties"));
+					new FileOutputStream(antibot.getDataFolder()
+							.getAbsolutePath()
+							+ File.separator
+							+ "c.properties"));
 			propConfig
 					.store(strea2m,
 							"AntiBot V2 - The ultimate AntiSpam protection for Minecraft.");

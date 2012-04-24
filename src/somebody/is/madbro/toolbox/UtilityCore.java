@@ -8,6 +8,7 @@ public class UtilityCore {
 	//utilities
 	private BotUtility botutility = null;
 	private DebugUtility debugutility = null;
+	private GeoIPUtility geoiputility = null;
 	
 	//listeners
 	protected BotListener botlistener = null;
@@ -19,15 +20,19 @@ public class UtilityCore {
 		botlistener = instance.getBotListener();
 		botutility = new BotUtility(instance);
 		debugutility = new DebugUtility(instance);
-		
+		geoiputility = new GeoIPUtility(instance);
 	}
 	
-	public BotUtility getBotUtility() {
+	public BotUtility getBot() {
 		return botutility;
 	}
 	
-	public DebugUtility getDebugUtility() {
+	public DebugUtility getDebug() {
 		return debugutility;
+	}
+	
+	public GeoIPUtility getGeoIP() {
+		return geoiputility;
 	}
 	
 	
