@@ -15,6 +15,7 @@ import somebody.is.madbro.handlers.HandlerCore;
 import somebody.is.madbro.listeners.BotListener;
 import somebody.is.madbro.listeners.ChatListener;
 import somebody.is.madbro.listeners.CountryListener;
+import somebody.is.madbro.listeners.KickListener;
 import somebody.is.madbro.settings.Settings;
 import somebody.is.madbro.settings.SettingsCore;
 import somebody.is.madbro.toolbox.UtilityCore;
@@ -25,6 +26,7 @@ public class AntiBotCore extends JavaPlugin {
 	private BotListener botlistener = null;
 	private ChatListener chatlistener = null;
 	private CountryListener countrylistener = null;
+	private KickListener kicklistener = null;
 
 	// utilities
 	private UtilityCore utilitycore = null;
@@ -57,6 +59,7 @@ public class AntiBotCore extends JavaPlugin {
 		botlistener = new BotListener(this);
 		chatlistener = new ChatListener(this);
 		countrylistener = new CountryListener(this);
+		kicklistener = new KickListener(this);
 
 		// cores
 		settings = new SettingsCore(this);
@@ -102,6 +105,7 @@ public class AntiBotCore extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(botlistener, this);
 		getServer().getPluginManager().registerEvents(chatlistener, this);
 		getServer().getPluginManager().registerEvents(countrylistener, this);
+		getServer().getPluginManager().registerEvents(kicklistener, this);
 
 		// all finished.
 		PluginDescriptionFile pdfFile = getDescription();

@@ -18,18 +18,10 @@ public class CountryBanHandler {
 		// check against countrybans!
 		antibot.getUtility().getDebug().debug("Countrybans size " + antibot.getDataTrack().getCountryTracker().countryBans.size());
 		antibot.getUtility().getDebug().debug("Checking IP " + IP);
-		String country = antibot.getUtility().getGeoIP().lookupIp(IP);
-		antibot.getUtility().getDebug().debug("Country " + country);
-		if (antibot.getDataTrack().getCountryTracker().countryBans
-				.contains(country)) {
+		if (antibot.getUtility().getGeoIP().determineFateForIP(IP)) {
 			antibot.getUtility().getDebug().debug("Banned IP " + IP);
 			// oh noes! he's in a forbidden country!
 			event.getPlayer().kickPlayer(Settings.countryBanMsg);
-			// TODO: organize tracker removals/unregisterers.
-			antibot.getDataTrack().getBotTracker()
-					.removeConnected(event.getPlayer().getName());
-			antibot.getDataTrack().getChatTracker().trackplayers.remove(event
-					.getPlayer().getName());
 			
 			if(Settings.banUsers) {
 				// well, we have permission to autoIP ban these country invaders.

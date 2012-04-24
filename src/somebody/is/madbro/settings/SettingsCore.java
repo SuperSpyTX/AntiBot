@@ -44,6 +44,8 @@ public class SettingsCore {
 						Boolean.toString(Settings.useOpPerms));
 				propConfig.setProperty("orgy-notify",
 						Boolean.toString(Settings.notify));
+				propConfig.setProperty("country-whitelist-mode",
+						Boolean.toString(Settings.whiteListCountry));
 				propConfig.setProperty("debug-mode",
 						Boolean.toString(Settings.debugmode));
 				propConfig.setProperty("enable-by-default",
@@ -175,6 +177,16 @@ public class SettingsCore {
 			}
 			if (load != null && !load3.equals(Settings.notify)) {
 				Settings.notify = load3;
+			}
+			
+			load = propConfig.getProperty("country-whitelist-mode");
+			if (load != null) {
+				load3 = Boolean.parseBoolean(load);
+			} else {
+				load3 = Settings.whiteListCountry;
+			}
+			if (load != null && !load3.equals(Settings.whiteListCountry)) {
+				Settings.whiteListCountry = load3;
 			}
 
 			load = propConfig.getProperty("ban-users");

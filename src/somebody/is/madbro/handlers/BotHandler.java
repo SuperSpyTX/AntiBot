@@ -44,11 +44,6 @@ public class BotHandler {
 		if (botclass.getHandler().getPermissions().hasPerms(event.getPlayer())) {
 			return;
 		} else {
-			// TODO: organize tracker removals/unregisterers.
-			botclass.getDataTrack().getBotTracker()
-					.removeConnected(event.getPlayer().getName());
-			botclass.getDataTrack().getChatTracker().trackplayers.remove(event
-					.getPlayer().getName());
 			if (data.getBotTracker().botcts < 1) {
 				return;
 			} else {

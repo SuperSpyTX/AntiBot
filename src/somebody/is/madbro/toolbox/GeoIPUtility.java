@@ -12,6 +12,7 @@ import java.util.zip.GZIPInputStream;
 import com.maxmind.geoip.LookupService;
 
 import somebody.is.madbro.AntiBotCore;
+import somebody.is.madbro.settings.Settings;
 
 public class GeoIPUtility {
 
@@ -42,14 +43,27 @@ public class GeoIPUtility {
 			System.out.println("Loading failed!");
 		}
 	}
-	
+
 	// lookup functions
-	
-	public String lookupIp(String ip) {
+
+	public boolean determineFateForIP(String ip) {
 		String code = lkup.getCountry(ip).getCode();
-		return code;
+		if (antibot.getDataTrack().getCountryTracker().countryBans
+				.contains(code)) {
+			// now determine the two behaviors.
+			if (Settings.whiteListCountry) {
+				return false; // dont ban.
+			} else {
+				return true; // yesban
+			}
+		} else {
+			if (Settings.whiteListCountry) {
+				return true; // yesban
+			}
+		}
+		return false;
 	}
-	
+
 	// loading shit.
 	public boolean checkIfDownloaded() {
 		if (db.exists()) {
@@ -58,9 +72,9 @@ public class GeoIPUtility {
 			return false;
 		}
 	}
-	
+
 	public void loadCountryBanList(String list) {
-		if(list.length() == 0) {
+		if (list.length() == 0) {
 			return;
 		}
 		String[] liz = list.split(",");
@@ -68,7 +82,8 @@ public class GeoIPUtility {
 			antibot.getDataTrack().getCountryTracker().countryBans.add(liz[i]);
 			System.out.println("Loaded Country " + liz[i]);
 		}
-		System.out.println("Loaded " + liz.length + " entries to CountryBans list.");
+		System.out.println("Loaded " + liz.length
+				+ " entries to CountryBans list.");
 	}
 
 	public void preDownload() {

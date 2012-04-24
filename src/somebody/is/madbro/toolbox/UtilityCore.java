@@ -9,6 +9,7 @@ public class UtilityCore {
 	private BotUtility botutility = null;
 	private DebugUtility debugutility = null;
 	private GeoIPUtility geoiputility = null;
+	private DeregisterUtility deregisterutility = null;
 	
 	//listeners
 	protected BotListener botlistener = null;
@@ -21,6 +22,7 @@ public class UtilityCore {
 		botutility = new BotUtility(instance);
 		debugutility = new DebugUtility(instance);
 		geoiputility = new GeoIPUtility(instance);
+		deregisterutility = new DeregisterUtility(instance);
 	}
 	
 	public BotUtility getBot() {
@@ -33,6 +35,10 @@ public class UtilityCore {
 	
 	public GeoIPUtility getGeoIP() {
 		return geoiputility;
+	}
+	
+	public DeregisterUtility getDeregister() {
+		return deregisterutility;
 	}
 	
 	
