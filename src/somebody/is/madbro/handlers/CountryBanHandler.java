@@ -20,6 +20,7 @@ public class CountryBanHandler {
 		antibot.getUtility().getDebug().debug("Checking IP " + IP);
 		if (antibot.getUtility().getGeoIP().determineFateForIP(IP)) {
 			antibot.getUtility().getDebug().debug("Banned IP " + IP);
+			antibot.getDataTrack().getCountryTracker().countryusersblocked += 1;
 			// oh noes! he's in a forbidden country!
 			event.getPlayer().kickPlayer(Settings.countryBanMsg);
 			

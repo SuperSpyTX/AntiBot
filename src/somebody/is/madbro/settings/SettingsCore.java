@@ -42,6 +42,8 @@ public class SettingsCore {
 						Boolean.toString(Settings.useWhiteListPerms));
 				propConfig.setProperty("op-perms",
 						Boolean.toString(Settings.useOpPerms));
+				propConfig.setProperty("check-updates",
+						Boolean.toString(Settings.checkupdates));
 				propConfig.setProperty("orgy-notify",
 						Boolean.toString(Settings.notify));
 				propConfig.setProperty("country-whitelist-mode",
@@ -167,6 +169,16 @@ public class SettingsCore {
 			}
 			if (load != null && !load3.equals(Settings.whiteList)) {
 				Settings.whiteList = load3;
+			}
+			
+			load = propConfig.getProperty("check-updates");
+			if (load != null) {
+				load3 = Boolean.parseBoolean(load);
+			} else {
+				load3 = Settings.checkupdates;
+			}
+			if (load != null && !load3.equals(Settings.checkupdates)) {
+				Settings.checkupdates = load3;
 			}
 
 			load = propConfig.getProperty("orgy-notify");

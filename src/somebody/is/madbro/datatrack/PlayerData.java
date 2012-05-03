@@ -25,7 +25,7 @@ public class PlayerData {
 
 	public boolean connectedForLonger() {
 		int math = (int) (System.currentTimeMillis() - connectedFor);
-		if (math < Settings.connectFor && !hasMoved) {
+		if (math < Settings.connectFor) {
 			return false;
 		}
 

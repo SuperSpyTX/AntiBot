@@ -19,6 +19,7 @@ public class Settings {
 	public static boolean banUsers = false;
 	public static boolean geoIP = true;
 	public static boolean whiteListCountry = false;
+	public static boolean checkupdates = true;
 	public static String kickMsg = "The Ban Hammer has spoken!";
 	public static String countryBanMsg = "Your country is banned from this server!";
 	public static String connectMsg = "You are not on the whitelist!";

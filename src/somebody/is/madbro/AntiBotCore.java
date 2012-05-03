@@ -87,11 +87,23 @@ public class AntiBotCore extends JavaPlugin {
 
 				@Override
 				public int getValue() {
-					return getHandler().getChatSpamHandler().chatspamblocked;
+					return getDataTrack().getChatTracker().chatspamblocked;
+				}
+
+			});
+
+			graph.addPlotter(new Metrics.Plotter("Country Users Blocked") {
+
+				@Override
+				public int getValue() {
+					return getDataTrack().getCountryTracker().countryusersblocked;
 				}
 
 			});
 			metrics.start();
+
+			// report version to ingame.
+
 		} catch (IOException e) {
 			System.out.println("Metrics haz failed.");
 		}
@@ -112,14 +124,16 @@ public class AntiBotCore extends JavaPlugin {
 		version = pdfFile.getVersion();
 		System.out.println(pdfFile.getName() + " version " + getVersion()
 				+ " is enabled!");
+		System.out
+				.println("If you have any issues with AntiBot.  Or there is a false positive! Don't be afraid to make a ticket!");
 
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd,
 			String commandLabel, String[] args) {
-		if(sender instanceof Player) {
+		if (sender instanceof Player) {
 			return getHandler().getCommands().handle(sender, cmd, commandLabel,
-				args);
+					args);
 		} else {
 			return getHandler().getCommands().handle(sender, cmd, commandLabel,
 					args);

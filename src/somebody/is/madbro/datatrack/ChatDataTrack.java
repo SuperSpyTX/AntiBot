@@ -15,6 +15,7 @@ public class ChatDataTrack {
 	
 	public ArrayList<String> spammyPlayers = new ArrayList<String>();
 	public HashMap<String, PlayerData> trackplayers = new HashMap<String, PlayerData>();
+	public int chatspamblocked = 0;
 	
 	public boolean checkConnection(String usr) {
 		if (trackplayers.containsKey(usr)) {

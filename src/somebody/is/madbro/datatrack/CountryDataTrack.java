@@ -13,6 +13,8 @@ public class CountryDataTrack {
 		botclass = instance;
 	}
 	
+	public int countryusersblocked = 0;
+	
 	public List<String> countryBans = new CopyOnWriteArrayList< String >();
 
 }
