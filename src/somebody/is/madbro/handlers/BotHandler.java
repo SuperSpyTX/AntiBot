@@ -92,6 +92,19 @@ public class BotHandler {
 					event.getPlayer().sendMessage(
 							Settings.prefix + "\247c"
 									+ Settings.connectInvasion);
+					// updates notify
+					if (botclass.getUpdates().newVersion) {
+						event.getPlayer()
+								.sendMessage(
+										Settings.prefix
+												+ "\247a"
+												+ "There is currently a new update for AntiBot!");
+						event.getPlayer().sendMessage(
+								Settings.prefix + "\247a" + "New version: v"
+										+ botclass.getUpdates().version
+										+ " Your version: v"
+										+ botclass.getVersion());
+					}
 				}
 				if (data.getBotTracker().reanibo
 						&& botclass

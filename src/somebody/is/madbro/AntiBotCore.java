@@ -36,9 +36,14 @@ public class AntiBotCore extends JavaPlugin {
 
 	// data trackers
 	private DataTrackCore datatrackcore = null;
+	
+	//updater
+	private Updates updates = null;
 
 	// settings
 	private SettingsCore settings = null;
+	
+	//others
 	private File dataFolder;
 	private long installdate;
 	private Date install;
@@ -112,6 +117,12 @@ public class AntiBotCore extends JavaPlugin {
 		if (Settings.geoIP) {
 			utilitycore.getGeoIP().initialize();
 		}
+		
+		// and check for updates ^_^
+		updates = new Updates(this); //call the class, so no NPEs if we need to check if there is an update.
+		if(Settings.checkupdates) {
+			updates.run();
+		}
 
 		// register listeners
 		getServer().getPluginManager().registerEvents(botlistener, this);
@@ -166,6 +177,10 @@ public class AntiBotCore extends JavaPlugin {
 		return datatrackcore;
 	}
 
+	public Updates getUpdates() {
+		return updates;
+	}
+	
 	public SettingsCore getSettings() {
 		return settings;
 	}
@@ -209,5 +224,4 @@ public class AntiBotCore extends JavaPlugin {
 	public void setVersion(String version) {
 		this.version = version;
 	}
-
 }
