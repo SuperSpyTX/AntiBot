@@ -64,6 +64,7 @@
   		<artifactId>bukkit</artifactId>
   		<version>1.2.5-R1.0</version>
   	</dependency>
+   </dependencies>
   
   <repositories>
      <repository>
@@ -71,6 +72,5 @@
       <url>http://repo.bukkit.org/content/groups/public</url>
     </repository>
   </repositories>
-
 
 </project>
