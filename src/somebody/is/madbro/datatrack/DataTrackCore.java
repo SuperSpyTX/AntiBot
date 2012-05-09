@@ -2,7 +2,7 @@ package somebody.is.madbro.datatrack;
 
 import somebody.is.madbro.AntiBotCore;
 import somebody.is.madbro.handlers.BotHandler;
-import somebody.is.madbro.handlers.ChatSpamHandler;
+import somebody.is.madbro.handlers.chat.ChatSpamHandler;
 
 public class DataTrackCore {
 	

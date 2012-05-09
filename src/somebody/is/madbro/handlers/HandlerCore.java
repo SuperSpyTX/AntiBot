@@ -2,6 +2,8 @@ package somebody.is.madbro.handlers;
 
 import somebody.is.madbro.AntiBotCore;
 import somebody.is.madbro.datatrack.DataTrackCore;
+import somebody.is.madbro.handlers.chat.ChatFlowHandler;
+import somebody.is.madbro.handlers.chat.ChatSpamHandler;
 
 public class HandlerCore {
 
@@ -14,6 +16,7 @@ public class HandlerCore {
 	private BotHandler bothandler = null;
 	private ChatSpamHandler chatspamhandler = null;
 	private CountryBanHandler countrybanhandler = null;
+	private ChatFlowHandler chatflowhandler = null;
 
 	public HandlerCore(AntiBotCore instance, DataTrackCore instance2) {
 		antibot = instance;
@@ -22,6 +25,7 @@ public class HandlerCore {
 		bothandler = new BotHandler(instance, instance2);
 		chatspamhandler = new ChatSpamHandler(instance);
 		countrybanhandler = new CountryBanHandler(instance);
+		chatflowhandler = new ChatFlowHandler(instance);
 	}
 
 	public PermissionsHandler getPermissions() {
@@ -42,6 +46,10 @@ public class HandlerCore {
 	
 	public CountryBanHandler getCountryBanHandler() {
 		return countrybanhandler;
+	}
+	
+	public ChatFlowHandler getChatFlowHandler() {
+		return chatflowhandler;
 	}
 
 }

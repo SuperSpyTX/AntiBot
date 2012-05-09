@@ -1,4 +1,4 @@
-package somebody.is.madbro.handlers;
+package somebody.is.madbro.handlers.chat;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerChatEvent;
@@ -28,7 +28,7 @@ public class ChatSpamHandler {
 					|| !Settings.enableAntiSpam) {
 				return;
 			}
-
+			
 			if (antibot.getDataTrack().getBotTracker().autokick.contains(player
 					.getName())) {
 				player.kickPlayer(Settings.kickMsg);

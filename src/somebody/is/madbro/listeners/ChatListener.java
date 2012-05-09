@@ -33,5 +33,21 @@ public class ChatListener implements Listener {
 		}
 		antibot.getHandler().getChatSpamHandler().handle(event.getPlayer(), (PlayerChatEvent) event);
 	}
+	
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onPlayerCommandLow(PlayerCommandPreprocessEvent event) {
+		if (!Settings.enabled) {
+			return;
+		}
+		antibot.getHandler().getChatFlowHandler().handle((PlayerChatEvent) event);
+	}
+	
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onPlayerChatLow(PlayerChatEvent event) {
+		if (!Settings.enabled) {
+			return;
+		}
+		antibot.getHandler().getChatFlowHandler().handle((PlayerChatEvent) event);
+	}
 
 }

@@ -61,6 +61,11 @@ public class BotUtility {
 			Settings.accounts = antibot.getDefaultaccounts();
 			antibot.getDataTrack().getBotTracker().lasttime = 0;
 			antibot.getDataTrack().getBotTracker().botattempt = 0;
+			antibot.getDataTrack().getChatTracker().chatflowscurrent = 0;
+			antibot.getDataTrack().getChatTracker().chatLockedDown = false;
+			antibot.getDataTrack().getChatTracker().chatoverflows = 0;
+			antibot.getDataTrack().getChatTracker().chatmutedlength = 5L;
+			antibot.getDataTrack().getChatTracker().lasttime = 0L;
 			if (Settings.notify && Settings.whiteList) {
 				antibot.getServer()
 						.broadcastMessage(
