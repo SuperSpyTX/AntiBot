@@ -36,14 +36,14 @@ public class AntiBotCore extends JavaPlugin {
 
 	// data trackers
 	private DataTrackCore datatrackcore = null;
-	
-	//updater
+
+	// updater
 	private Updates updates = null;
 
 	// settings
 	private SettingsCore settings = null;
-	
-	//others
+
+	// others
 	private File dataFolder;
 	private long installdate;
 	private Date install;
@@ -117,10 +117,11 @@ public class AntiBotCore extends JavaPlugin {
 		if (Settings.geoIP) {
 			utilitycore.getGeoIP().initialize();
 		}
-		
+
 		// and check for updates ^_^
-		updates = new Updates(this); //call the class, so no NPEs if we need to check if there is an update.
-		if(Settings.checkupdates) {
+		updates = new Updates(this); // call the class, so no NPEs if we need to
+										// check if there is an update.
+		if (Settings.checkupdates) {
 			updates.run();
 		}
 
@@ -135,9 +136,14 @@ public class AntiBotCore extends JavaPlugin {
 		version = pdfFile.getVersion();
 		System.out.println(pdfFile.getName() + " version " + getVersion()
 				+ " is enabled!");
-		System.out
-				.println("If you have any issues with AntiBot.  Or there is a false positive! Don't be afraid to make a ticket!");
-
+		boolean development = true;
+		if (development) {
+			System.out
+					.println("This is a development version of AntiBot and not a official release.  Please be careful.  Please report bugs as you find them.");
+		} else {
+			System.out
+					.println("If you have any issues with AntiBot.  Or there is a false positive! Don't be afraid to make a ticket!");
+		}
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd,
@@ -180,7 +186,7 @@ public class AntiBotCore extends JavaPlugin {
 	public Updates getUpdates() {
 		return updates;
 	}
-	
+
 	public SettingsCore getSettings() {
 		return settings;
 	}
