@@ -29,7 +29,7 @@
   
   <build>
       <sourceDirectory>${basedir}/src</sourceDirectory>
-    <finalName>${project.artifactId}</finalName>
+    <finalName>${project.artifactId}-${project.version}</finalName>
     <plugins>
     
       <plugin>
