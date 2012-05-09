@@ -87,7 +87,7 @@ public class BotHandler {
 						&& botclass
 								.getHandler()
 								.getPermissions()
-								.ownPermission("AntiBot.Settings.notify",
+								.ownPermission("AntiBot.notify",
 										event.getPlayer(), 1)) {
 					event.getPlayer().sendMessage(
 							Settings.prefix + "\247c"
@@ -110,7 +110,7 @@ public class BotHandler {
 						&& botclass
 								.getHandler()
 								.getPermissions()
-								.ownPermission("AntiBot.admin.Settings.notify",
+								.ownPermission("AntiBot.admin.notify",
 										event.getPlayer(), 2)
 						&& Settings.interval > 100000) {
 					event.getPlayer()
