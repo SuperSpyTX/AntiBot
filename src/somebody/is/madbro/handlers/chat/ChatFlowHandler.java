@@ -23,7 +23,7 @@ public class ChatFlowHandler {
 			if (!Settings.enabled) {
 				return;
 			}
-
+			
 			if (antibot.getHandler().getPermissions()
 					.hasPermission("AntiBot.voice", event.getPlayer())) {
 				return;
@@ -75,7 +75,7 @@ public class ChatFlowHandler {
 			}
 
 			chatdata.lasttime = System.currentTimeMillis();
-
+			chatdata.chatflowscurrent = 0;
 		} catch (Exception e) {
 
 		}
