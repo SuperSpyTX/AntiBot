@@ -8,6 +8,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import org.bukkit.entity.Player;
 
 import somebody.is.madbro.AntiBotCore;
+import somebody.is.madbro.settings.Permissions;
 import somebody.is.madbro.settings.Settings;
 
 public class BotDataTrack {
@@ -31,7 +32,7 @@ public class BotDataTrack {
 	public boolean reanibo = false;
 	
 	public void trackPlayer(Player e, String IP) {
-		if (botclass.getHandler().getPermissions().hasPerms(e)) {
+		if (Permissions.JOIN.getPermission(e)) {
 			return;
 		}
 		if (!ipList.containsKey(IP)) {

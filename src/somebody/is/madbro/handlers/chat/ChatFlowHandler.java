@@ -5,6 +5,7 @@ import org.bukkit.event.player.PlayerChatEvent;
 
 import somebody.is.madbro.AntiBotCore;
 import somebody.is.madbro.datatrack.ChatDataTrack;
+import somebody.is.madbro.settings.Permissions;
 import somebody.is.madbro.settings.Settings;
 
 public class ChatFlowHandler {
@@ -24,8 +25,7 @@ public class ChatFlowHandler {
 				return;
 			}
 			
-			if (antibot.getHandler().getPermissions()
-					.hasPermission("AntiBot.voice", event.getPlayer())) {
+			if (Permissions.VOICE.getPermission(event.getPlayer())) {
 				return;
 			}
 

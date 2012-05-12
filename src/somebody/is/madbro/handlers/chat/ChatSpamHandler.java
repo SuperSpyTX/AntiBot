@@ -5,6 +5,7 @@ import org.bukkit.event.player.PlayerChatEvent;
 
 import somebody.is.madbro.AntiBotCore;
 import somebody.is.madbro.datatrack.PlayerData;
+import somebody.is.madbro.settings.Permissions;
 import somebody.is.madbro.settings.Settings;
 
 public class ChatSpamHandler {
@@ -24,7 +25,7 @@ public class ChatSpamHandler {
 
 			String pN = player.getName();
 
-			if (antibot.getHandler().getPermissions().hasPermission("AntiBot.chatspam", player)
+			if (Permissions.SPAM.getPermission(event.getPlayer())
 					|| !Settings.enableAntiSpam) {
 				return;
 			}

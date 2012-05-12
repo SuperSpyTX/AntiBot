@@ -8,7 +8,7 @@ public class Settings {
 	public static int spamtime = 1500;
 	public static int connectFor = 30000;
 	public static boolean notify = true;
-	public static boolean useWhiteListPerms = true;
+	public static boolean useWhiteListPerms = false;
 	public static boolean useOpPerms = false;
 	public static boolean enabled = true;
 	public static boolean debugmode = false;
@@ -20,7 +20,7 @@ public class Settings {
 	public static boolean geoIP = true;
 	public static boolean whiteListCountry = false;
 	public static boolean checkupdates = true;
-	public static String kickMsg = "The Ban Hammer has spoken!";
+	public static String kickMsg = "[AntiBot] Tripwired protection!";
 	public static String countryBanMsg = "Your country is banned from this server!";
 	public static String connectMsg = "You are not on the whitelist!";
 	public static String connectInvasion = "The server is currently under attack.";

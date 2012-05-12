@@ -12,7 +12,6 @@ public class HandlerCore {
 
 	// handlers
 	private CommandHandler commandhandler = null;
-	private PermissionsHandler permissionhandler = null;
 	private BotHandler bothandler = null;
 	private ChatSpamHandler chatspamhandler = null;
 	private CountryBanHandler countrybanhandler = null;
@@ -21,17 +20,12 @@ public class HandlerCore {
 	public HandlerCore(AntiBotCore instance, DataTrackCore instance2) {
 		antibot = instance;
 		commandhandler = new CommandHandler(instance);
-		permissionhandler = new PermissionsHandler(instance);
 		bothandler = new BotHandler(instance, instance2);
 		chatspamhandler = new ChatSpamHandler(instance);
 		countrybanhandler = new CountryBanHandler(instance);
 		chatflowhandler = new ChatFlowHandler(instance);
 	}
-
-	public PermissionsHandler getPermissions() {
-		return permissionhandler;
-	}
-
+	
 	public CommandHandler getCommands() {
 		return commandhandler;
 	}

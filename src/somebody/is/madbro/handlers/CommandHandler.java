@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import somebody.is.madbro.AntiBotCore;
+import somebody.is.madbro.settings.Permissions;
 import somebody.is.madbro.settings.Settings;
 
 public class CommandHandler {
@@ -27,14 +28,12 @@ public class CommandHandler {
 		}
 
 		if (args.length < 1) {
-			antibot.getHandler().getPermissions().returnMotd(sender);
+			antibot.getUtility().getBot().returnMotd(sender);
 			return true;
 		}
 
 		if (player != null) {
-			if (!antibot.getHandler().getPermissions()
-					.ownPermission("AntiBot.admin", player, 1)) {
-				antibot.getHandler().getPermissions().noPermission(sender);
+			if (!Permissions.ADMIN_BASIC.getPermission(player, sender)) {
 				return true;
 			}
 		}
@@ -43,33 +42,23 @@ public class CommandHandler {
 			sender.sendMessage(Settings.prefix + "AntiBot Help:");
 			sender.sendMessage(Settings.prefix + "");
 			sender.sendMessage(Settings.prefix + "/antibot help - Help Menu");
-			if (antibot.getHandler().getPermissions()
-					.ownPermission("AntiBot.admin.reload", player, 1)) {
+			if (Permissions.ADMIN_RELOAD.getPermission(player)) {
 				sender.sendMessage(Settings.prefix
 						+ "/antibot reload - Reload configuration");
 			}
-			if (antibot.getHandler().getPermissions()
-					.ownPermission("AntiBot.admin.info", player, 3)) {
+			if (Permissions.ADMIN_INFO.getPermission(player)) {
 				sender.sendMessage(Settings.prefix
 						+ "/antibot info - Check current status of AntiBot.");
 			}
-			if (antibot.getHandler().getPermissions()
-					.ownPermission("AntiBot.admin.attack", player, 3)) {
+			if (Permissions.ADMIN_ATTACK.getPermission(player)) {
 				sender.sendMessage(Settings.prefix
 						+ "/antibot run - Turn on invasion mode manually.");
 			}
-			if (antibot.getHandler().getPermissions()
-					.ownPermission("AntiBot.admin.remkickplayer", player, 1)) {
-				sender.sendMessage(Settings.prefix
-						+ "/antibot remkick [player] - Removes a player from the autokick list.");
-			}
-			if (antibot.getHandler().getPermissions()
-					.ownPermission("AntiBot.admin.flush", player, 2)) {
+			if (Permissions.ADMIN_FLUSH.getPermission(player)) {
 				sender.sendMessage(Settings.prefix
 						+ "/antibot flush - Flush the connection throttling.");
 			}
-			if (antibot.getHandler().getPermissions()
-					.ownPermission("AntiBot.admin.changeconf", player, 2)) {
+			if (Permissions.ADMIN_CHANGECONF.getPermission(player)) {
 				sender.sendMessage(Settings.prefix
 						+ "/antibot int [val] - Change intervals.");
 				sender.sendMessage(Settings.prefix
@@ -77,8 +66,7 @@ public class CommandHandler {
 				sender.sendMessage(Settings.prefix
 						+ "/antibot notify [true/false] - Change whether you get notified or not.");
 			}
-			if (antibot.getHandler().getPermissions()
-					.ownPermission("AntiBot.admin.toggle", player, 3)) {
+			if (Permissions.ADMIN_TOGGLE.getPermission(player)) {
 				sender.sendMessage(Settings.prefix
 						+ "/antibot off - Turn off AntiBot.");
 				sender.sendMessage(Settings.prefix
@@ -89,8 +77,7 @@ public class CommandHandler {
 			return true;
 		}
 		if (args[0].compareToIgnoreCase("reload") == 0) {
-			if (antibot.getHandler().getPermissions()
-					.ownPermission("AntiBot.admin.reload", player, 1)) {
+			if (Permissions.ADMIN_RELOAD.getPermission(player, sender)) {
 				if (antibot.getSettings().loadSettings(antibot.getDataFolder())) {
 					sender.sendMessage(Settings.prefix + ChatColor.GREEN
 							+ "Reloaded configuration successfully!");
@@ -98,14 +85,11 @@ public class CommandHandler {
 					sender.sendMessage(Settings.prefix + ChatColor.RED
 							+ "Configuration failed to reload.");
 				}
-			} else {
-				antibot.getHandler().getPermissions().noPermission(sender);
 			}
 			return true;
 		}
 		if (args[0].compareToIgnoreCase("run") == 0) {
-			if (antibot.getHandler().getPermissions()
-					.ownPermission("AntiBot.admin.attack", player, 2)) {
+			if (Permissions.ADMIN_ATTACK.getPermission(player, sender)) {
 				if (!antibot.getDataTrack().getBotTracker().reanibo) {
 					if (Settings.notify) {
 						antibot.getServer()
@@ -122,26 +106,9 @@ public class CommandHandler {
 			}
 			return true;
 		}
-		if (args[0].compareToIgnoreCase("remkick") == 0) {
-			if (antibot.getHandler().getPermissions()
-					.ownPermission("AntiBot.admin.remkickplayer", player, 1)) {
-				try {
-					antibot.getDataTrack().getBotTracker().autokick
-							.remove(args[1]);
-					sender.sendMessage(Settings.prefix + "\247aRemoved "
-							+ args[1] + " successfully!");
-				} catch (Exception e) {
-					sender.sendMessage(Settings.prefix
-							+ "\247cFailed to remove kicked player.");
-				}
-			}
-
-			return true;
-		}
 
 		if (args[0].compareToIgnoreCase("flush") == 0) {
-			if (antibot.getHandler().getPermissions()
-					.ownPermission("AntiBot.admin.flush", player, 2)) {
+			if (Permissions.ADMIN_FLUSH.getPermission(player, sender)) {
 				if (antibot.getUtility().getBot().flush2()) {
 					sender.sendMessage(Settings.prefix + ChatColor.GREEN
 							+ "System flushed successfully!");
@@ -149,15 +116,12 @@ public class CommandHandler {
 					sender.sendMessage(Settings.prefix + ChatColor.RED
 							+ "System failed to flush.");
 				}
-			} else {
-				antibot.getHandler().getPermissions().noPermission(sender);
 			}
 			return true;
 			// Reload here.
 		}
 		if (args[0].compareToIgnoreCase("on") == 0) {
-			if (antibot.getHandler().getPermissions()
-					.ownPermission("AntiBot.admin.toggle", player, 3)) {
+			if (Permissions.ADMIN_TOGGLE.getPermission(player,sender)) {
 				if (Settings.enabled == true) {
 					sender.sendMessage(Settings.prefix
 							+ "The system is already enabled!");
@@ -171,15 +135,12 @@ public class CommandHandler {
 					}
 				}
 
-			} else {
-				antibot.getHandler().getPermissions().noPermission(sender);
 			}
 			return true;
 			// Reload here.
 		}
 		if (args[0].compareToIgnoreCase("off") == 0) {
-			if (antibot.getHandler().getPermissions()
-					.ownPermission("AntiBot.admin.toggle", player, 3)) {
+			if (Permissions.ADMIN_TOGGLE.getPermission(player, sender)) {
 				if (Settings.enabled == false) {
 					sender.sendMessage(Settings.prefix
 							+ "The system is already disabled!");
@@ -192,15 +153,12 @@ public class CommandHandler {
 								+ "Error while trying to disable AntiBot.");
 					}
 				}
-			} else {
-				antibot.getHandler().getPermissions().noPermission(sender);
 			}
 			return true;
 			// Reload here.
 		}
 		if (args[0].compareToIgnoreCase("int") == 0) {
-			if (antibot.getHandler().getPermissions()
-					.ownPermission("AntiBot.admin.changeconf", player, 2)) {
+			if (Permissions.ADMIN_CHANGECONF.getPermission(player, sender)) {
 				if (args.length < 2) {
 					sender.sendMessage(Settings.prefix + ChatColor.RED
 							+ "Please type an interval after /antibot int.");
@@ -232,14 +190,11 @@ public class CommandHandler {
 					sender.sendMessage(Settings.prefix + ChatColor.RED
 							+ "Error while trying to change interval.");
 				}
-			} else {
-				antibot.getHandler().getPermissions().noPermission(sender);
 			}
 			return true;
 		}
 		if (args[0].compareToIgnoreCase("notify") == 0) {
-			if (antibot.getHandler().getPermissions()
-					.ownPermission("AntiBot.admin.changeconf", player, 2)) {
+			if (Permissions.ADMIN_CHANGECONF.getPermission(player,sender)) {
 				if (args.length != 2) {
 					sender.sendMessage(Settings.prefix + ChatColor.RED
 							+ "Please type true/false after /antibot notify.");
@@ -269,14 +224,11 @@ public class CommandHandler {
 							+ "Error while trying to change notification status.");
 				}
 
-			} else {
-				antibot.getHandler().getPermissions().noPermission(sender);
 			}
 			return true;
 		}
 		if (args[0].compareToIgnoreCase("acc") == 0) {
-			if (antibot.getHandler().getPermissions()
-					.ownPermission("AntiBot.admin.changeconf", player, 2)) {
+			if (Permissions.ADMIN_CHANGECONF.getPermission(player,sender)) {
 				if (args.length < 2) {
 					sender.sendMessage(Settings.prefix
 							+ ChatColor.RED
@@ -308,14 +260,11 @@ public class CommandHandler {
 					sender.sendMessage(Settings.prefix + ChatColor.RED
 							+ "Error while trying to change # of accounts.");
 				}
-			} else {
-				antibot.getHandler().getPermissions().noPermission(sender);
 			}
 			return true;
 		}
 		if (args[0].compareToIgnoreCase("info") == 0) {
-			if (antibot.getHandler().getPermissions()
-					.ownPermission("AntiBot.admin.info", player, 3)) {
+			if (Permissions.ADMIN_INFO.getPermission(player, sender)) {
 				sender.sendMessage(Settings.prefix + "AntiBot System Info:");
 				sender.sendMessage(Settings.prefix + "");
 				if (Settings.interval > 100000) {
@@ -340,14 +289,12 @@ public class CommandHandler {
 					antibot.debug("Connection Throttling: " + ChatColor.RED
 							+ "Disabled", sender);
 				}
-			} else {
-				antibot.getHandler().getPermissions().noPermission(sender);
 			}
 			return true;
 		}
 
 		if (args[0].compareToIgnoreCase("version") == 0) {
-			antibot.getHandler().getPermissions().returnMotd(sender);
+			antibot.getUtility().getBot().returnMotd(sender);
 			return true;
 		}
 		sender.sendMessage(Settings.prefix + "Unknown system command.");

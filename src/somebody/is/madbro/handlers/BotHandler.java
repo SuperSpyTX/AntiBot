@@ -6,6 +6,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import somebody.is.madbro.AntiBotCore;
 import somebody.is.madbro.datatrack.DataTrackCore;
+import somebody.is.madbro.settings.Permissions;
 import somebody.is.madbro.settings.Settings;
 
 public class BotHandler {
@@ -41,7 +42,7 @@ public class BotHandler {
 	// falsified antibot trigger bug fix, or brolos bug fix.
 
 	public void onPlayerQuit(PlayerQuitEvent event) {
-		if (botclass.getHandler().getPermissions().hasPerms(event.getPlayer())) {
+		if (Permissions.JOIN.getPermission(event.getPlayer())) {
 			return;
 		} else {
 			if (data.getBotTracker().botcts < 1) {
@@ -80,15 +81,10 @@ public class BotHandler {
 					.debug("User is trying to connect..");
 			data.getBotTracker().time = System.currentTimeMillis();
 
-			if (botclass.getHandler().getPermissions()
-					.hasPerms(event.getPlayer())) {
+			if (Permissions.JOIN.getPermission(event.getPlayer())) {
 				botclass.getUtility().getDebug().debug("Whitelisted.");
 				if (data.getBotTracker().reanibo
-						&& botclass
-								.getHandler()
-								.getPermissions()
-								.ownPermission("AntiBot.notify",
-										event.getPlayer(), 1)) {
+						&& Permissions.NOTIFY.getPermission(event.getPlayer())) {
 					event.getPlayer().sendMessage(
 							Settings.prefix + "\247c"
 									+ Settings.connectInvasion);
@@ -107,11 +103,7 @@ public class BotHandler {
 					}
 				}
 				if (data.getBotTracker().reanibo
-						&& botclass
-								.getHandler()
-								.getPermissions()
-								.ownPermission("AntiBot.admin.notify",
-										event.getPlayer(), 2)
+						&& Permissions.NOTIFY.getPermission(event.getPlayer())
 						&& Settings.interval > 100000) {
 					event.getPlayer()
 							.sendMessage(
