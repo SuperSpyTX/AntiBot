@@ -22,7 +22,7 @@ public class Updates implements Runnable {
 		try {
 			String check = check("http://pastebin.com/jdC0Tzzs").split(
 					"SERVERREPORT6356574309780958632018")[1]; // roflroflroflrofl @pastebin link
-			if (antibot.getVersion() != check) {
+			if (!antibot.getVersion().equals(check)) {
 				newVersion = true;
 				version = check;
 				System.out

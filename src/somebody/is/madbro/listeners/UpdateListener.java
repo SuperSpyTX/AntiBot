@@ -37,7 +37,7 @@ public class UpdateListener implements Listener {
 					.sendMessage(
 							Settings.prefix
 									+ "\247a"
-									+ "Check at http://dev.bukkit.org/server-mods/antibot/");
+									+ "Check at http://goo.gl/FuMrd");
 		}
 	}
 
