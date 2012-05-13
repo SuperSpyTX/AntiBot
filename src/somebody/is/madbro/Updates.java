@@ -21,12 +21,14 @@ public class Updates implements Runnable {
 		// TODO Auto-generated method stub
 		try {
 			String check = check("http://pastebin.com/jdC0Tzzs").split(
-					"[SERVERREPORT]")[1]; // roflroflroflrofl @pastebin link
+					"SERVERREPORT6356574309780958632018")[1]; // roflroflroflrofl @pastebin link
 			if (antibot.getVersion() != check) {
 				newVersion = true;
 				version = check;
 				System.out
 						.println("YAY! A new update is currently available for AntiBot!");
+				System.out.println("New version: " + version
+						+ " Your version: " + antibot.getVersion());
 				System.out
 						.println("Check at http://dev.bukkit.org/server-mods/antibot/");
 			}

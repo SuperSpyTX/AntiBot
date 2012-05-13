@@ -28,7 +28,7 @@ public class BotDataTrack {
 	public long botattempt;
 	public int spamcts = 0;
 	public int spambotsblocked = 0;
-	public int botcts;
+	public int botcts = 0;
 	public boolean reanibo = false;
 	
 	public void trackPlayer(Player e, String IP) {

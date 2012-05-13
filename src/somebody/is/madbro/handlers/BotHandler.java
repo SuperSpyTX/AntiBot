@@ -73,9 +73,6 @@ public class BotHandler {
 	}
 
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		if (!Settings.enabled) {
-			return;
-		}
 		try {
 			botclass.getUtility().getDebug()
 					.debug("User is trying to connect..");
@@ -97,21 +94,10 @@ public class BotHandler {
 									Settings.prefix
 											+ "\247cThe system needs a flush. Please type /antibot flush. Thanks.");
 				}
-				// updates notify
-				if (botclass.getUpdates().newVersion
-						&& Permissions.ADMIN_NOTIFY.getPermission(event
-								.getPlayer())) {
-					event.getPlayer()
-							.sendMessage(
-									Settings.prefix
-											+ "\247a"
-											+ "There is currently a new update for AntiBot!");
-					event.getPlayer().sendMessage(
-							Settings.prefix + "\247a" + "New version: v"
-									+ botclass.getUpdates().version
-									+ " Your version: v"
-									+ botclass.getVersion());
-				}
+				return;
+			}
+			
+			if (!Settings.enabled) {
 				return;
 			}
 
