@@ -2,13 +2,13 @@ package somebody.is.madbro.toolbox;
 
 import org.bukkit.entity.Player;
 
-import somebody.is.madbro.AntiBotCore;
+import somebody.is.madbro.AntiBot;
 
 public class DeregisterUtility {
 
-	public AntiBotCore antibot = null;
+	public AntiBot antibot = null;
 
-	public DeregisterUtility(AntiBotCore instance) {
+	public DeregisterUtility(AntiBot instance) {
 		antibot = instance;
 	}
 

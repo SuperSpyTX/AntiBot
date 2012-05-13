@@ -3,16 +3,16 @@ package somebody.is.madbro.handlers.chat;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerChatEvent;
 
-import somebody.is.madbro.AntiBotCore;
+import somebody.is.madbro.AntiBot;
 import somebody.is.madbro.datatrack.PlayerData;
 import somebody.is.madbro.settings.Permissions;
 import somebody.is.madbro.settings.Settings;
 
 public class ChatSpamHandler {
 
-	public AntiBotCore antibot = null;
+	public AntiBot antibot = null;
 
-	public ChatSpamHandler(AntiBotCore instance) {
+	public ChatSpamHandler(AntiBot instance) {
 		antibot = instance;
 		// TODO Auto-generated constructor stub
 	}

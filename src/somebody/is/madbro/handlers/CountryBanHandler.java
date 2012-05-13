@@ -2,14 +2,14 @@ package somebody.is.madbro.handlers;
 
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import somebody.is.madbro.AntiBotCore;
+import somebody.is.madbro.AntiBot;
 import somebody.is.madbro.settings.Settings;
 
 public class CountryBanHandler {
 
-	public AntiBotCore antibot = null;
+	public AntiBot antibot = null;
 
-	public CountryBanHandler(AntiBotCore instance) {
+	public CountryBanHandler(AntiBot instance) {
 		antibot = instance;
 	}
 

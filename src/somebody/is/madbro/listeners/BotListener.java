@@ -10,14 +10,14 @@ import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import somebody.is.madbro.AntiBotCore;
+import somebody.is.madbro.AntiBot;
 import somebody.is.madbro.settings.Settings;
 
 public class BotListener implements Listener {
 
-	public AntiBotCore antibot = null;
+	public AntiBot antibot = null;
 	
-	public BotListener(AntiBotCore instance) {
+	public BotListener(AntiBot instance) {
 		antibot = instance;
 	}
 	

@@ -8,13 +8,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import somebody.is.madbro.AntiBotCore;
+import somebody.is.madbro.AntiBot;
 
 public class SettingsCore {
 
-	public AntiBotCore antibot = null;
+	public AntiBot antibot = null;
 
-	public SettingsCore(AntiBotCore instance) {
+	public SettingsCore(AntiBot instance) {
 		antibot = instance;
 	}
 
@@ -46,6 +46,8 @@ public class SettingsCore {
 						Boolean.toString(Settings.checkupdates));
 				propConfig.setProperty("orgy-notify",
 						Boolean.toString(Settings.notify));
+				propConfig.setProperty("delayed-start",
+						Boolean.toString(Settings.delayedStart));
 				propConfig.setProperty("country-whitelist-mode",
 						Boolean.toString(Settings.whiteListCountry));
 				propConfig.setProperty("debug-mode",
@@ -62,6 +64,8 @@ public class SettingsCore {
 						Boolean.toString(Settings.chatMute));
 				propConfig.setProperty("whitelist-when-triggered",
 						Boolean.toString(Settings.whiteList));
+				propConfig.setProperty("start-delay",
+						Long.toString(Settings.startdelay));
 				propConfig.setProperty("spam-time",
 						Integer.toString(Settings.spamtime));
 				propConfig.setProperty("spam-amount",
@@ -159,6 +163,16 @@ public class SettingsCore {
 			}
 			if (load != null && !load3.equals(Settings.useOpPerms)) {
 				Settings.useOpPerms = load3;
+			}
+			
+			load = propConfig.getProperty("delayed-start");
+			if (load != null) {
+				load3 = Boolean.parseBoolean(load);
+			} else {
+				load3 = Settings.delayedStart;
+			}
+			if (load != null && !load3.equals(Settings.delayedStart)) {
+				Settings.delayedStart = load3;
 			}
 
 			load = propConfig.getProperty("whitelist-when-triggered");
@@ -282,6 +296,16 @@ public class SettingsCore {
 			}
 			if (load != null && !load2.equals(Settings.connectFor)) {
 				Settings.connectFor = load2;
+			}
+			
+			load = propConfig.getProperty("start-delay");
+			if (load != null) {
+				load4 = Long.parseLong(load);
+			} else {
+				load4 = Settings.startdelay;
+			}
+			if (load != null && load4 < 120L && !load4.equals(Settings.startdelay)) {
+				Settings.startdelay = load2;
 			}
 
 			load = propConfig.getProperty("spam-time");

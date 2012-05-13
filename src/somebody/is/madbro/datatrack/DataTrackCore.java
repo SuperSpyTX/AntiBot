@@ -1,19 +1,19 @@
 package somebody.is.madbro.datatrack;
 
-import somebody.is.madbro.AntiBotCore;
+import somebody.is.madbro.AntiBot;
 import somebody.is.madbro.handlers.BotHandler;
 import somebody.is.madbro.handlers.chat.ChatSpamHandler;
 
 public class DataTrackCore {
 	
-	public AntiBotCore antibot = null;
+	public AntiBot antibot = null;
 	
 	// trackers
 	public BotDataTrack botdata = null;
 	public ChatDataTrack chatdata = null;
 	public CountryDataTrack countrydata = null;
 	
-	public DataTrackCore(AntiBotCore instance) {
+	public DataTrackCore(AntiBot instance) {
 		antibot = instance;
 		botdata = new BotDataTrack(instance);
 		chatdata = new ChatDataTrack(instance);

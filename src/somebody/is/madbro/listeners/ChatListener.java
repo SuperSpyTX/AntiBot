@@ -6,14 +6,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-import somebody.is.madbro.AntiBotCore;
+import somebody.is.madbro.AntiBot;
 import somebody.is.madbro.settings.Settings;
 
 public class ChatListener implements Listener {
 	
-	public AntiBotCore antibot = null;
+	public AntiBot antibot = null;
 	
-	public ChatListener(AntiBotCore instance) {
+	public ChatListener(AntiBot instance) {
 		antibot = instance;
 	}
 	

@@ -10,9 +10,9 @@ public class Updates implements Runnable {
 	public String version = "";
 	public boolean newVersion = false;
 
-	public AntiBotCore antibot = null;
+	public AntiBot antibot = null;
 
-	public Updates(AntiBotCore instance) {
+	public Updates(AntiBot instance) {
 		antibot = instance;
 	}
 

@@ -1,13 +1,13 @@
 package somebody.is.madbro.handlers;
 
-import somebody.is.madbro.AntiBotCore;
+import somebody.is.madbro.AntiBot;
 import somebody.is.madbro.datatrack.DataTrackCore;
 import somebody.is.madbro.handlers.chat.ChatFlowHandler;
 import somebody.is.madbro.handlers.chat.ChatSpamHandler;
 
 public class HandlerCore {
 
-	protected AntiBotCore antibot = null;
+	protected AntiBot antibot = null;
 	protected DataTrackCore datatrack = null;
 
 	// handlers
@@ -17,7 +17,7 @@ public class HandlerCore {
 	private CountryBanHandler countrybanhandler = null;
 	private ChatFlowHandler chatflowhandler = null;
 
-	public HandlerCore(AntiBotCore instance, DataTrackCore instance2) {
+	public HandlerCore(AntiBot instance, DataTrackCore instance2) {
 		antibot = instance;
 		commandhandler = new CommandHandler(instance);
 		bothandler = new BotHandler(instance, instance2);

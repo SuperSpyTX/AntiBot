@@ -7,15 +7,15 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.bukkit.entity.Player;
 
-import somebody.is.madbro.AntiBotCore;
+import somebody.is.madbro.AntiBot;
 import somebody.is.madbro.settings.Permissions;
 import somebody.is.madbro.settings.Settings;
 
 public class BotDataTrack {
 	
-	public AntiBotCore botclass = null;
+	public AntiBot botclass = null;
 	
-	public BotDataTrack(AntiBotCore instance) {
+	public BotDataTrack(AntiBot instance) {
 		botclass = instance;
 	}
 	

@@ -8,13 +8,13 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import somebody.is.madbro.AntiBotCore;
+import somebody.is.madbro.AntiBot;
 import somebody.is.madbro.settings.Settings;
 
 public class BotUtility {
-	public AntiBotCore antibot = null;
+	public AntiBot antibot = null;
 
-	public BotUtility(AntiBotCore instance) {
+	public BotUtility(AntiBot instance) {
 		antibot = instance;
 		// TODO Auto-generated constructor stub
 	}

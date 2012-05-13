@@ -4,17 +4,17 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import somebody.is.madbro.AntiBotCore;
+import somebody.is.madbro.AntiBot;
 import somebody.is.madbro.datatrack.DataTrackCore;
 import somebody.is.madbro.settings.Permissions;
 import somebody.is.madbro.settings.Settings;
 
 public class BotHandler {
 
-	private AntiBotCore botclass = null;
+	private AntiBot botclass = null;
 	private DataTrackCore data = null;
 
-	public BotHandler(AntiBotCore instance, DataTrackCore instance2) {
+	public BotHandler(AntiBot instance, DataTrackCore instance2) {
 		// transfer instance for compatibility
 		botclass = instance;
 		data = instance2;
@@ -88,19 +88,6 @@ public class BotHandler {
 					event.getPlayer().sendMessage(
 							Settings.prefix + "\247c"
 									+ Settings.connectInvasion);
-					// updates notify
-					if (botclass.getUpdates().newVersion) {
-						event.getPlayer()
-								.sendMessage(
-										Settings.prefix
-												+ "\247a"
-												+ "There is currently a new update for AntiBot!");
-						event.getPlayer().sendMessage(
-								Settings.prefix + "\247a" + "New version: v"
-										+ botclass.getUpdates().version
-										+ " Your version: v"
-										+ botclass.getVersion());
-					}
 				}
 				if (data.getBotTracker().reanibo
 						&& Permissions.NOTIFY.getPermission(event.getPlayer())
@@ -109,6 +96,21 @@ public class BotHandler {
 							.sendMessage(
 									Settings.prefix
 											+ "\247cThe system needs a flush. Please type /antibot flush. Thanks.");
+				}
+				// updates notify
+				if (botclass.getUpdates().newVersion
+						&& Permissions.ADMIN_NOTIFY.getPermission(event
+								.getPlayer())) {
+					event.getPlayer()
+							.sendMessage(
+									Settings.prefix
+											+ "\247a"
+											+ "There is currently a new update for AntiBot!");
+					event.getPlayer().sendMessage(
+							Settings.prefix + "\247a" + "New version: v"
+									+ botclass.getUpdates().version
+									+ " Your version: v"
+									+ botclass.getVersion());
 				}
 				return;
 			}

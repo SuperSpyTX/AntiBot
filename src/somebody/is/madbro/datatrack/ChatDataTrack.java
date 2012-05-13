@@ -3,13 +3,13 @@ package somebody.is.madbro.datatrack;
 import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import somebody.is.madbro.AntiBotCore;
+import somebody.is.madbro.AntiBot;
 
 public class ChatDataTrack {
 	
-	public AntiBotCore botclass = null;
+	public AntiBot botclass = null;
 	
-	public ChatDataTrack(AntiBotCore instance) {
+	public ChatDataTrack(AntiBot instance) {
 		botclass = instance;
 	}
 	

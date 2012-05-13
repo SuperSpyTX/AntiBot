@@ -5,14 +5,14 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import somebody.is.madbro.AntiBotCore;
+import somebody.is.madbro.AntiBot;
 import somebody.is.madbro.settings.Settings;
 
 public class CountryListener implements Listener {
 	
-	public AntiBotCore antibot = null;
+	public AntiBot antibot = null;
 	
-	public CountryListener(AntiBotCore instance) {
+	public CountryListener(AntiBot instance) {
 		antibot = instance;
 	}
 	

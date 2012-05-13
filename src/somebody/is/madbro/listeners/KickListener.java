@@ -5,13 +5,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import somebody.is.madbro.AntiBotCore;
+import somebody.is.madbro.AntiBot;
 
 public class KickListener implements Listener {
 	
-	public AntiBotCore antibot = null;
+	public AntiBot antibot = null;
 	
-	public KickListener(AntiBotCore instance) {
+	public KickListener(AntiBot instance) {
 		antibot = instance;
 	}
 	

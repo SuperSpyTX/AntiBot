@@ -1,6 +1,6 @@
 package somebody.is.madbro.datatrack;
 
-import somebody.is.madbro.AntiBotCore;
+import somebody.is.madbro.AntiBot;
 import somebody.is.madbro.listeners.BotListener;
 import somebody.is.madbro.settings.Settings;
 
@@ -13,9 +13,9 @@ public class PlayerData {
 	public boolean hasMoved = false;
 	public BotListener botlistener;
 
-	public AntiBotCore antibot = null;
+	public AntiBot antibot = null;
 
-	public PlayerData(AntiBotCore instance, String usernam) {
+	public PlayerData(AntiBot instance, String usernam) {
 		antibot = instance;
 		username = usernam;
 		lastChatMsg = System.currentTimeMillis();

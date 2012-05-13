@@ -3,17 +3,17 @@ package somebody.is.madbro.handlers.chat;
 import org.bukkit.ChatColor;
 import org.bukkit.event.player.PlayerChatEvent;
 
-import somebody.is.madbro.AntiBotCore;
+import somebody.is.madbro.AntiBot;
 import somebody.is.madbro.datatrack.ChatDataTrack;
 import somebody.is.madbro.settings.Permissions;
 import somebody.is.madbro.settings.Settings;
 
 public class ChatFlowHandler {
 
-	public AntiBotCore antibot = null;
+	public AntiBot antibot = null;
 	public ChatDataTrack chatdata = null;
 
-	public ChatFlowHandler(AntiBotCore instance) {
+	public ChatFlowHandler(AntiBot instance) {
 		antibot = instance;
 		chatdata = instance.getDataTrack().getChatTracker();
 		// TODO Auto-generated constructor stub

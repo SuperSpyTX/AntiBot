@@ -3,6 +3,7 @@ package somebody.is.madbro;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -20,7 +21,7 @@ import somebody.is.madbro.settings.Settings;
 import somebody.is.madbro.settings.SettingsCore;
 import somebody.is.madbro.toolbox.UtilityCore;
 
-public class AntiBotCore extends JavaPlugin {
+public class AntiBot extends JavaPlugin {
 
 	// listeners
 	private BotListener botlistener = null;
@@ -116,6 +117,20 @@ public class AntiBotCore extends JavaPlugin {
 		// load geoip if our memogram tells us to.
 		if (Settings.geoIP) {
 			utilitycore.getGeoIP().initialize();
+		}
+		
+		// delayed start
+		if (Settings.delayedStart && Settings.enabled) {
+			Settings.enabled = false;
+			getServer().getScheduler()
+			.scheduleSyncDelayedTask(this, new Runnable() {
+
+				public void run() {
+					System.out.println("System has been enabled!");
+					Settings.enabled = true;
+				}
+			}, Settings.startdelay * 20L);
+			System.out.println("System is now having a delayed start!");
 		}
 
 		// and check for updates ^_^

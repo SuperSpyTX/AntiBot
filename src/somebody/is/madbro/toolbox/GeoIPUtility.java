@@ -11,17 +11,17 @@ import java.util.zip.GZIPInputStream;
 
 import com.maxmind.geoip.LookupService;
 
-import somebody.is.madbro.AntiBotCore;
+import somebody.is.madbro.AntiBot;
 import somebody.is.madbro.settings.Settings;
 
 public class GeoIPUtility {
 
-	public AntiBotCore antibot = null;
+	public AntiBot antibot = null;
 	private LookupService lkup = null;
 
 	private File db = null;
 
-	public GeoIPUtility(AntiBotCore instance) {
+	public GeoIPUtility(AntiBot instance) {
 		antibot = instance;
 		db = new File(instance.getDataFolder(), "GeoIP.dat");
 	}

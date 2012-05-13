@@ -5,15 +5,15 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import somebody.is.madbro.AntiBotCore;
+import somebody.is.madbro.AntiBot;
 import somebody.is.madbro.settings.Permissions;
 import somebody.is.madbro.settings.Settings;
 
 public class CommandHandler {
 
-	public AntiBotCore antibot = null;
+	public AntiBot antibot = null;
 
-	public CommandHandler(AntiBotCore instance) {
+	public CommandHandler(AntiBot instance) {
 		antibot = instance;
 		// TODO Auto-generated constructor stub
 	}

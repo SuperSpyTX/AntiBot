@@ -1,6 +1,6 @@
 package somebody.is.madbro.toolbox;
 
-import somebody.is.madbro.AntiBotCore;
+import somebody.is.madbro.AntiBot;
 import somebody.is.madbro.listeners.BotListener;
 
 public class UtilityCore {
@@ -14,9 +14,9 @@ public class UtilityCore {
 	//listeners
 	protected BotListener botlistener = null;
 	
-	protected AntiBotCore antibot = null;
+	protected AntiBot antibot = null;
 	
-	public UtilityCore(AntiBotCore instance) {
+	public UtilityCore(AntiBot instance) {
 		antibot = instance;
 		botlistener = instance.getBotListener();
 		botutility = new BotUtility(instance);
