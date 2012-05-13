@@ -6,6 +6,7 @@ public class Settings {
 	public static int accounts = 2;
 	public static int spamam = 4;
 	public static int spamtime = 1500;
+	public static int multiaccmin = 2;
 	public static int connectFor = 30000;
 	public static long startdelay = 60L;
 	public static boolean notify = true;
@@ -16,7 +17,7 @@ public class Settings {
 	public static boolean whiteList = false;
 	public static boolean enableAntiSpam = true;
 	public static boolean chatMute = false;
-	public static boolean enableMultiAccs = true;
+	public static boolean enableMultiAccs = false;
 	public static boolean banUsers = false;
 	public static boolean geoIP = true;
 	public static boolean whiteListCountry = false;
