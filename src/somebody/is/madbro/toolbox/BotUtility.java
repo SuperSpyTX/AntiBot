@@ -64,7 +64,6 @@ public class BotUtility {
 			antibot.getDataTrack().getBotTracker().lasttime = 0;
 			antibot.getDataTrack().getBotTracker().botattempt = 0;
 			antibot.getDataTrack().getChatTracker().chatflowscurrent = 0;
-			antibot.getDataTrack().getChatTracker().chatflowscurrent = 0;
 			if(antibot.getDataTrack().getChatTracker().chatLockedDown) {
 				antibot.getDataTrack().getChatTracker().chatLockedDown = false;
 				antibot.getServer().broadcastMessage(
