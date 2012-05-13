@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -18,6 +19,7 @@ import somebody.is.madbro.listeners.ChatListener;
 import somebody.is.madbro.listeners.CountryListener;
 import somebody.is.madbro.listeners.KickListener;
 import somebody.is.madbro.listeners.UpdateListener;
+import somebody.is.madbro.settings.Permissions;
 import somebody.is.madbro.settings.Settings;
 import somebody.is.madbro.settings.SettingsCore;
 import somebody.is.madbro.toolbox.UtilityCore;
@@ -130,7 +132,9 @@ public class AntiBot extends JavaPlugin {
 
 				public void run() {
 					System.out.println("System has been enabled!");
+					sendToAllAdminsWithNotify(ChatColor.GREEN + "System has been enabled!");
 					Settings.enabled = true;
+					Settings.delayedStart = false;
 				}
 			}, Settings.startdelay * 20L);
 			System.out.println("System is now having a delayed start!");
@@ -173,6 +177,14 @@ public class AntiBot extends JavaPlugin {
 		} else {
 			return getHandler().getCommands().handle(sender, cmd, commandLabel,
 					args);
+		}
+	}
+	
+	public void sendToAllAdminsWithNotify(String msg) {
+		for(Player pl : getServer().getOnlinePlayers()) {
+			if(Permissions.ADMIN_NOTIFY.getPermission(pl)) {
+				pl.sendMessage(Settings.prefix + msg);
+			}
 		}
 	}
 

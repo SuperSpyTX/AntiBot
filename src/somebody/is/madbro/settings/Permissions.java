@@ -14,9 +14,8 @@ public enum Permissions {
 	COUNTRYBAN("countryban", 1),
 	
 	//admin level permissions
-	ADMIN_ROOT("admin.root" , 3),
-	ADMIN_PLUS("admin.plus", 2),
-	ADMIN_BASIC("admin.basic", 1),
+	ADMIN_PLUS("admin.plus" , 3),
+	ADMIN("admin", 2),
 	
 	//individual permissions.
 	ADMIN_RELOAD("admin.reload", 3),
@@ -25,11 +24,7 @@ public enum Permissions {
 	ADMIN_NOTIFY("admin.notify", 2),
 	ADMIN_FLUSH("admin.flush", 2),
 	ADMIN_CHANGECONF("admin.changeconf", 3),
-	ADMIN_TOGGLE("admin.toggle", 3),
-	@Deprecated
-	ADMIN_REMKICKPLAYER("admin.remkickplayer", -1),
-	@Deprecated
-	ADMIN("admin", -1);
+	ADMIN_TOGGLE("admin.toggle", 3);
 	
 	String perm = "";
 	String baseperm = "";
@@ -42,7 +37,7 @@ public enum Permissions {
 	}
 	
 	public boolean isLevelPermission() {
-		return baseperm == ADMIN_ROOT.baseperm || baseperm == ADMIN_PLUS.baseperm || baseperm == ADMIN_BASIC.baseperm; 
+		return baseperm == ADMIN.baseperm || baseperm == ADMIN_PLUS.baseperm; 
 	}
 	
 	public boolean getPermission(Player pl, CommandSender sender) {
@@ -74,15 +69,11 @@ public enum Permissions {
 				return false;
 			}
 
-			if(ADMIN_ROOT.getPermission(pl) && level >= 3) {
+			if(ADMIN.getPermission(pl) && level >= 3) {
 				return true;
 			}
 			
 			if(ADMIN_PLUS.getPermission(pl) && level < 3) {
-				return true;
-			}
-			
-			if(ADMIN_BASIC.getPermission(pl) && level < 2) {
 				return true;
 			}
 			

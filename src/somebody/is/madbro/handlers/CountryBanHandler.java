@@ -3,6 +3,7 @@ package somebody.is.madbro.handlers;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import somebody.is.madbro.AntiBot;
+import somebody.is.madbro.settings.Permissions;
 import somebody.is.madbro.settings.Settings;
 
 public class CountryBanHandler {
@@ -14,6 +15,10 @@ public class CountryBanHandler {
 	}
 
 	public void handle(PlayerJoinEvent event) {
+		// add countrybans bypass permissions.
+		if(Permissions.COUNTRYBAN.getPermission(event.getPlayer())) {
+			return;
+		}
 		String IP = event.getPlayer().getAddress().toString().split(":")[0].replace("/", "");
 		// check against countrybans!
 		antibot.getUtility().getDebug().debug("Countrybans size " + antibot.getDataTrack().getCountryTracker().countryBans.size());

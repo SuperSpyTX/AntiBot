@@ -16,7 +16,7 @@ public class CountryListener implements Listener {
 		antibot = instance;
 	}
 	
-	@EventHandler(priority = EventPriority.MONITOR)
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		if (!Settings.enabled || antibot.getDataTrack().getCountryTracker().countryBans.size() < 1 || !Settings.geoIP) {
 			return;

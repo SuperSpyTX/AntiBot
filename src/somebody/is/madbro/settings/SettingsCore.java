@@ -13,6 +13,7 @@ import somebody.is.madbro.AntiBot;
 public class SettingsCore {
 
 	public AntiBot antibot = null;
+	public int reloads = 0;
 
 	public SettingsCore(AntiBot instance) {
 		antibot = instance;
@@ -115,17 +116,17 @@ public class SettingsCore {
 			if (load != null && load != Settings.kickMsg) {
 				Settings.kickMsg = load;
 			}
-			
+
 			load = propConfig.getProperty("flow-message");
 			if (load != null && load != Settings.overflowedmessage) {
 				Settings.overflowedmessage = load;
 			}
-			
+
 			load = propConfig.getProperty("countryban-message");
 			if (load != null && load != Settings.countryBanMsg) {
 				Settings.countryBanMsg = load;
 			}
-			
+
 			load = propConfig.getProperty("countrybans");
 			if (load != null) {
 				antibot.getUtility().getGeoIP().loadCountryBanList(load);
@@ -171,7 +172,7 @@ public class SettingsCore {
 			if (load != null && !load3.equals(Settings.useOpPerms)) {
 				Settings.useOpPerms = load3;
 			}
-			
+
 			load = propConfig.getProperty("flow-enabled");
 			if (load != null) {
 				load3 = Boolean.parseBoolean(load);
@@ -181,15 +182,17 @@ public class SettingsCore {
 			if (load != null && !load3.equals(Settings.flowEnabled)) {
 				Settings.flowEnabled = load3;
 			}
-			
-			load = propConfig.getProperty("delayed-start");
-			if (load != null) {
-				load3 = Boolean.parseBoolean(load);
-			} else {
-				load3 = Settings.delayedStart;
-			}
-			if (load != null && !load3.equals(Settings.delayedStart)) {
-				Settings.delayedStart = load3;
+
+			if (reloads < 1) {
+				load = propConfig.getProperty("delayed-start");
+				if (load != null) {
+					load3 = Boolean.parseBoolean(load);
+				} else {
+					load3 = Settings.delayedStart;
+				}
+				if (load != null && !load3.equals(Settings.delayedStart)) {
+					Settings.delayedStart = load3;
+				}
 			}
 
 			load = propConfig.getProperty("whitelist-when-triggered");
@@ -201,7 +204,7 @@ public class SettingsCore {
 			if (load != null && !load3.equals(Settings.whiteList)) {
 				Settings.whiteList = load3;
 			}
-			
+
 			load = propConfig.getProperty("check-updates");
 			if (load != null) {
 				load3 = Boolean.parseBoolean(load);
@@ -221,7 +224,7 @@ public class SettingsCore {
 			if (load != null && !load3.equals(Settings.notify)) {
 				Settings.notify = load3;
 			}
-			
+
 			load = propConfig.getProperty("country-whitelist-mode");
 			if (load != null) {
 				load3 = Boolean.parseBoolean(load);
@@ -241,7 +244,7 @@ public class SettingsCore {
 			if (load != null && !load3.equals(Settings.banUsers)) {
 				Settings.banUsers = load3;
 			}
-			
+
 			load = propConfig.getProperty("enable-geoip");
 			if (load != null) {
 				load3 = Boolean.parseBoolean(load);
@@ -314,7 +317,7 @@ public class SettingsCore {
 			if (load != null && !load2.equals(Settings.connectFor)) {
 				Settings.connectFor = load2;
 			}
-			
+
 			load = propConfig.getProperty("flow-time");
 			if (load != null) {
 				load2 = Integer.parseInt(load);
@@ -324,7 +327,7 @@ public class SettingsCore {
 			if (load != null && !load2.equals(Settings.timetooverflow)) {
 				Settings.timetooverflow = load2;
 			}
-			
+
 			load = propConfig.getProperty("flow-amount");
 			if (load != null) {
 				load2 = Integer.parseInt(load);
@@ -334,14 +337,15 @@ public class SettingsCore {
 			if (load != null && !load2.equals(Settings.overflows)) {
 				Settings.overflows = load2;
 			}
-			
+
 			load = propConfig.getProperty("start-delay");
 			if (load != null) {
 				load4 = Long.parseLong(load);
 			} else {
 				load4 = Settings.startdelay;
 			}
-			if (load != null && load4 < 120L && !load4.equals(Settings.startdelay)) {
+			if (load != null && load4 < 120L
+					&& !load4.equals(Settings.startdelay)) {
 				Settings.startdelay = load2;
 			}
 
@@ -389,6 +393,7 @@ public class SettingsCore {
 			}
 
 			System.out.print("AntiBot: Configuration Loaded Successfully!");
+			reloads++;
 			return true;
 
 		} catch (Exception e) {

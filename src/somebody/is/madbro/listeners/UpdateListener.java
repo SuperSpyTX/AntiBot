@@ -39,6 +39,12 @@ public class UpdateListener implements Listener {
 									+ "\247a"
 									+ "Check at http://goo.gl/FuMrd");
 		}
+		// priority delayed start message
+		if(Settings.delayedStart && !Settings.enabled) {
+			if(Permissions.ADMIN_NOTIFY.getPermission(event.getPlayer())) {
+				event.getPlayer().sendMessage(Settings.prefix + "\247c" + "System is currently having a " + "\247e" + "delayed start.");
+			}
+		}
 	}
 
 }
