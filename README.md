@@ -46,9 +46,9 @@ Because BukkitDev requires approval. I've made a wget friendly URL you can use:
 Commands/Permissions/Configuration
 ===========
 
-You can find the Commands & Permissions [[http://dev.bukkit.org/server-mods/antibot/pages/commands-permissions/|here]].
+You can find the Commands & Permissions [here](http://dev.bukkit.org/server-mods/antibot/pages/commands-permissions/).
 
-You can find the Configuration explanation [[http://dev.bukkit.org/server-mods/antibot/pages/configuration/| here as well.]]
+You can find the Configuration explanation [here as well.](http://dev.bukkit.org/server-mods/antibot/pages/configuration/)
 
 **NOTICE:** You don't have to edit your configuration.  If you reset your config, it should be good at it's defaults.
 
