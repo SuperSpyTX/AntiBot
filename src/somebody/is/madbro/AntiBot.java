@@ -68,6 +68,7 @@ public class AntiBot extends JavaPlugin {
 		chatlistener = new ChatListener(this);
 		countrylistener = new CountryListener(this);
 		kicklistener = new KickListener(this);
+		updatelistener = new UpdateListener(this);
 
 		// cores
 		settings = new SettingsCore(this);
