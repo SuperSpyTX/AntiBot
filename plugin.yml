@@ -14,6 +14,9 @@ permissions:
   AntiBot.join:
     default: false
     description: Allow users to bypass anti bot spam.
+  AntiBot.voice:
+    default: false
+    description: Allow users to speak, even while voiced.
   AntiBot.chatspam:
     default: false
     description: Allows users to bypass anti chat spam.
@@ -22,16 +25,10 @@ permissions:
     description: Users with this permission can join the server if their home country is banned from the server.
   AntiBot.admin:
     default: false
-    description: Full permissions! Don't give this to your admins.  Use the alternatives below.
-  AntiBot.admin.root:
-    default: false
-    description: Full permissions! Same as above.
+    description: Basic Permissions to the Antibot system.
   AntiBot.admin.plus:
     default: false
-    description: Gives a bit more access to the AntiBot system.
-  AntiBot.admin.basic:
-    default: false
-    description: Gives basic access to the AntiBot system.
+    description: Gives full access to the system.
   AntiBot.admin.reload:
     default: false
     description: Ability to reload configuration.
@@ -41,9 +38,6 @@ permissions:
   AntiBot.admin.attack:
     default: false
     description: Turns on Invasion Mode manually.  Good if you know you're about to get attacked.
-  AntiBot.admin.remkickplayer:
-    default: false
-    description: Removes a player from the Auto Kick list. Helpful for users accidentally autokicked.
   AntiBot.admin.notify:
     default: false
     description: Gives extra details during invasions.  Tells this user if a system flush is needed.

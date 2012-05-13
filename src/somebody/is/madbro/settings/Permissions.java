@@ -9,7 +9,6 @@ public enum Permissions {
 	NOTIFY("notify", 1),
 	JOIN("join", 1),
 	VOICE("voice", 1),
-	SPAM("spam", 1),
 	CHATSPAM("chatspam", 1),
 	COUNTRYBAN("countryban", 1),
 	
