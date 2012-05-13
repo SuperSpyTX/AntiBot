@@ -6,9 +6,12 @@ public class Settings {
 	public static int accounts = 2;
 	public static int spamam = 4;
 	public static int spamtime = 1500;
-	public static int multiaccmin = 2;
 	public static int connectFor = 30000;
 	public static long startdelay = 60L;
+	public static int timetooverflow = 5000;
+	public static int overflows = 10;
+	public static String overflowedmessage = "SILENCE! Let's cool it down for %sec% seconds.";
+	public static boolean flowEnabled = true;
 	public static boolean notify = true;
 	public static boolean useWhiteListPerms = false;
 	public static boolean useOpPerms = false;

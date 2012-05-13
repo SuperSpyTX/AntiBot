@@ -72,6 +72,8 @@ public class SettingsCore {
 						Integer.toString(Settings.spamam));
 				propConfig.setProperty("connection-time",
 						Integer.toString(Settings.connectFor));
+				propConfig.setProperty("flow-time",
+						Integer.toString(Settings.timetooverflow));
 				propConfig.setProperty("ban-users",
 						Boolean.toString(Settings.banUsers));
 				propConfig.setProperty("enable-geoip",
@@ -112,6 +114,11 @@ public class SettingsCore {
 			load = propConfig.getProperty("kick-message");
 			if (load != null && load != Settings.kickMsg) {
 				Settings.kickMsg = load;
+			}
+			
+			load = propConfig.getProperty("flow-message");
+			if (load != null && load != Settings.overflowedmessage) {
+				Settings.overflowedmessage = load;
 			}
 			
 			load = propConfig.getProperty("countryban-message");
@@ -163,6 +170,16 @@ public class SettingsCore {
 			}
 			if (load != null && !load3.equals(Settings.useOpPerms)) {
 				Settings.useOpPerms = load3;
+			}
+			
+			load = propConfig.getProperty("flow-enabled");
+			if (load != null) {
+				load3 = Boolean.parseBoolean(load);
+			} else {
+				load3 = Settings.flowEnabled;
+			}
+			if (load != null && !load3.equals(Settings.flowEnabled)) {
+				Settings.flowEnabled = load3;
 			}
 			
 			load = propConfig.getProperty("delayed-start");
@@ -296,6 +313,26 @@ public class SettingsCore {
 			}
 			if (load != null && !load2.equals(Settings.connectFor)) {
 				Settings.connectFor = load2;
+			}
+			
+			load = propConfig.getProperty("flow-time");
+			if (load != null) {
+				load2 = Integer.parseInt(load);
+			} else {
+				load2 = Settings.timetooverflow;
+			}
+			if (load != null && !load2.equals(Settings.timetooverflow)) {
+				Settings.timetooverflow = load2;
+			}
+			
+			load = propConfig.getProperty("flow-amount");
+			if (load != null) {
+				load2 = Integer.parseInt(load);
+			} else {
+				load2 = Settings.overflows;
+			}
+			if (load != null && !load2.equals(Settings.overflows)) {
+				Settings.overflows = load2;
 			}
 			
 			load = propConfig.getProperty("start-delay");

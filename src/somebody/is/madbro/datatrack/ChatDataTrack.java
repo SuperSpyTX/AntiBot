@@ -20,10 +20,7 @@ public class ChatDataTrack {
 	
 	// chat flowdata
 	public int chatoverflows = 0;
-	public int settimetooverflow = 5000; //todo: set as a setting.
-	public int setoverflows = 3; //todo: set as a setting.
-	public String overflowedmessage = "SILENCE! Let's cool it down for %sec% seconds."; //todo: set as a setting.
-	public Long chatmutedlength = 5L; //todo: possible setting.
+	public Long chatmutedlength = 5L;
 	public int chatflowscurrent = 0;
 	public Long lasttime = 0L;
 	public boolean chatLockedDown = false;

@@ -24,7 +24,7 @@ public class ChatFlowHandler {
 			if (!Settings.enabled) {
 				return;
 			}
-			
+
 			if (Permissions.VOICE.getPermission(event.getPlayer())) {
 				return;
 			}
@@ -40,8 +40,8 @@ public class ChatFlowHandler {
 			}
 
 			Long math = System.currentTimeMillis() - chatdata.lasttime;
-			if (math < chatdata.settimetooverflow) {
-				if (chatdata.chatflowscurrent > chatdata.setoverflows) {
+			if (math < Settings.overflows) {
+				if (chatdata.chatflowscurrent > Settings.overflows) {
 					// lockdown chatting.
 					chatdata.chatLockedDown = true;
 					if (Settings.notify) {
@@ -49,7 +49,7 @@ public class ChatFlowHandler {
 								.broadcastMessage(
 										Settings.prefix
 												+ ChatColor.DARK_AQUA
-												+ chatdata.overflowedmessage.replace(
+												+ Settings.overflowedmessage.replace(
 														"%sec%",
 														Long.toString(chatdata.chatmutedlength)));
 					}
@@ -60,12 +60,15 @@ public class ChatFlowHandler {
 							.scheduleSyncDelayedTask(antibot, new Runnable() {
 
 								public void run() {
-									chatdata.chatLockedDown = false;
-									chatdata.chatflowscurrent = 0;
-									antibot.getServer().broadcastMessage(
-											Settings.prefix + ChatColor.GREEN
-													+ "Chat has been unmuted!");
-
+									if (chatdata.chatLockedDown) {
+										chatdata.chatLockedDown = false;
+										chatdata.chatflowscurrent = 0;
+										antibot.getServer()
+												.broadcastMessage(
+														Settings.prefix
+																+ ChatColor.GREEN
+																+ "Chat has been unmuted!");
+									}
 								}
 							}, timetomutefor);
 					return;

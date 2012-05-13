@@ -98,7 +98,7 @@ public class CommandHandler {
 					}
 					antibot.getDataTrack().getBotTracker().reanibo = true;
 					antibot.getUtility().getDebug().debug("Tripswitched!");
-					antibot.getUtility().getBot().kickConnected();
+					antibot.getDataTrack().getBotTracker().kickConnected();
 				}
 				antibot.getDataTrack().getBotTracker().botattempt = System
 						.currentTimeMillis();

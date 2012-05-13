@@ -91,5 +91,67 @@ public class BotDataTrack {
 					.debug("Removing player failed: " + e.getMessage());
 		}
 	}
+	
+	public void kickConnected() {
+		// int kicked = 0;
+		botclass.getUtility()
+				.getDebug()
+				.debug("Kicking players with method #1 Size: "
+						+ botclass.getDataTrack().getBotTracker().connected
+								.size());
+		for (String pl : botclass.getDataTrack().getBotTracker().connected) {
+			try {
+				botclass.getUtility().getDebug()
+						.debug("Checking if kick possible for player..." + pl);
+				Player p2 = botclass.getServer().getPlayerExact(pl);
+				if (!botclass.getDataTrack().getChatTracker().checkConnection(pl)) {
+					botclass.getUtility().getDebug()
+							.debug("Yes, Kicking player..." + pl);
+					botclass.getServer().getPlayerExact(pl)
+							.kickPlayer(Settings.kickMsg);
+					botclass.getDataTrack().getBotTracker().spambotsblocked += 1;
+					if (Settings.banUsers) {
+						botclass.getDataTrack().getBotTracker().autoipkick
+								.add(p2.getAddress().toString().split(":")[0]);
+						botclass.getDataTrack().getBotTracker().autokick.add(pl);
+					}
+					// kicked += 1;
+					botclass.getUtility().getDebug()
+							.debug("Kicked player with method #1");
+					botclass.getUtility()
+							.getDebug()
+							.debug("We now have autokick: "
+									+ botclass.getDataTrack().getBotTracker().autokick
+											.size()
+									+ " ip: "
+									+ botclass.getDataTrack().getBotTracker().autoipkick
+											.size());
+				} else {
+					botclass.getUtility().getDebug()
+							.debug("Not possible for player ...." + pl);
+					botclass.getDataTrack().getBotTracker().connected.remove(pl);
+				}
+			} catch (Exception e) {
+				// if it fails. go down here.
+				e.printStackTrace();
+				botclass.getUtility().getDebug()
+						.debug("Failed to kick: " + pl);
+			}
+		}
+		botclass.getDataTrack().getBotTracker().connected.clear();
+
+		// kick players if the above method doesn't work :|
+		/*
+		 * botclass.getUtility().getDebug().debug("Checking if " + kicked
+		 * + " is less than 1"); if (kicked < 1) {
+		 * botclass.getUtility().getDebug()
+		 * .debug("Kicking player with method #2"); Player[] players =
+		 * botclass.getServer().getOnlinePlayers(); for (Player pl : players) {
+		 * if (!hasPerms(pl)) { pl.kickPlayer(Settings.connectMsg);
+		 * autokick.add(pl); botclass.getUtility().getDebug().debug(
+		 * "Kicked player with method #2" ); } } }
+		 */
+
+	}
 
 }

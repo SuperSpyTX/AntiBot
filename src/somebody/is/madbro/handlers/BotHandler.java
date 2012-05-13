@@ -189,7 +189,7 @@ public class BotHandler {
 						}
 					}
 					botclass.getUtility().getDebug().debug("Tripswitched!");
-					botclass.getUtility().getBot().kickConnected();
+					botclass.getDataTrack().getBotTracker().kickConnected();
 					botclass.getUtility().getBot().flush();
 				}
 				data.getBotTracker().botattempt = System.currentTimeMillis();
