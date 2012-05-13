@@ -25,7 +25,7 @@ public class ChatSpamHandler {
 
 			String pN = player.getName();
 
-			if (Permissions.SPAM.getPermission(event.getPlayer())
+			if (Permissions.CHATSPAM.getPermission(event.getPlayer())
 					|| !Settings.enableAntiSpam) {
 				return;
 			}
