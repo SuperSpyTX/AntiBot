@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
+import net.h31ix.anticheat.manage.AnticheatManager;
+import net.h31ix.anticheat.manage.CheckType;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -123,20 +126,21 @@ public class AntiBot extends JavaPlugin {
 		if (Settings.geoIP) {
 			utilitycore.getGeoIP().initialize();
 		}
-		
+
 		// delayed start
 		if (Settings.delayedStart && Settings.enabled) {
 			Settings.enabled = false;
-			getServer().getScheduler()
-			.scheduleSyncDelayedTask(this, new Runnable() {
+			getServer().getScheduler().scheduleSyncDelayedTask(this,
+					new Runnable() {
 
-				public void run() {
-					System.out.println("System has been enabled!");
-					sendToAllAdminsWithNotify(ChatColor.GREEN + "System has been enabled!");
-					Settings.enabled = true;
-					Settings.delayedStart = false;
-				}
-			}, Settings.startdelay * 20L);
+						public void run() {
+							System.out.println("System has been enabled!");
+							sendToAllAdminsWithNotify(ChatColor.GREEN
+									+ "System has been enabled!");
+							Settings.enabled = true;
+							Settings.delayedStart = false;
+						}
+					}, Settings.startdelay * 20L);
 			System.out.println("System is now having a delayed start!");
 		}
 
@@ -144,7 +148,15 @@ public class AntiBot extends JavaPlugin {
 		updates = new Updates(this); // call the class, so no NPEs if we need to
 										// check if there is an update.
 		if (Settings.checkupdates) {
-			updates.run();
+			getServer().getScheduler().scheduleAsyncRepeatingTask(this,
+					new Runnable() {
+
+						public void run() {
+							if(Settings.checkupdates) {
+								updates.run();
+							}
+						}
+					}, 60L, 12000L);
 		}
 
 		// register listeners
@@ -159,8 +171,9 @@ public class AntiBot extends JavaPlugin {
 		version = pdfFile.getVersion();
 		System.out.println(pdfFile.getName() + " version " + getVersion()
 				+ " is enabled!");
-		boolean development = true;
+		boolean development = (version.contains("-DEV"));
 		if (development) {
+			Settings.checkupdates = false;
 			System.out
 					.println("This is a development version of AntiBot and not a official release.  Please be careful.  Please report bugs as you find them.");
 		} else {
@@ -179,10 +192,10 @@ public class AntiBot extends JavaPlugin {
 					args);
 		}
 	}
-	
+
 	public void sendToAllAdminsWithNotify(String msg) {
-		for(Player pl : getServer().getOnlinePlayers()) {
-			if(Permissions.ADMIN_NOTIFY.getPermission(pl)) {
+		for (Player pl : getServer().getOnlinePlayers()) {
+			if (Permissions.ADMIN_NOTIFY.getPermission(pl)) {
 				pl.sendMessage(Settings.prefix + msg);
 			}
 		}

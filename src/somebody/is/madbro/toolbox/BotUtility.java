@@ -1,11 +1,8 @@
 package somebody.is.madbro.toolbox;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Random;
 
 import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
 import somebody.is.madbro.AntiBot;
 import somebody.is.madbro.settings.Settings;
 

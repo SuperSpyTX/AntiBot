@@ -35,6 +35,8 @@ public class SettingsCore {
 				propConfig.setProperty("connect-message", Settings.connectMsg);
 				propConfig.setProperty("kick-message", Settings.kickMsg);
 				propConfig.setProperty("prefix", Settings.prefix);
+				propConfig.setProperty("flow-message",
+						Settings.overflowedmessage);
 				propConfig.setProperty("countryban-message",
 						Settings.countryBanMsg);
 				propConfig.setProperty("countrybans", "");
@@ -78,6 +80,10 @@ public class SettingsCore {
 						Integer.toString(Settings.connectFor));
 				propConfig.setProperty("flow-time",
 						Integer.toString(Settings.timetooverflow));
+				propConfig.setProperty("flow-amount",
+						Integer.toString(Settings.overflows));
+				propConfig.setProperty("flow-enabled",
+						Boolean.toString(Settings.flowEnabled));
 				propConfig.setProperty("ban-users",
 						Boolean.toString(Settings.banUsers));
 				propConfig.setProperty("enable-geoip",
@@ -267,19 +273,21 @@ public class SettingsCore {
 			if (load != null && !load3.equals(Settings.enableAntiSpam)) {
 				Settings.enableAntiSpam = load3;
 			}
-			
-			// we need to disable AntiCheat's anti spam because AntiBot has one already.... or does it?
+
+			// we need to disable AntiCheat's anti spam because AntiBot has one
+			// already.... or does it?
 			// or do we?
 			// Thanks H31IX for approving AntiBot :D
-			if(antibot.getServer().getPluginManager().getPlugin("AntiCheat") != null)
-			{
-				if(Settings.enableAntiSpam) {
-					AnticheatManager.CHECK_MANAGER.deactivateCheck(CheckType.SPAM);
+			if (antibot.getServer().getPluginManager().getPlugin("AntiCheat") != null) {
+				if (Settings.enableAntiSpam) {
+					AnticheatManager.CHECK_MANAGER
+							.deactivateCheck(CheckType.SPAM);
 				} else {
-					AnticheatManager.CHECK_MANAGER.activateCheck(CheckType.SPAM);
+					AnticheatManager.CHECK_MANAGER
+							.activateCheck(CheckType.SPAM);
 				}
 			}
-			
+
 			load = propConfig.getProperty("enable-multiacc-detection");
 			if (load != null) {
 				load3 = Boolean.parseBoolean(load);
@@ -405,6 +413,11 @@ public class SettingsCore {
 			if (load != null && load2 > 0 && !load2.equals(Settings.accounts)) {
 				Settings.accounts = load2;
 				antibot.setDefaultaccounts(Settings.accounts);
+			}
+
+			boolean development = (antibot.getVersion().contains("-DEV"));
+			if (development) {
+				Settings.checkupdates = false;
 			}
 
 			System.out.print("AntiBot: Configuration Loaded Successfully!");
