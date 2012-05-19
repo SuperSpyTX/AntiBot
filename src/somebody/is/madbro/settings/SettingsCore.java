@@ -414,10 +414,13 @@ public class SettingsCore {
 				Settings.accounts = load2;
 				antibot.setDefaultaccounts(Settings.accounts);
 			}
-
-			boolean development = (antibot.getVersion().contains("-DEV"));
-			if (development) {
-				Settings.checkupdates = false;
+			try {
+				boolean development = (antibot.getVersion().contains("-DEV"));
+				if (development) {
+					Settings.checkupdates = false;
+				}
+			} catch (NullPointerException e) {
+				// server startup.
 			}
 
 			System.out.print("AntiBot: Configuration Loaded Successfully!");
@@ -426,6 +429,7 @@ public class SettingsCore {
 
 		} catch (Exception e) {
 			System.out.print("AntiBot: FUCKIN: " + e);
+			e.printStackTrace();
 			return false;
 		}
 	}
