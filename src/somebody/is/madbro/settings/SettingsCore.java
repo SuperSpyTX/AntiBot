@@ -8,7 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import net.h31ix.anticheat.manage.AnticheatManager;
+import net.h31ix.anticheat.api.*;
 import net.h31ix.anticheat.manage.CheckType;
 
 import somebody.is.madbro.AntiBot;
@@ -278,15 +278,20 @@ public class SettingsCore {
 			// already.... or does it?
 			// or do we?
 			// Thanks H31IX for approving AntiBot :D
-			if (antibot.getServer().getPluginManager().getPlugin("AntiCheat") != null) {
-				if (Settings.enableAntiSpam) {
-					AnticheatManager.CHECK_MANAGER
-							.deactivateCheck(CheckType.SPAM);
-				} else {
-					AnticheatManager.CHECK_MANAGER
-							.activateCheck(CheckType.SPAM);
+			antibot.getServer().getScheduler().scheduleAsyncDelayedTask(antibot, new Runnable() {
+
+				@Override
+				public void run() {
+					if (antibot.getServer().getPluginManager().getPlugin("AntiCheat") != null) {
+						if (Settings.enableAntiSpam) {
+							AnticheatAPI.deactivateCheck(CheckType.SPAM);
+						} else {
+							AnticheatAPI.activateCheck(CheckType.SPAM);
+						}
+					}
 				}
-			}
+				
+			}, 600L); //start in 30 seconds.
 
 			load = propConfig.getProperty("enable-multiacc-detection");
 			if (load != null) {
