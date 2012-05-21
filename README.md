@@ -16,6 +16,22 @@ This plugin uses special techniques to block spam bots from joining your Minecra
 
 It has Chat Spam protection.  After a certain amount of chat messages are sent in less than x seconds, they're kicked from the server. 
 
+It also has other options, such as Chat Flow, Country Bans, and delayed start!
+
+**Chat Flow** solves one of the most possible scenarios out there, when the bots bypass anti-chat spam protection!  The name of this feature is practical to keeping your server chat from chat spam.  Read the following scenario to get a better understanding of how it works.
+
+**Scenario - Before Chat Flow**
+This guy's Bob.  He runs a popular PvP server.  He loves the incoming traffic towards his server.  But then, some angry guy finds your server and is angry for no apparent reason.  So he opens his tools and begins sending 20 players or "bots" to your server, the bots then bypass your spam protection by sending 1 message every 2 seconds.  The chat spam protection isn't doing anything and your server chat ends up getting spammed like crazy.
+
+**Scenario - With Chat Flow**
+Bob installed AntiBot and adjusted AntiBot's Chat Flow.   The angry guy came around and once again, loaded his "bots" into the game and began running the same technique.  But fortunately, AntiBot's chat flow kicked in and muted the entire server chat for 5 seconds (auto increments by 5 seconds each time chat flow detects spam). If Bob assigned //antibot.voice// to his staff, they would be able to talk regardless if the chat is muted or not.  Bob then manually bans the bots and the day has been saved!
+
+I had no better way of explaining chat flow besides this scenario.
+
+**Country Bans** allows you to ban (or whitelist) countries into your server.  This is perfect if you wish to make your country based minecraft server to only allow your country.
+
+**Delayed Start** solves another problem, what if you restart the server with a bunch of players on, and basically when they all rejoin, AntiBot then detects bot spam and falsely kicks everybody.  This prevents that happening by disabling AntiBot for 60 seconds and re-enabling afterwards.
+
 It also has a legacy option to turn on a fake whitelist to prevent other users from joining the server until the specified joins per second has ran out. 
 
 The best part? This plugin is configurable to your own hands.  If my default settings don't work for your server, change them!
@@ -55,6 +71,6 @@ You can find the Configuration explanation [here as well.](http://dev.bukkit.org
 Help?  IRC Info
 ===========
 
-You can find me on Rizon IRC on [#antibot@irc.rizon.net](http://qchat.rizon.net/?nick=&channels=antibot)
+You can find me on Rizon IRC on [#antibot@irc.esper.net](http://webchat.esper.net/?nick=&channels=antibot)
 
 ![](http://metrics.griefcraft.com/signature/antibot.png)
