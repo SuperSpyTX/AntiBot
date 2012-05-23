@@ -26,6 +26,7 @@ public class Settings {
 	public static boolean whiteListCountry = false;
 	public static boolean checkupdates = true;
 	public static boolean delayedStart = true;
+	public static boolean craftBukkitMinusMinus = false;
 	public static String kickMsg = "[AntiBot] Tripwired protection!";
 	public static String countryBanMsg = "Your country is banned from this server!";
 	public static String connectMsg = "You are not on the whitelist!";

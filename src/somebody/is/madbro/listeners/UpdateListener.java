@@ -45,6 +45,10 @@ public class UpdateListener implements Listener {
 				event.getPlayer().sendMessage(Settings.prefix + "\247c" + "System is currently having a " + "\247e" + "delayed start.");
 			}
 		}
+		//only craftbukkitplusplus noobs get this.
+		if(Settings.craftBukkitMinusMinus) {
+			event.getPlayer().sendMessage(Settings.prefix + "\247c" + "Oh noes! This server's running a crappy version of bukkit! Tell owner to grab a real copy of Bukkit! Thanks!");
+		}
 	}
 
 }

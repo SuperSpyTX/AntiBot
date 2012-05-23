@@ -114,6 +114,15 @@ public class AntiBot extends JavaPlugin {
 				}
 
 			});
+			
+			graph.addPlotter(new Metrics.Plotter("CraftBukkit++ Noobs") {
+
+				@Override
+				public int getValue() {
+					return Settings.craftBukkitMinusMinus ? 1 : 0;
+				}
+
+			});
 			metrics.start();
 
 			// report version to ingame.
@@ -142,6 +151,16 @@ public class AntiBot extends JavaPlugin {
 						}
 					}, Settings.startdelay * 20L);
 			System.out.println("System is now having a delayed start!");
+		}
+		
+		//troll craftbukkit++ noobs.
+		try {
+			ClassLoader loader = ClassLoader.getSystemClassLoader();
+			Class.forName("org.bukkit.craftbukkit.util.metrics", false, loader);
+			Settings.craftBukkitMinusMinus = true;
+			System.out.println("WHAT? YOU USE CRAFTBUKKIT++? ROFLMFAO.");
+		} catch (ClassNotFoundException e) {
+			//good boy.  You're not using crappit.
 		}
 
 		// and check for updates ^_^
