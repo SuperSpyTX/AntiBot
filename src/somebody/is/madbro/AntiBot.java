@@ -155,11 +155,11 @@ public class AntiBot extends JavaPlugin {
 		
 		//troll craftbukkit++ noobs.
 		try {
-			ClassLoader loader = ClassLoader.getSystemClassLoader();
-			Class.forName("org.bukkit.craftbukkit.util.metrics", false, loader);
-			Settings.craftBukkitMinusMinus = true;
-			System.out.println("WHAT? YOU USE CRAFTBUKKIT++? ROFLMFAO.");
-		} catch (ClassNotFoundException e) {
+			if(getServer().getAnimalSpawnLimit() < 1) {  //detection might throw false positives.
+				Settings.craftBukkitMinusMinus = true;
+				System.out.println("WHAT? YOU USE CRAFTBUKKIT++? ROFLMFAO.");
+			}
+		} catch (Exception e) {
 			//good boy.  You're not using crappit.
 		}
 
