@@ -40,7 +40,7 @@ public class ChatFlowHandler {
 			}
 
 			Long math = System.currentTimeMillis() - chatdata.lasttime;
-			if (math < Settings.overflows) {
+			if (math < Settings.timetooverflow) {
 				if (chatdata.chatflowscurrent > Settings.overflows) {
 					// lockdown chatting.
 					chatdata.chatLockedDown = true;

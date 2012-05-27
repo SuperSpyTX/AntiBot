@@ -4,9 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
-import net.h31ix.anticheat.manage.AnticheatManager;
-import net.h31ix.anticheat.manage.CheckType;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
