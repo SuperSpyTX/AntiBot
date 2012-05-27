@@ -2,6 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   
+  
   <groupId>madbros</groupId>
   <artifactId>AntiBot</artifactId>
   <packaging>jar</packaging>
@@ -29,7 +30,7 @@
   
   <build>
       <sourceDirectory>${basedir}/src</sourceDirectory>
-    <finalName>${project.artifactId}-${project.version}</finalName>
+    <finalName>${project.artifactId}</finalName>
     <plugins>
     
       <plugin>
@@ -41,6 +42,10 @@
           <target>1.6</target>
           <encoding>${project.build.sourceEncoding}</encoding>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
       </plugin>
       
     </plugins>
