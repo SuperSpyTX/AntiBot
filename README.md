@@ -3,7 +3,7 @@ AntiBot
 
 The Ultimate Anti Spam protection plugin for Minecraft.  It trolls users who use login spam tools like **PWN4G3**.
 
-![Screenshot](http://dev.bukkit.org/thumbman/images/41/396/100x38/Image_2012-04-21_at_7.08.36_PM.png.-m1.png)
+![Screenshot](http://dev.bukkit.org/media/images/41/396/Image_2012-04-21_at_7.08.36_PM.png)
 
 Like this plugin and need a deathban type plugin?! Come try my latest: [http://dev.bukkit.org/server-mods/klaypexbans](http://dev.bukkit.org/server-mods/klaypexbans/)
 
