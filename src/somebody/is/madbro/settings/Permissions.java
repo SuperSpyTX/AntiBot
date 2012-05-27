@@ -68,11 +68,11 @@ public enum Permissions {
 				return false;
 			}
 
-			if(ADMIN.getPermission(pl) && level >= 3) {
+			if(ADMIN_PLUS.getPermission(pl) && level >= 3) {
 				return true;
 			}
 			
-			if(ADMIN_PLUS.getPermission(pl) && level < 3) {
+			if(ADMIN.getPermission(pl) && level < 3) {
 				return true;
 			}
 			

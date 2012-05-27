@@ -27,6 +27,7 @@ import somebody.is.madbro.settings.Settings;
 import somebody.is.madbro.settings.SettingsCore;
 import somebody.is.madbro.toolbox.UtilityCore;
 
+@Deprecated
 public class AntiBot extends JavaPlugin {
 
 	// listeners
