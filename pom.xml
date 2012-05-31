@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
   
   
-  <groupId>madbros</groupId>
+  <groupId>me.freebuild.superspytx</groupId>
   <artifactId>AntiBot</artifactId>
   <packaging>jar</packaging>
   <name>AntiBot</name>
-  <version>2.7.3-SNAPSHOT</version>
+  <version>2.7.4-SNAPSHOT</version>
   <url>http://dev.bukkit.org/server-mods/antibot</url>
   <description>
     The Ultimate Anti Spam protection plugin for Minecraft. It trolls users who use login spam tools like PWN4G3.
