@@ -1,5 +1,5 @@
 name: AntiBot
-main: me.freebuild.superspytx.AntiBot
+main: me.freebuild.superspytx.antibot.Core
 version: 2.7.4-DEV
 description: The ultimate spam protection for Minecraft.
 softdepend: [AntiCheat]
