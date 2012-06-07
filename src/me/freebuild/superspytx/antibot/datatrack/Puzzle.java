@@ -13,6 +13,7 @@ public class Puzzle {
 	private String answer = null;
 	private ChatColor colorcode = null;
 	private int attempts = 0;
+	private long lastsolvetime = 0;
 	
 	public Puzzle(Core instance, Player pl) {
 		core = instance;
@@ -43,10 +44,20 @@ public class Puzzle {
 		return false;
 	}
 	
+	public void setSolveTime(Long m) {
+		lastsolvetime = m;
+	}
+	
+	public boolean tooTaylorSwift() {
+		Long now = System.currentTimeMillis();
+		Long math = now - lastsolvetime;
+		return math < 4000L;
+	}
+	
 	public boolean checkAnswer(String c) {
 		if(naughty()) return false;
 		
-		if(answer.equalsIgnoreCase(c)) {
+		if(core.getUtility().getCaptcha().compare(c, answer)) {
 			return true;
 		}
 		

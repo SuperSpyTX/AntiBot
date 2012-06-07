@@ -21,6 +21,10 @@ public class CaptchaHandler {
 		if (hasUnsolvedPuzzle(e.getPlayer())) { // double checking never hurts.
 			Puzzle puzzle = antibot.getDataTrack().getCaptchaTracker().puzzles
 					.get(e.getPlayer());
+			if (puzzle.tooTaylorSwift()) {
+				puzzle.getPlayer().kickPlayer(Settings.kickMsg);
+				return;
+			}
 			if (!puzzle.checkAnswer(e.getMessage())) {
 				if (puzzle.naughty()) {
 					puzzle.getPlayer().kickPlayer(Settings.captchafail);
@@ -40,6 +44,7 @@ public class CaptchaHandler {
 						Settings.prefix + ChatColor.RED
 								+ "Wrong captcha text! You have " + wrong
 								+ " before you get kicked!");
+				puzzle.setSolveTime(System.currentTimeMillis());
 			} else {
 				// it's correct! yay!
 				antibot.getDataTrack().getCaptchaTracker().puzzles.remove(e
@@ -61,19 +66,27 @@ public class CaptchaHandler {
 	}
 
 	public void playerNeedsPuzzling(Player player) {
-		if(!Settings.captchaEnabled) return; // do nothing.
-		
-		if(Permissions.CAPTCHA.getPermission(player)) return;
-		
+		if (!Settings.captchaEnabled)
+			return; // do nothing.
+
+		if (Permissions.CAPTCHA.getPermission(player))
+			return;
+
 		if (!antibot.getDataTrack().getCaptchaTracker().solvedplayers
 				.contains(player.getName())) {
 			Puzzle puzzle = antibot.getDataTrack().getPuzzle(player);
 			antibot.getDataTrack().getCaptchaTracker().puzzles.put(player,
 					puzzle);
-			player.sendMessage(Settings.prefix + "Oh noes! Please enter 4 "
+			player.sendMessage(Settings.prefix
+					+ ChatColor.RED
+					+ "Oh noes, CAPTCHA! Please enter "
 					+ puzzle.getColor().toString()
-					+ "-colored letters from this letter strain: ");
-			player.sendMessage(puzzle.getCaptcha());
+					+ "4 "
+					+ antibot.getUtility().getCaptcha()
+							.formatColorName(puzzle.getColor().name())
+					+ ChatColor.RED + " colored letters from these: "
+					+ puzzle.getCaptcha());
+			puzzle.setSolveTime(System.currentTimeMillis());
 		} else {
 			// player is still spamming? what is this wizardry! /kaikzpun
 			player.kickPlayer(Settings.kickMsg);
