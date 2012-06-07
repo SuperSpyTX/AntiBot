@@ -1,9 +1,9 @@
 package me.freebuild.superspytx.antibot.handlers;
 
 import me.freebuild.superspytx.antibot.Core;
-import me.freebuild.superspytx.antibot.chat.ChatFlowHandler;
-import me.freebuild.superspytx.antibot.chat.ChatSpamHandler;
 import me.freebuild.superspytx.antibot.datatrack.DataTrackCore;
+import me.freebuild.superspytx.antibot.handlers.chat.ChatFlowHandler;
+import me.freebuild.superspytx.antibot.handlers.chat.ChatSpamHandler;
 
 public class HandlerCore {
 
@@ -16,6 +16,7 @@ public class HandlerCore {
 	private ChatSpamHandler chatspamhandler = null;
 	private CountryBanHandler countrybanhandler = null;
 	private ChatFlowHandler chatflowhandler = null;
+	private CaptchaHandler captchahandler = null;
 
 	public HandlerCore(Core instance, DataTrackCore instance2) {
 		antibot = instance;
@@ -24,6 +25,7 @@ public class HandlerCore {
 		chatspamhandler = new ChatSpamHandler(instance);
 		countrybanhandler = new CountryBanHandler(instance);
 		chatflowhandler = new ChatFlowHandler(instance);
+		captchahandler = new CaptchaHandler(instance);
 	}
 	
 	public CommandHandler getCommands() {
@@ -44,6 +46,10 @@ public class HandlerCore {
 	
 	public ChatFlowHandler getChatFlowHandler() {
 		return chatflowhandler;
+	}
+	
+	public CaptchaHandler getCaptchaHandler() {
+		return captchahandler;
 	}
 
 }

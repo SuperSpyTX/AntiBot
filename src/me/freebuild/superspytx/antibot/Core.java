@@ -169,7 +169,7 @@ public class Core extends JavaPlugin {
 		version = pdfFile.getVersion();
 		System.out.println(pdfFile.getName() + " version " + getVersion()
 				+ " is enabled!");
-		boolean development = (version.contains("-DEV"));
+		boolean development = (version.split("-b")[0].contains("-SNAPSHOT"));
 		if (development) {
 			Settings.checkupdates = false;
 			System.out

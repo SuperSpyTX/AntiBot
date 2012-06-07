@@ -5,7 +5,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import me.freebuild.superspytx.antibot.Core;
 
-
 public class CountryDataTrack {
 	
 	public Core botclass = null;

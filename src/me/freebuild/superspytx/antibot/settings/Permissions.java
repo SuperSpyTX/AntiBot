@@ -10,6 +10,7 @@ public enum Permissions {
 	JOIN("join", 1),
 	VOICE("voice", 1),
 	CHATSPAM("chatspam", 1),
+	CAPTCHA("captcha", 1),
 	COUNTRYBAN("countryban", 1),
 	
 	//admin level permissions

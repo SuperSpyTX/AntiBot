@@ -1,4 +1,4 @@
-package me.freebuild.superspytx.antibot.chat;
+package me.freebuild.superspytx.antibot.handlers.chat;
 
 import me.freebuild.superspytx.antibot.Core;
 import me.freebuild.superspytx.antibot.datatrack.ChatDataTrack;
@@ -6,8 +6,8 @@ import me.freebuild.superspytx.antibot.settings.Permissions;
 import me.freebuild.superspytx.antibot.settings.Settings;
 
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerChatEvent;
-
 
 public class ChatFlowHandler {
 
@@ -53,6 +53,15 @@ public class ChatFlowHandler {
 												+ Settings.overflowedmessage.replace(
 														"%sec%",
 														Long.toString(chatdata.chatmutedlength)));
+					}
+
+					// force captcha on chat overflow.
+
+					if (Settings.forceCaptchaOnChatFlow) {
+						for (Player pl : antibot.getServer().getOnlinePlayers()) {
+							antibot.getHandler().getCaptchaHandler()
+									.playerNeedsPuzzling(pl);
+						}
 					}
 
 					Long timetomutefor = chatdata.chatmutedlength * 20L;

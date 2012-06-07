@@ -1,23 +1,27 @@
 package me.freebuild.superspytx.antibot.datatrack;
 
+import org.bukkit.entity.Player;
+
 import me.freebuild.superspytx.antibot.Core;
-import me.freebuild.superspytx.antibot.chat.ChatSpamHandler;
 import me.freebuild.superspytx.antibot.handlers.BotHandler;
+import me.freebuild.superspytx.antibot.handlers.chat.ChatSpamHandler;
 
 public class DataTrackCore {
 	
-	public Core antibot = null;
+	private Core antibot = null;
 	
 	// trackers
-	public BotDataTrack botdata = null;
-	public ChatDataTrack chatdata = null;
-	public CountryDataTrack countrydata = null;
+	private BotDataTrack botdata = null;
+	private ChatDataTrack chatdata = null;
+	private CountryDataTrack countrydata = null;
+	private CaptchaDataTrack captchadata = null;
 	
 	public DataTrackCore(Core instance) {
 		antibot = instance;
 		botdata = new BotDataTrack(instance);
 		chatdata = new ChatDataTrack(instance);
 		countrydata = new CountryDataTrack(instance);
+		captchadata = new CaptchaDataTrack(instance);
 	}
 	
 	public PlayerData getPlayer(String username, ChatSpamHandler thi) {
@@ -26,6 +30,10 @@ public class DataTrackCore {
 	
 	public PlayerData getPlayer(String username, BotHandler thi) {
 		return new PlayerData(antibot, username);
+	}
+	
+	public Puzzle getPuzzle(Player player) {
+		return new Puzzle(antibot, player);
 	}
 	
 	public BotDataTrack getBotTracker() {
@@ -38,6 +46,10 @@ public class DataTrackCore {
 	
 	public CountryDataTrack getCountryTracker() {
 		return countrydata;
+	}
+	
+	public CaptchaDataTrack getCaptchaTracker() {
+		return captchadata;
 	}
 
 }

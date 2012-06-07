@@ -1,13 +1,13 @@
-package me.freebuild.superspytx.antibot.chat;
+package me.freebuild.superspytx.antibot.handlers.chat;
 
 import me.freebuild.superspytx.antibot.Core;
 import me.freebuild.superspytx.antibot.datatrack.PlayerData;
+import me.freebuild.superspytx.antibot.datatrack.Puzzle;
 import me.freebuild.superspytx.antibot.settings.Permissions;
 import me.freebuild.superspytx.antibot.settings.Settings;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerChatEvent;
-
 
 public class ChatSpamHandler {
 
@@ -30,7 +30,7 @@ public class ChatSpamHandler {
 					|| !Settings.enableAntiSpam) {
 				return;
 			}
-			
+
 			if (antibot.getDataTrack().getBotTracker().autokick.contains(player
 					.getName())) {
 				player.kickPlayer(Settings.kickMsg);
@@ -67,7 +67,10 @@ public class ChatSpamHandler {
 									Settings.prefix
 											+ "\247chas detected chat spam!");
 						}
-						if (!Settings.chatMute) {
+						
+						if (Settings.captchaEnabled && !Settings.chatMute) {
+							antibot.getHandler().getCaptchaHandler().playerNeedsPuzzling(player);
+						} else if (!Settings.chatMute) {
 							antibot.getDataTrack().getChatTracker().trackplayers
 									.remove(pN);
 							player.kickPlayer(Settings.kickMsg);

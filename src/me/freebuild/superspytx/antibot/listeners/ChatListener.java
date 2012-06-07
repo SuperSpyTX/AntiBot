@@ -40,6 +40,12 @@ public class ChatListener implements Listener {
 		if (!Settings.enabled) {
 			return;
 		}
+		
+		if(antibot.getHandler().getCaptchaHandler().hasUnsolvedPuzzle(event.getPlayer())) {
+			event.setCancelled(true);
+			return;
+		}
+		
 		antibot.getHandler().getChatFlowHandler().handle((PlayerChatEvent) event);
 	}
 	
@@ -48,6 +54,13 @@ public class ChatListener implements Listener {
 		if (!Settings.enabled) {
 			return;
 		}
+		
+		if(antibot.getHandler().getCaptchaHandler().hasUnsolvedPuzzle(event.getPlayer())) {
+			antibot.getHandler().getCaptchaHandler().handle((PlayerChatEvent) event);
+			event.setCancelled(true);
+			return;
+		}
+		
 		antibot.getHandler().getChatFlowHandler().handle((PlayerChatEvent) event);
 	}
 

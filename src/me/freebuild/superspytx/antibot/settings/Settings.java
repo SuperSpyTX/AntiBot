@@ -26,7 +26,11 @@ public class Settings {
 	public static boolean whiteListCountry = false;
 	public static boolean checkupdates = true;
 	public static boolean delayedStart = true;
+	public static boolean captchaEnabled = true;
+	public static boolean forceCaptchaOnJoin = false;
+	public static boolean forceCaptchaOnChatFlow = true;
 	public static String kickMsg = "[AntiBot] Tripwired protection!";
+	public static String captchafail = "[AntiBot] CAPTCHA Failed!";
 	public static String countryBanMsg = "Your country is banned from this server!";
 	public static String connectMsg = "You are not on the whitelist!";
 	public static String connectInvasion = "The server is currently under attack.";

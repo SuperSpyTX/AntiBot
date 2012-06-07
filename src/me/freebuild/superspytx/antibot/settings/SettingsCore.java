@@ -34,6 +34,7 @@ public class SettingsCore {
 				Properties propConfig = new Properties();
 				propConfig.setProperty("connect-message", Settings.connectMsg);
 				propConfig.setProperty("kick-message", Settings.kickMsg);
+				propConfig.setProperty("captcha-failed-message", Settings.captchafail);
 				propConfig.setProperty("prefix", Settings.prefix);
 				propConfig.setProperty("flow-message",
 						Settings.overflowedmessage);
@@ -60,12 +61,18 @@ public class SettingsCore {
 						Boolean.toString(Settings.debugmode));
 				propConfig.setProperty("enable-by-default",
 						Boolean.toString(Settings.enabled));
+				propConfig.setProperty("enable-captcha",
+						Boolean.toString(Settings.captchaEnabled));
 				propConfig.setProperty("joins",
 						Integer.toString(Settings.accounts));
 				propConfig.setProperty("enable-antispam",
 						Boolean.toString(Settings.enableAntiSpam));
 				propConfig.setProperty("enable-multiacc-detection",
 						Boolean.toString(Settings.enableMultiAccs));
+				propConfig.setProperty("captcha-on-join",
+						Boolean.toString(Settings.forceCaptchaOnJoin));
+				propConfig.setProperty("captcha-on-chat-overflow",
+						Boolean.toString(Settings.forceCaptchaOnChatFlow));
 				propConfig.setProperty("chat-mute",
 						Boolean.toString(Settings.chatMute));
 				propConfig.setProperty("whitelist-when-triggered",
@@ -124,6 +131,11 @@ public class SettingsCore {
 			load = propConfig.getProperty("kick-message");
 			if (load != null && load != Settings.kickMsg) {
 				Settings.kickMsg = load;
+			}
+			
+			load = propConfig.getProperty("captcha-failed-message");
+			if (load != null && load != Settings.captchafail) {
+				Settings.captchafail = load;
 			}
 
 			load = propConfig.getProperty("flow-message");
@@ -213,6 +225,16 @@ public class SettingsCore {
 			if (load != null && !load3.equals(Settings.whiteList)) {
 				Settings.whiteList = load3;
 			}
+			
+			load = propConfig.getProperty("enable-captcha");
+			if (load != null) {
+				load3 = Boolean.parseBoolean(load);
+			} else {
+				load3 = Settings.captchaEnabled;
+			}
+			if (load != null && !load3.equals(Settings.captchaEnabled)) {
+				Settings.captchaEnabled = load3;
+			}
 
 			load = propConfig.getProperty("check-updates");
 			if (load != null) {
@@ -222,6 +244,26 @@ public class SettingsCore {
 			}
 			if (load != null && !load3.equals(Settings.checkupdates)) {
 				Settings.checkupdates = load3;
+			}
+			
+			load = propConfig.getProperty("captcha-on-join");
+			if (load != null) {
+				load3 = Boolean.parseBoolean(load);
+			} else {
+				load3 = Settings.forceCaptchaOnJoin;
+			}
+			if (load != null && !load3.equals(Settings.forceCaptchaOnJoin)) {
+				Settings.forceCaptchaOnJoin = load3;
+			}
+			
+			load = propConfig.getProperty("captcha-on-chat-overflow");
+			if (load != null) {
+				load3 = Boolean.parseBoolean(load);
+			} else {
+				load3 = Settings.forceCaptchaOnChatFlow;
+			}
+			if (load != null && !load3.equals(Settings.forceCaptchaOnChatFlow)) {
+				Settings.forceCaptchaOnChatFlow = load3;
 			}
 
 			load = propConfig.getProperty("orgy-notify");

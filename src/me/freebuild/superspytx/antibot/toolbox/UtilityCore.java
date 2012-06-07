@@ -10,6 +10,7 @@ public class UtilityCore {
 	private DebugUtility debugutility = null;
 	private GeoIPUtility geoiputility = null;
 	private DeregisterUtility deregisterutility = null;
+	private CaptchaUtility captchautility = null;
 	
 	//listeners
 	protected BotListener botlistener = null;
@@ -23,6 +24,7 @@ public class UtilityCore {
 		debugutility = new DebugUtility(instance);
 		geoiputility = new GeoIPUtility(instance);
 		deregisterutility = new DeregisterUtility(instance);
+		captchautility = new CaptchaUtility(instance);
 	}
 	
 	public BotUtility getBot() {
@@ -39,6 +41,10 @@ public class UtilityCore {
 	
 	public DeregisterUtility getDeregister() {
 		return deregisterutility;
+	}
+	
+	public CaptchaUtility getCaptcha() {
+		return captchautility;
 	}
 	
 	

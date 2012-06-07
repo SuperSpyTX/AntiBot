@@ -54,5 +54,10 @@ public class BotListener implements Listener {
 			return;
 		}
 		antibot.getHandler().getBotHandler().onPlayerJoin(event);
+		
+		// i'm not sure, people are really getting spammed or just their OCD.
+		if(Settings.forceCaptchaOnJoin) {
+			antibot.getHandler().getCaptchaHandler().playerNeedsPuzzling(event.getPlayer());
+		}
 	}
 }
