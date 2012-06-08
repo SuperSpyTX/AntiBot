@@ -73,6 +73,10 @@ public class SettingsCore {
 						Boolean.toString(Settings.forceCaptchaOnJoin));
 				propConfig.setProperty("captcha-on-chat-overflow",
 						Boolean.toString(Settings.forceCaptchaOnChatFlow));
+				propConfig.setProperty("captcha-on-multi-account",
+						Boolean.toString(Settings.forceCaptchaOnMultiAcc));
+				propConfig.setProperty("captcha-on-bot-spam",
+						Boolean.toString(Settings.forceCaptchaOnBotSpam));
 				propConfig.setProperty("chat-mute",
 						Boolean.toString(Settings.chatMute));
 				propConfig.setProperty("whitelist-when-triggered",
@@ -264,6 +268,26 @@ public class SettingsCore {
 			}
 			if (load != null && !load3.equals(Settings.forceCaptchaOnChatFlow)) {
 				Settings.forceCaptchaOnChatFlow = load3;
+			}
+			
+			load = propConfig.getProperty("captcha-on-multi-account");
+			if (load != null) {
+				load3 = Boolean.parseBoolean(load);
+			} else {
+				load3 = Settings.forceCaptchaOnMultiAcc;
+			}
+			if (load != null && !load3.equals(Settings.forceCaptchaOnMultiAcc)) {
+				Settings.forceCaptchaOnMultiAcc = load3;
+			}
+			
+			load = propConfig.getProperty("captcha-on-bot-spam");
+			if (load != null) {
+				load3 = Boolean.parseBoolean(load);
+			} else {
+				load3 = Settings.forceCaptchaOnBotSpam;
+			}
+			if (load != null && !load3.equals(Settings.forceCaptchaOnBotSpam)) {
+				Settings.forceCaptchaOnBotSpam = load3;
 			}
 
 			load = propConfig.getProperty("orgy-notify");

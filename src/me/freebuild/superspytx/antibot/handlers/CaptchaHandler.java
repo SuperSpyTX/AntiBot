@@ -11,7 +11,7 @@ import me.freebuild.superspytx.antibot.settings.Settings;
 
 public class CaptchaHandler {
 
-	public Core antibot = null;
+	private Core antibot = null;
 
 	public CaptchaHandler(Core instance) {
 		antibot = instance;
@@ -66,8 +66,13 @@ public class CaptchaHandler {
 	}
 
 	public void playerNeedsPuzzling(Player player) {
-		if (!Settings.captchaEnabled)
-			return; // do nothing.
+		if (!Settings.captchaEnabled) {
+			if (Permissions.CAPTCHA.getPermission(player))
+				return;
+			player.kickPlayer(Settings.kickMsg); //act as if they're getting kicked.
+			
+			return; // do nothing else.
+		}
 
 		if (Permissions.CAPTCHA.getPermission(player))
 			return;

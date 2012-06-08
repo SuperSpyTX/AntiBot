@@ -2,7 +2,6 @@ package me.freebuild.superspytx.antibot.handlers.chat;
 
 import me.freebuild.superspytx.antibot.Core;
 import me.freebuild.superspytx.antibot.datatrack.PlayerData;
-import me.freebuild.superspytx.antibot.datatrack.Puzzle;
 import me.freebuild.superspytx.antibot.settings.Permissions;
 import me.freebuild.superspytx.antibot.settings.Settings;
 

@@ -57,12 +57,17 @@ public class BotDataTrack {
 							Settings.prefix
 									+ "\247chas detected multiple accounts!!");
 				}
-				try {
-					e.kickPlayer(Settings.kickMsg);
-					botclass.getServer().getPlayerExact(ipList.get(IP))
-							.kickPlayer(Settings.kickMsg);
-				} catch (Exception e1) {
+				if (!Settings.forceCaptchaOnMultiAcc
+						|| !Settings.captchaEnabled) {
+					try {
+						e.kickPlayer(Settings.kickMsg);
+						botclass.getServer().getPlayerExact(ipList.get(IP))
+								.kickPlayer(Settings.kickMsg);
+					} catch (Exception e1) {
 
+					}
+				} else {
+					botclass.getHandler().getCaptchaHandler().playerNeedsPuzzling(e);
 				}
 			}
 		}
@@ -106,11 +111,18 @@ public class BotDataTrack {
 				Player p2 = botclass.getServer().getPlayerExact(pl);
 				if (!botclass.getDataTrack().getChatTracker()
 						.checkConnection(pl)) {
-					botclass.getUtility().getDebug()
-							.debug("Yes, Kicking player..." + pl);
-					p2.kickPlayer(Settings.kickMsg);
+					if(!Settings.forceCaptchaOnBotSpam) {
+						botclass.getUtility().getDebug()
+						.debug("Yes, Kicking player..." + pl);
+						p2.kickPlayer(Settings.kickMsg);
+					} else {
+						botclass.getUtility().getDebug()
+						.debug("Yes, Sending CAPTCHA" + pl);
+						botclass.getHandler().getCaptchaHandler().playerNeedsPuzzling(p2);
+					}
+					
 					botclass.getDataTrack().getBotTracker().spambotsblocked += 1;
-					if (Settings.banUsers) {
+					if (Settings.banUsers && (!Settings.forceCaptchaOnBotSpam || !Settings.captchaEnabled)) {
 						botclass.getDataTrack().getBotTracker().autoipkick
 								.add(p2.getAddress().toString().split(":")[0]);
 						botclass.getDataTrack().getBotTracker().autokick

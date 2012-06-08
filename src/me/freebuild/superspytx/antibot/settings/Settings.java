@@ -29,6 +29,8 @@ public class Settings {
 	public static boolean captchaEnabled = true;
 	public static boolean forceCaptchaOnJoin = false;
 	public static boolean forceCaptchaOnChatFlow = true;
+	public static boolean forceCaptchaOnMultiAcc = true;
+	public static boolean forceCaptchaOnBotSpam = true;
 	public static String kickMsg = "[AntiBot] Tripwired protection!";
 	public static String captchafail = "[AntiBot] CAPTCHA Failed!";
 	public static String countryBanMsg = "Your country is banned from this server!";
