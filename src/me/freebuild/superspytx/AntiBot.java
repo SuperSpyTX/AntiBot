@@ -110,6 +110,17 @@ public class AntiBot extends JavaPlugin
                 }
 
             });
+            
+            graph.addPlotter(new Metrics.Plotter("Chat Overflows")
+            {
+
+                @Override
+                public int getValue()
+                {
+                    return getDataTrack().getChatTracker().chatoverflows;
+                }
+
+            });
 
             graph.addPlotter(new Metrics.Plotter("Country Users Blocked")
             {

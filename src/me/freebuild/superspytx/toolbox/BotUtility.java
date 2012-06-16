@@ -77,7 +77,6 @@ public class BotUtility
                 antibot.getDataTrack().getChatTracker().chatLockedDown = false;
                 antibot.getServer().broadcastMessage(Settings.prefix + ChatColor.GREEN + "Chat has been unmuted!");
             }
-            antibot.getDataTrack().getChatTracker().chatoverflows = 0;
             antibot.getDataTrack().getChatTracker().chatmutedlength = 5L;
             antibot.getDataTrack().getChatTracker().lasttime = 0L;
             if (Settings.notify && Settings.whiteList)

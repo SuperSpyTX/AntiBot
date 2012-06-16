@@ -72,6 +72,7 @@ public class ChatFlowHandler
 
                     Long timetomutefor = chatdata.chatmutedlength * 20L;
                     chatdata.chatmutedlength += 5L; // increase by 5 each time.
+                    chatdata.chatoverflows += 1;
                     antibot.getServer().getScheduler().scheduleSyncDelayedTask(antibot, new Runnable()
                     {
 
