@@ -23,14 +23,14 @@ public class ChatSpamHandler
     {
         try
         {
-            if (!Settings.enabled)
+            if (!Settings.enabled || !Settings.enableAntiSpam)
             {
                 return;
             }
 
             String pN = player.getName();
 
-            if (Permissions.CHATSPAM.getPermission(event.getPlayer()) || !Settings.enableAntiSpam)
+            if (Permissions.CHATSPAM.getPermission(event.getPlayer()))
             {
                 return;
             }

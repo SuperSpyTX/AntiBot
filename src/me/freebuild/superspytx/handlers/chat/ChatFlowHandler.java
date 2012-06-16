@@ -26,7 +26,7 @@ public class ChatFlowHandler
     {
         try
         {
-            if (!Settings.enabled)
+            if (!Settings.enabled || !Settings.flowEnabled)
             {
                 return;
             }
