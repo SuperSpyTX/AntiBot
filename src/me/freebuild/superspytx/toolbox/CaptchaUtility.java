@@ -148,6 +148,100 @@ public class CaptchaUtility
         return newpuzzle;
     }
 
+    public static String randomNumbers()
+    {
+        int[] g = new int[4];
+        g[0] = (new Random()).nextInt(9);
+        g[1] = (new Random()).nextInt(9);
+        g[2] = (new Random()).nextInt(9);
+        g[3] = (new Random()).nextInt(9);
+        for (int i = 0; i < g.length; i++)
+        {
+            int o = g[i];
+            for (int c = 0; c < g.length; c++)
+            {
+                if (c == i)
+                    continue;
+                int a = g[c];
+                if (o == a)
+                    return randomNumbers(); // looks like java's random number generator derped.
+            }
+        }
+
+        String convert = "";
+        for (int z : g)
+            convert += Integer.toString(z);
+
+        return convert;
+    }
+
+    public String[] generatePuzzleV2()
+    {
+        String str = randomNumbers();
+        String[] speceffects = "l,m,n,o,r".split(",");
+        String[] minealpha = "0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f".split(",");
+        String spec = '\247' + minealpha[(new Random()).nextInt(minealpha.length)] + '\247' + speceffects[(new Random()).nextInt(speceffects.length)];
+        String[] puzzle = new String[6];
+        String[] p0 = strFormat(str.toCharArray()[0]);
+        String[] p1 = strFormat(str.toCharArray()[1]);
+        String[] p2 = strFormat(str.toCharArray()[2]);
+        String[] p3 = strFormat(str.toCharArray()[3]);
+        puzzle[0] = spec + p0[0] + "  " + p1[0] + "  " + p2[0] + "  " + p3[0];
+        puzzle[1] = spec + p0[1] + "  " + p1[1] + "  " + p2[1] + "  " + p3[1];
+        puzzle[2] = spec + p0[2] + "  " + p1[2] + "  " + p2[2] + "  " + p3[2];
+        puzzle[3] = spec + p0[3] + "  " + p1[3] + "  " + p2[3] + "  " + p3[3];
+        puzzle[4] = spec + p0[4] + "  " + p1[4] + "  " + p2[4] + "  " + p3[4];
+        puzzle[5] = str;
+        return puzzle;
+    }
+
+    public String[] strFormat(char g)
+    {
+        if (g == "0".toCharArray()[0])
+        {
+            return new String[] { "####", "#  #", "#  #", "#  #", "####" };
+        }
+        if (g == "1".toCharArray()[0])
+        {
+            return new String[] { " # ", "## ", " # ", " # ", "###" };
+        }
+        if (g == "2".toCharArray()[0])
+        {
+            return new String[] { "####", "   #", "####", "#   ", "####" };
+        }
+        if (g == "3".toCharArray()[0])
+        {
+            return new String[] { "####", "   #", " ###", "   #", "####" };
+        }
+        if (g == "4".toCharArray()[0])
+        {
+            return new String[] { "#  #", "#  #", "####", "   #", "   #" };
+        }
+        if (g == "5".toCharArray()[0])
+        {
+            return new String[] { "####", "#   ", "####", "   #", "####" };
+        }
+        if (g == "6".toCharArray()[0])
+        {
+            return new String[] { "####", "#   ", "####", "#  #", "####" };
+        }
+        if (g == "7".toCharArray()[0])
+        {
+            return new String[] { "####", "   #", "   #", "   #", "   #" };
+        }
+        if (g == "8".toCharArray()[0])
+        {
+            return new String[] { "####", "#  #", "####", "#  #", "####" };
+        }
+        if (g == "9".toCharArray()[0])
+        {
+            return new String[] { "####", "#  #", "####", "   #", "####" };
+        }
+
+        return null;
+
+    }
+
     public boolean compare(String input, String answer)
     {
         char[] onlychars = answer.toLowerCase().toCharArray();

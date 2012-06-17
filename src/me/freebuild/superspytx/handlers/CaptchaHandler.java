@@ -82,7 +82,16 @@ public class CaptchaHandler
         {
             Puzzle puzzle = antibot.getDataTrack().getPuzzle(player);
             antibot.getDataTrack().getCaptchaTracker().puzzles.put(player, puzzle);
-            player.sendMessage(Settings.prefix + ChatColor.RED + "Oh noes, CAPTCHA! Please enter " + puzzle.getColor().toString() + "4 " + antibot.getUtility().getCaptcha().formatColorName(puzzle.getColor().name()) + ChatColor.RED + " colored letters from these: " + puzzle.getCaptcha());
+            if (!puzzle.isNewCaptcha())
+            {
+                player.sendMessage(Settings.prefix + ChatColor.RED + "Oh noes, CAPTCHA! Please enter " + puzzle.getColor().toString() + "4 " + antibot.getUtility().getCaptcha().formatColorName(puzzle.getColor().name()) + ChatColor.RED + " colored letters from these: " + puzzle.getCaptcha());
+            }
+            else
+            {
+                player.sendMessage(Settings.prefix + ChatColor.RED + "Oh noes, CAPTCHA! Please enter the following numbers");
+                for (String capt : puzzle.getNewCaptcha())
+                    player.sendMessage(capt);
+            }
             puzzle.setSolveTime(System.currentTimeMillis());
         }
         else
