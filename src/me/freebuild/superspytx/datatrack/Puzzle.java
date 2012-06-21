@@ -102,7 +102,7 @@ public class Puzzle
     {
         Long now = System.currentTimeMillis();
         Long math = now - lastsolvetime;
-        return math < (newcaptcha ? 2000L : 4000L);
+        return math < (newcaptcha ? 600L : 2000L);
     }
 
     public boolean checkAnswer(String c)
