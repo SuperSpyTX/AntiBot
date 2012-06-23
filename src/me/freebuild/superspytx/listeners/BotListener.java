@@ -44,7 +44,7 @@ public class BotListener implements Listener
     }
 
     // falsified antibot trigger bug fix, or brolos bug fix.
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event)
     {
         if (!Settings.enabled)
@@ -54,7 +54,7 @@ public class BotListener implements Listener
         antibot.getHandler().getBotHandler().onPlayerQuit(event);
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event)
     {
         if (!Settings.enabled)
