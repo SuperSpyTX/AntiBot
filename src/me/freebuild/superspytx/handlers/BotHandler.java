@@ -185,14 +185,14 @@ public class BotHandler
                         {
                             botclass.getServer().broadcastMessage(Settings.prefix + "\247chas detected minecraft spam!");
                         }
+                        botclass.getUtility().getBot().flush();
                     }
                     botclass.getUtility().getDebug().debug("Tripswitched!");
                     botclass.getDataTrack().getBotTracker().kickConnected();
-                    botclass.getUtility().getBot().flush();
                 }
                 data.getBotTracker().botattempt = System.currentTimeMillis();
                 data.getBotTracker().botcts += 1;
-                event.getPlayer().kickPlayer(Settings.connectMsg);
+                event.getPlayer().kickPlayer(Settings.kickMsg);
                 event.setJoinMessage("");
             }
             else if (data.getBotTracker().botattempt < Settings.interval && data.getBotTracker().reanibo)

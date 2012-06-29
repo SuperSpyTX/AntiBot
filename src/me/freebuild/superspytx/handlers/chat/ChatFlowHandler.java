@@ -86,6 +86,7 @@ public class ChatFlowHandler
                             }
                         }
                     }, timetomutefor);
+                    event.setCancelled(true);
                     return;
                 }
                 chatdata.chatflowscurrent += 1;
