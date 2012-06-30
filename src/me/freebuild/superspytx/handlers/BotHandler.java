@@ -118,7 +118,7 @@ public class BotHandler
             if (data.getBotTracker().autokick.contains(event.getPlayer().getName()))
             {
                 event.getPlayer().kickPlayer(Settings.kickMsg);
-                event.setJoinMessage("");
+                event.setJoinMessage(null);
                 return;
             }
 
@@ -193,7 +193,7 @@ public class BotHandler
                 data.getBotTracker().botattempt = System.currentTimeMillis();
                 data.getBotTracker().botcts += 1;
                 event.getPlayer().kickPlayer(Settings.kickMsg);
-                event.setJoinMessage("");
+                event.setJoinMessage(null);
             }
             else if (data.getBotTracker().botattempt < Settings.interval && data.getBotTracker().reanibo)
             {
@@ -202,7 +202,7 @@ public class BotHandler
                 data.getBotTracker().botattempt = System.currentTimeMillis();
                 data.getBotTracker().botcts += 1;
                 event.getPlayer().kickPlayer(Settings.connectMsg);
-                event.setJoinMessage("");
+                event.setJoinMessage(null);
             }
             else
             {
@@ -219,7 +219,7 @@ public class BotHandler
 
             if (!botclass.getServer().getOfflinePlayer(event.getPlayer().getName()).isOnline())
             {
-                event.setJoinMessage("");
+                event.setJoinMessage(null);
             }
 
         }

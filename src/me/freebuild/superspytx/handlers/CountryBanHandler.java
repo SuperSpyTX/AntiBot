@@ -33,6 +33,7 @@ public class CountryBanHandler
             antibot.getDataTrack().getCountryTracker().countryusersblocked += 1;
             // oh noes! he's in a forbidden country!
             event.getPlayer().kickPlayer(Settings.countryBanMsg);
+            event.setJoinMessage(null);
 
             if (Settings.banUsers)
             {

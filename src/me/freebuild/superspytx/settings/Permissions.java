@@ -23,6 +23,7 @@ public enum Permissions
     ADMIN_INFO("admin.info", 2),
     ADMIN_ATTACK("admin.attack", 3),
     ADMIN_NOTIFY("admin.notify", 2),
+    ADMIN_CHATMUTE("admin.chatmute", 2),
     ADMIN_FLUSH("admin.flush", 2),
     ADMIN_CHANGECONF("admin.changeconf", 3),
     ADMIN_TOGGLE("admin.toggle", 3);

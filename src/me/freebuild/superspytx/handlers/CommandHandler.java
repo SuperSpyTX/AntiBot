@@ -68,7 +68,11 @@ public class CommandHandler
             }
             if (Permissions.ADMIN_FLUSH.getPermission(player))
             {
-                sender.sendMessage(Settings.prefix + "/antibot flush - Flush the connection throttling.");
+                sender.sendMessage(Settings.prefix + "/antibot flush - Flush user data in AntiBot.");
+            }
+            if (Permissions.ADMIN_CHATMUTE.getPermission(player))
+            {
+                sender.sendMessage(Settings.prefix + "/antibot chatmute - Toggle chat flow's global chat mute.");
             }
             if (Permissions.ADMIN_CHANGECONF.getPermission(player))
             {
@@ -116,6 +120,34 @@ public class CommandHandler
                 antibot.getDataTrack().getBotTracker().botattempt = System.currentTimeMillis();
                 antibot.getDataTrack().getBotTracker().botcts += 1;
             }
+            return true;
+        }
+
+        if (args[0].compareToIgnoreCase("flush") == 0)
+        {
+            if (Permissions.ADMIN_CHATMUTE.getPermission(player, sender))
+            {
+                boolean b = !antibot.getDataTrack().getChatTracker().chatLockedDown;
+                try
+                {
+                    b = (args[0].equalsIgnoreCase("on") ? true : (args[0].equalsIgnoreCase("off") ? false : !antibot.getDataTrack().getChatTracker().chatLockedDown));
+                }
+                catch (Exception shutup)
+                {
+                }
+
+                antibot.getDataTrack().getChatTracker().chatLockedDown = b;
+                if (Settings.notify)
+                {
+                    if (b)
+                        antibot.getServer().broadcastMessage(Settings.prefix + ChatColor.DARK_AQUA + Settings.overflowedmessage.replace("%sec%", "infinity, and beyond"));
+                    if (!b)
+                        antibot.getServer().broadcastMessage(Settings.prefix + ChatColor.GREEN + "Chat has been unmuted by " + sender.getName() + "!");
+
+                    antibot.getDataTrack().getChatTracker().chatflowscurrent = 0;
+                }
+            }
+
             return true;
         }
 
