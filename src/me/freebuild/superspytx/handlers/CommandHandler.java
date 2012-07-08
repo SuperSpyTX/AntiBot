@@ -123,7 +123,7 @@ public class CommandHandler
             return true;
         }
 
-        if (args[0].compareToIgnoreCase("flush") == 0)
+        if (args[0].compareToIgnoreCase("chatmute") == 0)
         {
             if (Permissions.ADMIN_CHATMUTE.getPermission(player, sender))
             {
