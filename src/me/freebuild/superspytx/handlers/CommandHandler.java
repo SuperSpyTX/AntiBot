@@ -74,12 +74,6 @@ public class CommandHandler
             {
                 sender.sendMessage(Settings.prefix + "/antibot chatmute - Toggle chat flow's global chat mute.");
             }
-            if (Permissions.ADMIN_CHANGECONF.getPermission(player))
-            {
-                sender.sendMessage(Settings.prefix + "/antibot int [val] - Change intervals.");
-                sender.sendMessage(Settings.prefix + "/antibot acc [val] - Change accounts.");
-                sender.sendMessage(Settings.prefix + "/antibot notify [true/false] - Change whether you get notified or not.");
-            }
             if (Permissions.ADMIN_TOGGLE.getPermission(player))
             {
                 sender.sendMessage(Settings.prefix + "/antibot off - Turn off AntiBot.");
@@ -92,7 +86,7 @@ public class CommandHandler
         {
             if (Permissions.ADMIN_RELOAD.getPermission(player, sender))
             {
-                if (antibot.getSettings().loadSettings(antibot.getDataFolder()))
+                if (antibot.getSettings().loadSettings())
                 {
                     sender.sendMessage(Settings.prefix + ChatColor.GREEN + "Reloaded configuration successfully!");
                 }
@@ -116,9 +110,13 @@ public class CommandHandler
                     antibot.getDataTrack().getBotTracker().reanibo = true;
                     antibot.getUtility().getDebug().debug("Tripswitched!");
                     antibot.getDataTrack().getBotTracker().kickConnected();
+                    antibot.getDataTrack().getBotTracker().botattempt = System.currentTimeMillis();
+                    antibot.getDataTrack().getBotTracker().botcts += 1;
                 }
-                antibot.getDataTrack().getBotTracker().botattempt = System.currentTimeMillis();
-                antibot.getDataTrack().getBotTracker().botcts += 1;
+                else if (!Settings.whiteList)
+                {
+                    sender.sendMessage(ChatColor.RED + "You do not have whitelist mode enabled!");
+                }
             }
             return true;
         }
@@ -171,7 +169,7 @@ public class CommandHandler
         {
             if (Permissions.ADMIN_TOGGLE.getPermission(player, sender))
             {
-                if (Settings.enabled == true)
+                if (Settings.enabled)
                 {
                     sender.sendMessage(Settings.prefix + "The system is already enabled!");
                 }
@@ -195,7 +193,7 @@ public class CommandHandler
         {
             if (Permissions.ADMIN_TOGGLE.getPermission(player, sender))
             {
-                if (Settings.enabled == false)
+                if (!Settings.enabled)
                 {
                     sender.sendMessage(Settings.prefix + "The system is already disabled!");
                 }
@@ -213,120 +211,6 @@ public class CommandHandler
             }
             return true;
             // Reload here.
-        }
-        if (args[0].compareToIgnoreCase("int") == 0)
-        {
-            if (Permissions.ADMIN_CHANGECONF.getPermission(player, sender))
-            {
-                if (args.length < 2)
-                {
-                    sender.sendMessage(Settings.prefix + ChatColor.RED + "Please type an interval after /antibot int.");
-                    return true;
-                }
-                try
-                {
-                    Integer toval = Integer.parseInt(args[1]);
-                    if (toval < 1)
-                    {
-                        sender.sendMessage(Settings.prefix + ChatColor.RED + "You cannot set this value less than 1.");
-                    }
-                    if (toval > 60)
-                    {
-                        sender.sendMessage(Settings.prefix + ChatColor.RED + "You cannot set this value greater than 60.");
-                    }
-                    toval = toval * 1000;
-
-                    Settings.interval = toval;
-                    if (antibot.getSettings().saveConfig("joins-sec", Integer.toString(toval)))
-                    {
-                        sender.sendMessage(Settings.prefix + ChatColor.GREEN + "Changed intervals successfully!");
-                    }
-                    else
-                    {
-                        sender.sendMessage(Settings.prefix + ChatColor.RED + "Error while trying to save interval to config.");
-                    }
-                }
-                catch (Exception e)
-                {
-                    sender.sendMessage(Settings.prefix + ChatColor.RED + "Error while trying to change interval.");
-                }
-            }
-            return true;
-        }
-        if (args[0].compareToIgnoreCase("notify") == 0)
-        {
-            if (Permissions.ADMIN_CHANGECONF.getPermission(player, sender))
-            {
-                if (args.length != 2)
-                {
-                    sender.sendMessage(Settings.prefix + ChatColor.RED + "Please type true/false after /antibot notify.");
-                    return true;
-                }
-                try
-                {
-                    String a = args[1];
-                    if (!a.equals("true") && !a.equals("false"))
-                    {
-                        sender.sendMessage(Settings.prefix + ChatColor.RED + "The value must either be true or false.");
-                        return true;
-                    }
-                    Settings.notify = Boolean.parseBoolean(a);
-                    if (antibot.getSettings().saveConfig("orgy-notify", a))
-                    {
-                        sender.sendMessage(Settings.prefix + ChatColor.GREEN + "Changed notification status successfully!");
-                    }
-                    else
-                    {
-                        sender.sendMessage(Settings.prefix + ChatColor.RED + "Error while trying to save notification status to config.");
-                    }
-
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                    sender.sendMessage(Settings.prefix + ChatColor.RED + "Error while trying to change notification status.");
-                }
-
-            }
-            return true;
-        }
-        if (args[0].compareToIgnoreCase("acc") == 0)
-        {
-            if (Permissions.ADMIN_CHANGECONF.getPermission(player, sender))
-            {
-                if (args.length < 2)
-                {
-                    sender.sendMessage(Settings.prefix + ChatColor.RED + "Please type an # of accounts after /antibot acc.");
-                    return true;
-                }
-                try
-                {
-                    Integer toval = Integer.parseInt(args[1]);
-                    if (toval > 10)
-                    {
-                        sender.sendMessage(Settings.prefix + ChatColor.RED + "You cannot set this value greater than 10.");
-                    }
-                    if (toval < 3)
-                    {
-                        sender.sendMessage(Settings.prefix + ChatColor.RED + "You cannot set this value less than 3.");
-                    }
-
-                    Settings.accounts = toval;
-                    if (antibot.getSettings().saveConfig("joins", Integer.toString(toval)))
-                    {
-                        sender.sendMessage(Settings.prefix + ChatColor.GREEN + "Changed # of accounts successfully!");
-                    }
-                    else
-                    {
-                        sender.sendMessage(Settings.prefix + ChatColor.RED + "Error while trying to save # of accounts to config.");
-                    }
-                }
-                catch (Exception e)
-                {
-                    sender.sendMessage(Settings.prefix + ChatColor.RED + "Error while trying to change # of accounts.");
-                }
-            }
-            return true;
         }
         if (args[0].compareToIgnoreCase("info") == 0)
         {

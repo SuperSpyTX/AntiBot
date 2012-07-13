@@ -1,8 +1,10 @@
 package me.freebuild.superspytx.settings;
 
+import me.freebuild.superspytx.AntiBot;
+
 public class Settings
 {
-
+    public static AntiBot core = null;
     public static int interval = 5000;
     public static int accounts = 4;
     public static int spamam = 4;

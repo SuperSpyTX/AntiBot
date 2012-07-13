@@ -33,6 +33,9 @@ permissions:
   AntiBot.admin.reload:
     default: false
     description: Ability to reload configuration.
+  AntiBot.admin.chatmute:
+    default: false
+    description: Ability to globally mute chat whenever you feel like it :)
   AntiBot.admin.info:
     default: false
     description: Check the status of AntiBot.

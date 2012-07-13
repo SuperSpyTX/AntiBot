@@ -151,7 +151,7 @@ public class BotHandler
                 if (botclass.getDefaultinterval() < 1)
                 {
                     // have to fix.
-                    botclass.getSettings().loadSettings(botclass.getDataFolder());
+                    botclass.getSettings().loadSettings();
                 }
             }
 

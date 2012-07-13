@@ -36,6 +36,11 @@ public class ChatFlowHandler
                 return;
             }
 
+            if (antibot.getHandler().getCaptchaHandler().hasUnsolvedPuzzle(event.getPlayer()))
+            {
+                return;
+            }
+
             if (chatdata.chatLockedDown)
             {
                 event.setCancelled(true);
@@ -66,7 +71,8 @@ public class ChatFlowHandler
                     {
                         for (Player pl : antibot.getServer().getOnlinePlayers())
                         {
-                            antibot.getHandler().getCaptchaHandler().playerNeedsPuzzling(pl);
+                            if (!antibot.getDataTrack().getCaptchaTracker().solvedplayers.contains(pl.getName()))
+                                antibot.getHandler().getCaptchaHandler().playerNeedsPuzzling(pl);
                         }
                     }
 

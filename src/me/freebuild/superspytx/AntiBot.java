@@ -26,7 +26,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class AntiBot extends JavaPlugin
 {
-
     // listeners
     private BotListener botlistener = null;
     private ChatListener chatlistener = null;
@@ -56,16 +55,19 @@ public class AntiBot extends JavaPlugin
     private int defaultinterval;
     private int defaultaccounts;
     private String version = null;
+    
+    public boolean firsttime = false;
 
     public void onEnable()
     {
-
+        
         // Configuration.
         dataFolder = getDataFolder();
         if (!dataFolder.exists())
         {
             System.out.print("AntiBot: Missing Folder. Creating..");
             dataFolder.mkdir();
+            firsttime = true;
         }
 
         // listeners
@@ -81,8 +83,8 @@ public class AntiBot extends JavaPlugin
         handlercore = new HandlerCore(this, datatrackcore);
         utilitycore = new UtilityCore(this);
 
-        settings.saveSettings(dataFolder);
-        settings.loadSettings(dataFolder);
+        settings.loadDefaults();
+        settings.loadSettings();
         try
         {
             Metrics metrics = new Metrics(this);
@@ -110,7 +112,7 @@ public class AntiBot extends JavaPlugin
                 }
 
             });
-            
+
             graph.addPlotter(new Metrics.Plotter("Chat Overflows")
             {
 
@@ -196,6 +198,12 @@ public class AntiBot extends JavaPlugin
         version = pdfFile.getVersion();
         System.out.println(pdfFile.getName() + " version " + getVersion() + " is enabled!");
         boolean development = (version.split("-b")[0].contains("-SNAPSHOT"));
+        if ((new File(getDataFolder() + "c.properties")).exists())
+        {
+            System.out.println("[SEVERE] AntiBot has received a new (assfuck) overhaul in the configuration.  You are currently now on defaults.");
+            System.out.println("[SEVERE] You will continue seeing this message until you remove c.properties in the AntiBot plugin folder.");
+        }
+        
         if (development)
         {
             Settings.checkupdates = false;
@@ -228,6 +236,11 @@ public class AntiBot extends JavaPlugin
                 pl.sendMessage(Settings.prefix + msg);
             }
         }
+    }
+    
+    public void log(String g)
+    {
+        System.out.println(g);
     }
 
     public void debug(String msg, CommandSender sender)

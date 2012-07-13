@@ -6,7 +6,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.Set;
+import java.util.logging.Level;
+
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 import me.freebuild.superspytx.AntiBot;
 import net.h31ix.anticheat.api.*;
@@ -17,374 +26,218 @@ public class SettingsCore
 
     public AntiBot antibot = null;
     public int reloads = 0;
+    public Map<String, Object> config = new HashMap<String, Object>();
+    public Map<String, Object> langs = new HashMap<String, Object>();
 
     public SettingsCore(AntiBot instance)
     {
         antibot = instance;
     }
 
-    public void saveSettings(File dataFolder)
+    public void loadDefaults()
     {
+        Settings.core = antibot;
+        config.put("AntiBot.Main.Prefix", Settings.prefix);
+        config.put("AntiBot.Main.EnableByDefault", Settings.enabled);
+        config.put("AntiBot.Main.Notifications", Settings.notify);
+        config.put("AntiBot.Main.OldBehavior", Settings.whiteList);
+        config.put("AntiBot.Main.BanPlayers", Settings.banUsers);
+        config.put("AntiBot.PermissionModes.UseOp", Settings.useOpPerms);
+        config.put("AntiBot.PermissionModes.UseBukkitWhiteList", Settings.useWhiteListPerms);
+        config.put("AntiBot.DelayedStart.Enabled", Settings.delayedStart);
+        config.put("AntiBot.DelayedStart.Time", Settings.startdelay);
+        config.put("AntiBot.Bot.Accounts", Settings.accounts);
+        config.put("AntiBot.Bot.Seconds", Settings.interval);
+        config.put("AntiBot.Bot.EnableMultiAccDetector", Settings.enableMultiAccs);
+        config.put("AntiBot.Bot.ConnectionTime", Settings.connectFor);
+        config.put("AntiBot.AntiSpam.Enabled", Settings.enableAntiSpam);
+        config.put("AntiBot.AntiSpam.Amount", Settings.spamam);
+        config.put("AntiBot.AntiSpam.Time", Settings.spamtime);
+        config.put("AntiBot.AntiSpam.MutePlayerIfCaptchaNotEnabled", Settings.chatMute);
+        config.put("AntiBot.ChatFlow.Enabled", Settings.flowEnabled);
+        config.put("AntiBot.ChatFlow.Amount", Settings.overflows);
+        config.put("AntiBot.ChatFlow.Time", Settings.timetooverflow);
+        config.put("AntiBot.Captcha.Enabled", Settings.captchaEnabled);
+        config.put("AntiBot.Captcha.Triggers.PlayerJoin", Settings.forceCaptchaOnJoin);
+        config.put("AntiBot.Captcha.Triggers.ChatOverflow", Settings.forceCaptchaOnChatFlow);
+        config.put("AntiBot.Captcha.Triggers.BotSpam", Settings.forceCaptchaOnBotSpam);
+        config.put("AntiBot.Captcha.Triggers.MultiAccount", Settings.forceCaptchaOnMultiAcc);
+        config.put("AntiBot.CountryBans.Enabled", Settings.geoIP);
+        config.put("AntiBot.CountryBans.WhitelistMode", Settings.whiteListCountry);
+        config.put("AntiBot.CountryBans.Countries", Arrays.asList(new String[0]));
+        langs.put("AntiBot.Messages.Kick", Settings.kickMsg);
+        langs.put("AntiBot.Messages.Connect", Settings.connectMsg);
+        langs.put("AntiBot.Messages.CaptchaFailure", Settings.captchafail);
+        langs.put("AntiBot.Messages.ChatOverflow", Settings.overflowedmessage);
+        langs.put("AntiBot.Messages.CountryBan", Settings.countryBanMsg);
+        langs.put("AntiBot.Messages.ConnectInvasion", Settings.connectInvasion);
+        config.put("AntiBot.TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.InstallDate", System.currentTimeMillis());
+        config.put("AntiBot.TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.CheckUpdates", Settings.checkupdates);
+        config.put("AntiBot.TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.DebugMode", Settings.debugmode);
+        config.put("AntiBot.TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.ABVersion", antibot.getVersion());
 
-        File Config = new File(dataFolder.getAbsolutePath() + File.separator + "c.properties");
-
-        if (!Config.exists())
+        antibot.getConfig().addDefaults(config);
+        FileConfiguration lang = YamlConfiguration.loadConfiguration(new File(antibot.getDataFolder(), "language.yml"));
+        lang.addDefaults(langs);
+        lang.options().copyDefaults(true);
+        try
         {
-            System.out.print("AntiBot: Configuration is missing, creating...");
-            try
-            {
-                Config.createNewFile();
-                Properties propConfig = new Properties();
-                propConfig.setProperty("connect-message", Settings.connectMsg);
-                propConfig.setProperty("kick-message", Settings.kickMsg);
-                propConfig.setProperty("captcha-failed-message", Settings.captchafail);
-                propConfig.setProperty("prefix", Settings.prefix);
-                propConfig.setProperty("flow-message", Settings.overflowedmessage);
-                propConfig.setProperty("countryban-message", Settings.countryBanMsg);
-                propConfig.setProperty("countrybans", "");
-                propConfig.setProperty("connect-join-invasion", Settings.connectInvasion);
-                propConfig.setProperty("joins-sec", Integer.toString(Settings.interval));
-                propConfig.setProperty("whitelist-perms", Boolean.toString(Settings.useWhiteListPerms));
-                propConfig.setProperty("op-perms", Boolean.toString(Settings.useOpPerms));
-                propConfig.setProperty("check-updates", Boolean.toString(Settings.checkupdates));
-                propConfig.setProperty("orgy-notify", Boolean.toString(Settings.notify));
-                propConfig.setProperty("delayed-start", Boolean.toString(Settings.delayedStart));
-                propConfig.setProperty("country-whitelist-mode", Boolean.toString(Settings.whiteListCountry));
-                propConfig.setProperty("debug-mode", Boolean.toString(Settings.debugmode));
-                propConfig.setProperty("enable-by-default", Boolean.toString(Settings.enabled));
-                propConfig.setProperty("enable-captcha", Boolean.toString(Settings.captchaEnabled));
-                propConfig.setProperty("joins", Integer.toString(Settings.accounts));
-                propConfig.setProperty("enable-antispam", Boolean.toString(Settings.enableAntiSpam));
-                propConfig.setProperty("enable-multiacc-detection", Boolean.toString(Settings.enableMultiAccs));
-                propConfig.setProperty("captcha-on-join", Boolean.toString(Settings.forceCaptchaOnJoin));
-                propConfig.setProperty("captcha-on-chat-overflow", Boolean.toString(Settings.forceCaptchaOnChatFlow));
-                propConfig.setProperty("captcha-on-multi-account", Boolean.toString(Settings.forceCaptchaOnMultiAcc));
-                propConfig.setProperty("captcha-on-bot-spam", Boolean.toString(Settings.forceCaptchaOnBotSpam));
-                propConfig.setProperty("chat-mute", Boolean.toString(Settings.chatMute));
-                propConfig.setProperty("whitelist-when-triggered", Boolean.toString(Settings.whiteList));
-                propConfig.setProperty("start-delay", Long.toString(Settings.startdelay));
-                propConfig.setProperty("spam-time", Integer.toString(Settings.spamtime));
-                propConfig.setProperty("spam-amount", Integer.toString(Settings.spamam));
-                propConfig.setProperty("connection-time", Integer.toString(Settings.connectFor));
-                propConfig.setProperty("flow-time", Integer.toString(Settings.timetooverflow));
-                propConfig.setProperty("flow-amount", Integer.toString(Settings.overflows));
-                propConfig.setProperty("flow-enabled", Boolean.toString(Settings.flowEnabled));
-                propConfig.setProperty("ban-users", Boolean.toString(Settings.banUsers));
-                propConfig.setProperty("enable-geoip", Boolean.toString(Settings.geoIP));
-                propConfig.setProperty("install-date", Long.toString(System.currentTimeMillis()));
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(Config.getAbsolutePath()));
-                propConfig.store(stream, "AntiBot V2 - The ultimate AntiSpam protection for Minecraft.");
-            }
-            catch (IOException ex)
-            {
-                System.out.println("AntiBot: Configuration creation failed.");
-            }
-
+            lang.save(new File(antibot.getDataFolder(), "language.yml"));
         }
+        catch (IOException e)
+        {
+        }
+
+        antibot.getConfig().options().copyDefaults(true);
+        antibot.saveConfig();
     }
 
-    public boolean loadSettings(File dataFolder1)
+    public boolean loadSettings()
     {
 
         System.out.print("AntiBot: Attempt to do the impossible - Eminem.");
+
+        antibot.reloadConfig();
+
+        FileConfiguration lang = YamlConfiguration.loadConfiguration(new File(antibot.getDataFolder(), "language.yml"));
+
         try
         {
-            Properties propConfig = new Properties();
-            BufferedInputStream stream = new BufferedInputStream(new FileInputStream(dataFolder1.getAbsolutePath() + File.separator + "c.properties"));
-            propConfig.load(stream);
-            String load = null;
-            Integer load2 = null;
-            Boolean load3 = null;
-            Long load4 = null;
+            for (Entry<String, Object> oh : config.entrySet())
+            {
+                String conf = oh.getKey().replace("AntiBot.", "");
+                Object duh = antibot.getConfig().get(oh.getKey());
 
-            load = propConfig.getProperty("connect-message");
-            if (load != null && load != Settings.connectMsg)
-            {
-                Settings.connectMsg = load;
-            }
-
-            load = propConfig.getProperty("kick-message");
-            if (load != null && load != Settings.kickMsg)
-            {
-                Settings.kickMsg = load;
-            }
-
-            load = propConfig.getProperty("captcha-failed-message");
-            if (load != null && load != Settings.captchafail)
-            {
-                Settings.captchafail = load;
-            }
-
-            load = propConfig.getProperty("flow-message");
-            if (load != null && load != Settings.overflowedmessage)
-            {
-                Settings.overflowedmessage = load;
-            }
-
-            load = propConfig.getProperty("countryban-message");
-            if (load != null && load != Settings.countryBanMsg)
-            {
-                Settings.countryBanMsg = load;
-            }
-
-            load = propConfig.getProperty("countrybans");
-            if (load != null)
-            {
-                antibot.getUtility().getGeoIP().loadCountryBanList(load);
-            }
-
-            load = propConfig.getProperty("connect-join-invasion");
-            if (load != null && load != Settings.connectInvasion)
-            {
-                Settings.connectInvasion = load;
-            }
-
-            load = propConfig.getProperty("prefix");
-            if (load != null && load != Settings.prefix)
-            {
-                Settings.prefix = load;
-            }
-
-            load = propConfig.getProperty("joins-sec");
-            if (load != null)
-            {
-                load2 = Integer.parseInt(load);
-            }
-            else
-            {
-                load2 = Settings.interval;
-            }
-            if (load != null && load2 > 999 && !load2.equals(Settings.interval))
-            {
-                Settings.interval = load2;
-                antibot.setDefaultinterval(Settings.interval);
-            }
-
-            load = propConfig.getProperty("whitelist-perms");
-            if (load != null)
-            {
-                load3 = Boolean.parseBoolean(load);
-            }
-            else
-            {
-                load3 = Settings.useWhiteListPerms;
-            }
-            if (load != null && !load3.equals(Settings.useWhiteListPerms))
-            {
-                Settings.useWhiteListPerms = load3;
-            }
-
-            load = propConfig.getProperty("op-perms");
-            if (load != null)
-            {
-                load3 = Boolean.parseBoolean(load);
-            }
-            else
-            {
-                load3 = Settings.useOpPerms;
-            }
-            if (load != null && !load3.equals(Settings.useOpPerms))
-            {
-                Settings.useOpPerms = load3;
-            }
-
-            load = propConfig.getProperty("flow-enabled");
-            if (load != null)
-            {
-                load3 = Boolean.parseBoolean(load);
-            }
-            else
-            {
-                load3 = Settings.flowEnabled;
-            }
-            if (load != null && !load3.equals(Settings.flowEnabled))
-            {
-                Settings.flowEnabled = load3;
-            }
-
-            if (reloads < 1)
-            {
-                load = propConfig.getProperty("delayed-start");
-                if (load != null)
+                if (conf.equalsIgnoreCase("Main.prefix"))
                 {
-                    load3 = Boolean.parseBoolean(load);
+                    Settings.prefix = (String) duh;
                 }
-                else
+                else if (conf.equalsIgnoreCase("Main.EnableByDefault"))
                 {
-                    load3 = Settings.delayedStart;
+                    Settings.enabled = (Boolean) duh;
                 }
-                if (load != null && !load3.equals(Settings.delayedStart))
+                else if (conf.equalsIgnoreCase("Main.Notifications"))
                 {
-                    Settings.delayedStart = load3;
+                    Settings.notify = (Boolean) duh;
                 }
-            }
+                else if (conf.equalsIgnoreCase("Main.OldBehavior"))
+                {
+                    Settings.whiteList = (Boolean) duh;
+                }
+                else if (conf.equalsIgnoreCase("Main.BanPlayers"))
+                {
+                    Settings.banUsers = (Boolean) duh;
+                }
+                else if (conf.equalsIgnoreCase("PermissionModes.UseOp"))
+                {
+                    Settings.useOpPerms = (Boolean) duh;
+                }
+                else if (conf.equalsIgnoreCase("PermissionModes.UseBukkitWhiteList"))
+                {
+                    Settings.useWhiteListPerms = (Boolean) duh;
+                }
+                else if (conf.equalsIgnoreCase("DelayedStart.Enabled") && reloads < 1)
+                {
+                    Settings.delayedStart = (Boolean) duh;
+                }
+                else if (conf.equalsIgnoreCase("DelayedStart.Time"))
+                {
+                    Settings.startdelay = Long.parseLong(Integer.toString((Integer) duh));
+                }
+                else if (conf.equalsIgnoreCase("Bot.Accounts"))
+                {
+                    Settings.accounts = (Integer) duh;
+                }
+                else if (conf.equalsIgnoreCase("Bot.Seconds"))
+                {
+                    Settings.interval = (Integer) duh;
+                }
+                else if (conf.equalsIgnoreCase("Bot.EnableMultiAccDetector"))
+                {
+                    Settings.enableMultiAccs = (Boolean) duh;
+                }
+                else if (conf.equalsIgnoreCase("Bot.ConnectionTime"))
+                {
+                    Settings.connectFor = (Integer) duh;
+                }
+                else if (conf.equalsIgnoreCase("AntiSpam.Enabled"))
+                {
+                    Settings.enableAntiSpam = (Boolean) duh;
+                }
+                else if (conf.equalsIgnoreCase("AntiSpam.Amount"))
+                {
+                    Settings.spamam = (Integer) duh;
+                }
+                else if (conf.equalsIgnoreCase("AntiSpam.Time"))
+                {
+                    Settings.spamtime = (Integer) duh;
+                }
+                else if (conf.equalsIgnoreCase("AntiSpam.MutePlayerIfCaptchaNotEnabled"))
+                {
+                    Settings.chatMute = (Boolean) duh;
+                }
+                else if (conf.equalsIgnoreCase("ChatFlow.Enabled"))
+                {
+                    Settings.flowEnabled = (Boolean) duh;
+                }
+                else if (conf.equalsIgnoreCase("ChatFlow.Amount"))
+                {
+                    Settings.overflows = (Integer) duh;
+                }
+                else if (conf.equalsIgnoreCase("ChatFlow.Time"))
+                {
+                    Settings.timetooverflow = (Integer) duh;
+                }
+                else if (conf.equalsIgnoreCase("Captcha.Enabled"))
+                {
+                    Settings.captchaEnabled = (Boolean) duh;
+                }
+                else if (conf.equalsIgnoreCase("Captcha.Triggers.PlayerJoin"))
+                {
+                    Settings.forceCaptchaOnJoin = (Boolean) duh;
+                }
+                else if (conf.equalsIgnoreCase("Captcha.Triggers.ChatOverflow"))
+                {
+                    Settings.forceCaptchaOnChatFlow = (Boolean) duh;
+                }
+                else if (conf.equalsIgnoreCase("Captcha.Triggers.BotSpam"))
+                {
+                    Settings.forceCaptchaOnBotSpam = (Boolean) duh;
+                }
+                else if (conf.equalsIgnoreCase("Captcha.Triggers.MultiAccount"))
+                {
+                    Settings.forceCaptchaOnMultiAcc = (Boolean) duh;
+                }
+                else if (conf.equalsIgnoreCase("CountryBans.Enabled"))
+                {
+                    Settings.geoIP = (Boolean) duh;
+                }
+                else if (conf.equalsIgnoreCase("CountryBans.WhitelistMode"))
+                {
+                    Settings.whiteListCountry = (Boolean) duh;
+                }
+                else if (conf.equalsIgnoreCase("CountryBans.Countries"))
+                {
+                    //TODO: Import Countries.
+                }
+                else if (conf.equalsIgnoreCase("TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.InstallDate"))
+                {
+                    antibot.setInstalldate((Long) duh);
+                    antibot.getLogger().log(Level.WARNING, Long.toString((Long) duh));
+                }
+                else if (conf.equalsIgnoreCase("TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.CheckUpdates"))
+                {
+                    Settings.checkupdates = (Boolean) duh;
+                }
+                else if (conf.equalsIgnoreCase("TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.DebugMode"))
+                {
+                    Settings.debugmode = (Boolean) duh;
+                }
+                else if (conf.equalsIgnoreCase("TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.ABVersion"))
+                {
+                    //TODO: Configuration Updates or deprecate.
+                }
 
-            load = propConfig.getProperty("whitelist-when-triggered");
-            if (load != null)
-            {
-                load3 = Boolean.parseBoolean(load);
-            }
-            else
-            {
-                load3 = Settings.whiteList;
-            }
-            if (load != null && !load3.equals(Settings.whiteList))
-            {
-                Settings.whiteList = load3;
-            }
-
-            load = propConfig.getProperty("enable-captcha");
-            if (load != null)
-            {
-                load3 = Boolean.parseBoolean(load);
-            }
-            else
-            {
-                load3 = Settings.captchaEnabled;
-            }
-            if (load != null && !load3.equals(Settings.captchaEnabled))
-            {
-                Settings.captchaEnabled = load3;
-            }
-
-            load = propConfig.getProperty("check-updates");
-            if (load != null)
-            {
-                load3 = Boolean.parseBoolean(load);
-            }
-            else
-            {
-                load3 = Settings.checkupdates;
-            }
-            if (load != null && !load3.equals(Settings.checkupdates))
-            {
-                Settings.checkupdates = load3;
-            }
-
-            load = propConfig.getProperty("captcha-on-join");
-            if (load != null)
-            {
-                load3 = Boolean.parseBoolean(load);
-            }
-            else
-            {
-                load3 = Settings.forceCaptchaOnJoin;
-            }
-            if (load != null && !load3.equals(Settings.forceCaptchaOnJoin))
-            {
-                Settings.forceCaptchaOnJoin = load3;
-            }
-
-            load = propConfig.getProperty("captcha-on-chat-overflow");
-            if (load != null)
-            {
-                load3 = Boolean.parseBoolean(load);
-            }
-            else
-            {
-                load3 = Settings.forceCaptchaOnChatFlow;
-            }
-            if (load != null && !load3.equals(Settings.forceCaptchaOnChatFlow))
-            {
-                Settings.forceCaptchaOnChatFlow = load3;
-            }
-
-            load = propConfig.getProperty("captcha-on-multi-account");
-            if (load != null)
-            {
-                load3 = Boolean.parseBoolean(load);
-            }
-            else
-            {
-                load3 = Settings.forceCaptchaOnMultiAcc;
-            }
-            if (load != null && !load3.equals(Settings.forceCaptchaOnMultiAcc))
-            {
-                Settings.forceCaptchaOnMultiAcc = load3;
-            }
-
-            load = propConfig.getProperty("captcha-on-bot-spam");
-            if (load != null)
-            {
-                load3 = Boolean.parseBoolean(load);
-            }
-            else
-            {
-                load3 = Settings.forceCaptchaOnBotSpam;
-            }
-            if (load != null && !load3.equals(Settings.forceCaptchaOnBotSpam))
-            {
-                Settings.forceCaptchaOnBotSpam = load3;
-            }
-
-            load = propConfig.getProperty("orgy-notify");
-            if (load != null)
-            {
-                load3 = Boolean.parseBoolean(load);
-            }
-            else
-            {
-                load3 = Settings.notify;
-            }
-            if (load != null && !load3.equals(Settings.notify))
-            {
-                Settings.notify = load3;
-            }
-
-            load = propConfig.getProperty("country-whitelist-mode");
-            if (load != null)
-            {
-                load3 = Boolean.parseBoolean(load);
-            }
-            else
-            {
-                load3 = Settings.whiteListCountry;
-            }
-            if (load != null && !load3.equals(Settings.whiteListCountry))
-            {
-                Settings.whiteListCountry = load3;
-            }
-
-            load = propConfig.getProperty("ban-users");
-            if (load != null)
-            {
-                load3 = Boolean.parseBoolean(load);
-            }
-            else
-            {
-                load3 = Settings.banUsers;
-            }
-            if (load != null && !load3.equals(Settings.banUsers))
-            {
-                Settings.banUsers = load3;
-            }
-
-            load = propConfig.getProperty("enable-geoip");
-            if (load != null)
-            {
-                load3 = Boolean.parseBoolean(load);
-            }
-            else
-            {
-                load3 = Settings.geoIP;
-            }
-            if (load != null && !load3.equals(Settings.geoIP))
-            {
-                Settings.geoIP = load3;
-            }
-
-            load = propConfig.getProperty("enable-antispam");
-            if (load != null)
-            {
-                load3 = Boolean.parseBoolean(load);
-            }
-            else
-            {
-                load3 = Settings.enableAntiSpam;
-            }
-            if (load != null && !load3.equals(Settings.enableAntiSpam))
-            {
-                Settings.enableAntiSpam = load3;
             }
 
             // we need to disable AntiCheat's anti spam because AntiBot has one
@@ -412,180 +265,61 @@ public class SettingsCore
 
             }, 600L); //start in 30 seconds.
 
-            load = propConfig.getProperty("enable-multiacc-detection");
-            if (load != null)
+            if (antibot.firsttime)
             {
-                load3 = Boolean.parseBoolean(load);
-            }
-            else
-            {
-                load3 = Settings.enableMultiAccs;
-            }
-            if (load != null && !load3.equals(Settings.enableMultiAccs))
-            {
-                Settings.enableMultiAccs = load3;
+                antibot.setInstalldate(System.currentTimeMillis());
+                antibot.getConfig().set("TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.InstallDate", antibot.getInstalldate());
+                antibot.firsttime = false;
             }
 
-            load = propConfig.getProperty("chat-mute");
-            if (load != null)
-            {
-                load3 = Boolean.parseBoolean(load);
-            }
-            else
-            {
-                load3 = Settings.chatMute;
-            }
-            if (load != null && !load3.equals(Settings.chatMute))
-            {
-                Settings.chatMute = load3;
-            }
-
-            load = propConfig.getProperty("debug-mode");
-            if (load != null)
-            {
-                load3 = Boolean.parseBoolean(load);
-            }
-            else
-            {
-                load3 = Settings.debugmode;
-            }
-            if (load != null && !load3.equals(Settings.debugmode))
-            {
-                Settings.debugmode = load3;
-                if (Settings.debugmode)
-                    System.out.print("AntiBot: WARNING! You're in Debug Mode! Do not use this on a live environment!");
-            }
-
-            load = propConfig.getProperty("spam-amount");
-            if (load != null)
-            {
-                load2 = Integer.parseInt(load);
-            }
-            else
-            {
-                load2 = Settings.spamam;
-            }
-            if (load != null && !load2.equals(Settings.spamam))
-            {
-                Settings.spamam = load2;
-            }
-
-            load = propConfig.getProperty("connection-time");
-            if (load != null)
-            {
-                load2 = Integer.parseInt(load);
-            }
-            else
-            {
-                load2 = Settings.connectFor;
-            }
-            if (load != null && !load2.equals(Settings.connectFor))
-            {
-                Settings.connectFor = load2;
-            }
-
-            load = propConfig.getProperty("flow-time");
-            if (load != null)
-            {
-                load2 = Integer.parseInt(load);
-            }
-            else
-            {
-                load2 = Settings.timetooverflow;
-            }
-            if (load != null && !load2.equals(Settings.timetooverflow))
-            {
-                Settings.timetooverflow = load2;
-            }
-
-            load = propConfig.getProperty("flow-amount");
-            if (load != null)
-            {
-                load2 = Integer.parseInt(load);
-            }
-            else
-            {
-                load2 = Settings.overflows;
-            }
-            if (load != null && !load2.equals(Settings.overflows))
-            {
-                Settings.overflows = load2;
-            }
-
-            load = propConfig.getProperty("start-delay");
-            if (load != null)
-            {
-                load4 = Long.parseLong(load);
-            }
-            else
-            {
-                load4 = Settings.startdelay;
-            }
-            if (load != null && load4 < 120L && !load4.equals(Settings.startdelay))
-            {
-                Settings.startdelay = load2;
-            }
-
-            load = propConfig.getProperty("spam-time");
-            if (load != null)
-            {
-                load2 = Integer.parseInt(load);
-            }
-            else
-            {
-                load2 = Settings.spamtime;
-            }
-            if (load != null && !load2.equals(Settings.spamtime))
-            {
-                Settings.spamtime = load2;
-            }
-
-            load = propConfig.getProperty("enable-by-default");
-            if (load != null)
-            {
-                load3 = Boolean.parseBoolean(load);
-            }
-            else
-            {
-                load3 = Settings.enabled;
-            }
-            if (load != null && !load3.equals(Settings.enabled))
-            {
-                Settings.enabled = load3;
-            }
-
-            load = propConfig.getProperty("install-date");
-            if (load != null)
-            {
-                load4 = Long.parseLong(load);
-            }
-            else
-            {
-                load4 = antibot.getInstalldate();
-                System.out.print("AntiBot: WARNING! Could not load system install date!");
-            }
-            if (load != null)
-            {
-                antibot.setInstalldate(load4);
-            }
-
-            load = propConfig.getProperty("joins");
-            if (load != null)
-            {
-                load2 = Integer.parseInt(load);
-            }
-            else
-            {
-                load2 = Settings.accounts;
-            }
-            if (load != null && load2 > 0 && !load2.equals(Settings.accounts))
-            {
-                Settings.accounts = load2;
-                antibot.setDefaultaccounts(Settings.accounts);
-            }
+            // load messages
+            langs.put("AntiBot.Messages.Kick", Settings.kickMsg);
+            langs.put("AntiBot.Messages.Connect", Settings.connectMsg);
+            langs.put("AntiBot.Messages.CaptchaFailure", Settings.captchafail);
+            langs.put("AntiBot.Messages.ChatOverflow", Settings.overflowedmessage);
+            langs.put("AntiBot.Messages.CountryBan", Settings.countryBanMsg);
+            langs.put("AntiBot.Messages.ConnectInvasion", Settings.connectInvasion);
             try
             {
-                boolean development = (antibot.getVersion().contains("-DEV"));
+                for (Entry<String, Object> oh : langs.entrySet())
+                {
+                    String conf = oh.getKey().replace("AntiBot.", "");
+                    String duh = lang.getString(oh.getKey());
+
+                    if (conf.equalsIgnoreCase("Messages.Kick"))
+                    {
+                        Settings.kickMsg = duh;
+                    }
+                    else if (conf.equalsIgnoreCase("Messages.Connect"))
+                    {
+                        Settings.connectMsg = duh;
+                    }
+                    else if (conf.equalsIgnoreCase("Messages.CaptchaFailure"))
+                    {
+                        Settings.captchafail = duh;
+                    }
+                    else if (conf.equalsIgnoreCase("Messages.ChatOverflow"))
+                    {
+                        Settings.overflowedmessage = duh;
+                    }
+                    else if (conf.equalsIgnoreCase("Messages.CountryBan"))
+                    {
+                        Settings.countryBanMsg = duh;
+                    }
+                    else if (conf.equalsIgnoreCase("Messages.ConnectInvasion"))
+                    {
+                        Settings.connectInvasion = duh;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                //fail.
+            }
+
+            try
+            {
+                boolean development = (antibot.getVersion().split("-b")[0].contains("-SNAPSHOT"));
                 if (development)
                 {
                     Settings.checkupdates = false;
@@ -611,19 +345,7 @@ public class SettingsCore
 
     public boolean saveConfig(String prp, String val)
     {
-        try
-        {
-            Properties propConfig = new Properties();
-            BufferedInputStream stream = new BufferedInputStream(new FileInputStream(antibot.getDataFolder().getAbsolutePath() + File.separator + "c.properties"));
-            propConfig.load(stream);
-            propConfig.setProperty(prp, val);
-            BufferedOutputStream strea2m = new BufferedOutputStream(new FileOutputStream(antibot.getDataFolder().getAbsolutePath() + File.separator + "c.properties"));
-            propConfig.store(strea2m, "AntiBot V2 - The ultimate AntiSpam protection for Minecraft.");
-            return true;
-        }
-        catch (Exception e)
-        {
-            return false;
-        }
+        //TODO: Update ingame configuration changing stuff.
+        return false;
     }
 }
