@@ -223,7 +223,6 @@ public class SettingsCore
                 else if (conf.equalsIgnoreCase("TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.InstallDate"))
                 {
                     antibot.setInstalldate((Long) duh);
-                    antibot.getLogger().log(Level.WARNING, Long.toString((Long) duh));
                 }
                 else if (conf.equalsIgnoreCase("TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.CheckUpdates"))
                 {
