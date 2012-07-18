@@ -9,48 +9,48 @@ commands:
     usage: |
       /<command> help - Help menu on the AntiBot system.
 permissions:
-  AntiBot.notify:
+  antibot.notify:
     default: false
     description: Notifies the player if there is a current invasion.
-  AntiBot.join:
+  antibot.join:
     default: false
     description: Allow users to bypass anti bot spam.
-  AntiBot.voice:
+  antibot.voice:
     default: false
     description: Allow users to speak, even while voiced.
-  AntiBot.chatspam:
+  antibot.chatspam:
     default: false
     description: Allows users to bypass anti chat spam.
-  AntiBot.countryban:
+  antibot.countryban:
     default: false
     description: Users with this permission can join the server if their home country is banned from the server.
-  AntiBot.admin:
+  antibot.admin:
     default: false
     description: Basic Permissions to the Antibot system.
-  AntiBot.admin.plus:
+  antibot.admin.plus:
     default: false
     description: Gives full access to the system.
-  AntiBot.admin.reload:
+  antibot.admin.reload:
     default: false
     description: Ability to reload configuration.
-  AntiBot.admin.chatmute:
+  antibot.admin.chatmute:
     default: false
     description: Ability to globally mute chat whenever you feel like it :)
-  AntiBot.admin.info:
+  antibot.admin.info:
     default: false
-    description: Check the status of AntiBot.
-  AntiBot.admin.attack:
+    description: Check the status of antibot.
+  antibot.admin.attack:
     default: false
     description: Turns on Invasion Mode manually.  Good if you know you're about to get attacked.
-  AntiBot.admin.notify:
+  antibot.admin.notify:
     default: false
     description: Gives extra details during invasions.  Tells this user if a system flush is needed.
-  AntiBot.admin.flush:
+  antibot.admin.flush:
     default: false
     description: Flush all connection throttling.  This could be on accident.
-  AntiBot.admin.changeconf:
+  antibot.admin.changeconf:
     default: false
     description: Change 2 configuration values ingame.  Amount of accounts and the time interval.
-  AntiBot.admin.toggle:
+  antibot.admin.toggle:
     default: false
     description: Toggle AntiBot to be on or off.  Useful when getting legitimate players.
