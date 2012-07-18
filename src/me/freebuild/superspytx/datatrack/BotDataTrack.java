@@ -130,6 +130,10 @@ public class BotDataTrack
             {
                 botclass.getUtility().getDebug().debug("Checking if kick possible for player..." + pl);
                 Player p2 = botclass.getServer().getPlayerExact(pl);
+                
+                if(p2 == null)
+                    continue;
+                
                 if (!botclass.getDataTrack().getChatTracker().checkConnection(pl))
                 {
                     if (!Settings.forceCaptchaOnBotSpam)
