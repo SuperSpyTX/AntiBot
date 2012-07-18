@@ -5,6 +5,8 @@ import me.freebuild.superspytx.settings.Permissions;
 import me.freebuild.superspytx.settings.Settings;
 
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerLoginEvent.Result;
 
 public class CountryBanHandler
 {
@@ -16,14 +18,14 @@ public class CountryBanHandler
         antibot = instance;
     }
 
-    public void handle(PlayerJoinEvent event)
+    public void handle(PlayerLoginEvent event)
     {
         // add countrybans bypass permissions.
         if (Permissions.COUNTRYBAN.getPermission(event.getPlayer()))
         {
             return;
         }
-        String IP = event.getPlayer().getAddress().toString().split(":")[0].replace("/", "");
+        String IP = event.getAddress().getAddress().toString().split(":")[0].replace("/", "");
         // check against countrybans!
         antibot.getUtility().getDebug().debug("Countrybans size " + antibot.getDataTrack().getCountryTracker().countryBans.size());
         antibot.getUtility().getDebug().debug("Checking IP " + IP);
@@ -32,8 +34,7 @@ public class CountryBanHandler
             antibot.getUtility().getDebug().debug("Banned IP " + IP);
             antibot.getDataTrack().getCountryTracker().countryusersblocked += 1;
             // oh noes! he's in a forbidden country!
-            event.getPlayer().kickPlayer(Settings.countryBanMsg);
-            event.setJoinMessage(null);
+            event.disallow(Result.KICK_OTHER, Settings.countryBanMsg);
 
             if (Settings.banUsers)
             {

@@ -219,6 +219,7 @@ public class SettingsCore
                 else if (conf.equalsIgnoreCase("CountryBans.Countries"))
                 {
                     //TODO: Import Countries.
+                    antibot.getDataTrack().getCountryTracker().countryBans = antibot.getConfig().getStringList(oh.getKey());
                 }
                 else if (conf.equalsIgnoreCase("TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.InstallDate"))
                 {
