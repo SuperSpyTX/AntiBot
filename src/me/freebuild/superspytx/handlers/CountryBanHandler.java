@@ -4,7 +4,6 @@ import me.freebuild.superspytx.AntiBot;
 import me.freebuild.superspytx.settings.Permissions;
 import me.freebuild.superspytx.settings.Settings;
 
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
 

@@ -1,5 +1,7 @@
 package me.freebuild.superspytx.toolbox;
 
+import java.util.logging.Level;
+
 import me.freebuild.superspytx.AntiBot;
 import me.freebuild.superspytx.settings.Settings;
 
@@ -18,6 +20,7 @@ public class DebugUtility
         if (Settings.debugmode)
         {
             antibot.getServer().broadcastMessage(Settings.prefix + "" + msg);
+            antibot.getLogger().log(Level.INFO, Settings.prefix + "" + msg);
         }
     }
 

@@ -197,7 +197,7 @@ public class AntiBot extends JavaPlugin
         PluginDescriptionFile pdfFile = getDescription();
         version = pdfFile.getVersion();
         System.out.println(pdfFile.getName() + " version " + getVersion() + " is enabled!");
-        boolean development = (version.split("-b")[0].contains("-SNAPSHOT"));
+        boolean development = (version.contains("-SNAPSHOT"));
         if ((new File(getDataFolder() + "c.properties")).exists())
         {
             System.out.println("[SEVERE] AntiBot has received a new (assfuck) overhaul in the configuration.  You are currently now on defaults.");

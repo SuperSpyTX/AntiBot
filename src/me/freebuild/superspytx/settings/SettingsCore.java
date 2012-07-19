@@ -220,6 +220,10 @@ public class SettingsCore
                 {
                     //TODO: Import Countries.
                     antibot.getDataTrack().getCountryTracker().countryBans = antibot.getConfig().getStringList(oh.getKey());
+                    for(String s : antibot.getDataTrack().getCountryTracker().countryBans)
+                    {
+                        antibot.getUtility().getDebug().debug(s);
+                    }
                 }
                 else if (conf.equalsIgnoreCase("TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.InstallDate"))
                 {
@@ -319,7 +323,7 @@ public class SettingsCore
 
             try
             {
-                boolean development = (antibot.getVersion().split("-b")[0].contains("-SNAPSHOT"));
+                boolean development = (antibot.getVersion().contains("-SNAPSHOT"));
                 if (development)
                 {
                     Settings.checkupdates = false;

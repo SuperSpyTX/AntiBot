@@ -54,6 +54,7 @@ public class GeoIPUtility
     public boolean determineFateForIP(String ip)
     {
         String code = lkup.getCountry(ip).getCode();
+        antibot.getUtility().getDebug().debug("Country Code: " + code);
         if (antibot.getDataTrack().getCountryTracker().countryBans.contains(code))
         {
             // now determine the two behaviors.
