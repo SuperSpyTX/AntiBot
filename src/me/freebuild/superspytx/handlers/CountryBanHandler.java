@@ -4,6 +4,7 @@ import me.freebuild.superspytx.AntiBot;
 import me.freebuild.superspytx.settings.Permissions;
 import me.freebuild.superspytx.settings.Settings;
 
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
 
@@ -24,7 +25,7 @@ public class CountryBanHandler
         {
             return;
         }
-        String IP = event.getAddress().getAddress().toString().split(":")[0].replace("/", "");
+        String IP = event.getAddress().toString().split(":")[0].replace("/", "");
         // check against countrybans!
         antibot.getUtility().getDebug().debug("Countrybans size " + antibot.getDataTrack().getCountryTracker().countryBans.size());
         antibot.getUtility().getDebug().debug("Checking IP " + IP);
