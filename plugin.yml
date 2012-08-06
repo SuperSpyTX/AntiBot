@@ -1,11 +1,12 @@
 name: AntiBot
-main: me.freebuild.superspytx.AntiBot
+main: me.freebuild.superspytx.ab.AntiBot
 version: ${project.version}
 description: The ultimate spam protection for Minecraft.
 softdepend: [AntiCheat]
 commands:
    antibot:
     description: Usable Antibot Commands
+    aliases: [ab]
     usage: |
       /<command> help - Help menu on the AntiBot system.
 permissions:
@@ -24,6 +25,9 @@ permissions:
   antibot.countryban:
     default: false
     description: Users with this permission can join the server if their home country is banned from the server.
+  antibot.logindelay:
+    default: false
+    description: Should users be able to log back into the server rapidly?
   antibot.admin:
     default: false
     description: Basic Permissions to the Antibot system.
