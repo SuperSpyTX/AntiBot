@@ -1,4 +1,4 @@
-package me.freebuild.superspytx.handlers.ab.login;
+package me.freebuild.superspytx.ab.handlers.login;
 
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;

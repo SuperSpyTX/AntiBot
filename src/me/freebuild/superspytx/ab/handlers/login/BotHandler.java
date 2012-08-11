@@ -1,4 +1,4 @@
-package me.freebuild.superspytx.handlers.ab.login;
+package me.freebuild.superspytx.ab.handlers.login;
 
 import me.freebuild.superspytx.ab.AntiBot;
 import me.freebuild.superspytx.ab.datatrack.DataTrackCore;

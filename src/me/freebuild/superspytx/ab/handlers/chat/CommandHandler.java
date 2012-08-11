@@ -1,4 +1,4 @@
-package me.freebuild.superspytx.handlers.ab.chat;
+package me.freebuild.superspytx.ab.handlers.chat;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

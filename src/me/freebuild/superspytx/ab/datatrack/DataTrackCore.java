@@ -3,8 +3,8 @@ package me.freebuild.superspytx.ab.datatrack;
 import org.bukkit.entity.Player;
 
 import me.freebuild.superspytx.ab.AntiBot;
-import me.freebuild.superspytx.handlers.ab.chat.ChatSpamHandler;
-import me.freebuild.superspytx.handlers.ab.login.BotHandler;
+import me.freebuild.superspytx.ab.handlers.chat.ChatSpamHandler;
+import me.freebuild.superspytx.ab.handlers.login.BotHandler;
 
 public class DataTrackCore
 {

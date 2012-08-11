@@ -1,4 +1,4 @@
-package me.freebuild.superspytx.handlers.ab.chat;
+package me.freebuild.superspytx.ab.handlers.chat;
 
 import me.freebuild.superspytx.ab.AntiBot;
 import me.freebuild.superspytx.ab.datatrack.ChatDataTrack;

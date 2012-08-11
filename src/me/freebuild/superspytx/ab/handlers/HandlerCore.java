@@ -2,13 +2,13 @@ package me.freebuild.superspytx.ab.handlers;
 
 import me.freebuild.superspytx.ab.AntiBot;
 import me.freebuild.superspytx.ab.datatrack.DataTrackCore;
-import me.freebuild.superspytx.handlers.ab.chat.CaptchaHandler;
-import me.freebuild.superspytx.handlers.ab.chat.ChatFlowHandler;
-import me.freebuild.superspytx.handlers.ab.chat.ChatSpamHandler;
-import me.freebuild.superspytx.handlers.ab.chat.CommandHandler;
-import me.freebuild.superspytx.handlers.ab.login.BotHandler;
-import me.freebuild.superspytx.handlers.ab.login.CountryBanHandler;
-import me.freebuild.superspytx.handlers.ab.login.LoginDelayHandler;
+import me.freebuild.superspytx.ab.handlers.chat.CaptchaHandler;
+import me.freebuild.superspytx.ab.handlers.chat.ChatFlowHandler;
+import me.freebuild.superspytx.ab.handlers.chat.ChatSpamHandler;
+import me.freebuild.superspytx.ab.handlers.chat.CommandHandler;
+import me.freebuild.superspytx.ab.handlers.login.BotHandler;
+import me.freebuild.superspytx.ab.handlers.login.CountryBanHandler;
+import me.freebuild.superspytx.ab.handlers.login.LoginDelayHandler;
 
 public class HandlerCore
 {

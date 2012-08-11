@@ -1,4 +1,4 @@
-package me.freebuild.superspytx.handlers.ab.chat;
+package me.freebuild.superspytx.ab.handlers.chat;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
