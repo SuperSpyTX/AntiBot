@@ -40,14 +40,12 @@ public class ChatSpamHandler
             if (antibot.getDataTrack().getLoginTracker().autokick.contains(player.getName()))
             {
                 player.kickPlayer(Settings.kickMsg);
-
                 return true;
             }
 
             if (antibot.getDataTrack().getLoginTracker().autoipkick.contains(player.getAddress().toString().split(":")[0]))
             {
                 player.kickPlayer(Settings.kickMsg);
-
                 return true;
             }
 

@@ -19,22 +19,6 @@ public class ChatListener implements Listener
         antibot = instance;
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onPlayerCommand(PlayerCommandPreprocessEvent event)
-    {
-        if (!Settings.enabled)
-            return;
-        event.setCancelled(antibot.getHandler().getChatSpamHandler().handle(event.getPlayer()));
-    }
-
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onPlayerChat(AsyncPlayerChatEvent event)
-    {
-        if (!Settings.enabled)
-            return;
-        event.setCancelled(antibot.getHandler().getChatSpamHandler().handle(event.getPlayer()));
-    }
-
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerCommandLow(PlayerCommandPreprocessEvent event)
     {
@@ -46,8 +30,11 @@ public class ChatListener implements Listener
             event.setCancelled(true);
             return;
         }
-
-        event.setCancelled(antibot.getHandler().getChatFlowHandler().handle(event.getPlayer()));
+        
+        event.setCancelled(antibot.getHandler().getChatSpamHandler().handle(event.getPlayer()));
+        
+        if(!event.isCancelled())
+            event.setCancelled(antibot.getHandler().getChatFlowHandler().handle(event.getPlayer()));
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -62,8 +49,11 @@ public class ChatListener implements Listener
             event.setCancelled(true);
             return;
         }
+        
+        event.setCancelled(antibot.getHandler().getChatSpamHandler().handle(event.getPlayer()));
 
-        event.setCancelled(antibot.getHandler().getChatFlowHandler().handle(event.getPlayer()));
+        if(!event.isCancelled())
+            event.setCancelled(antibot.getHandler().getChatFlowHandler().handle(event.getPlayer()));
     }
 
 }

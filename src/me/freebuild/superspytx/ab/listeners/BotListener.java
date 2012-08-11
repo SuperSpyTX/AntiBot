@@ -33,7 +33,7 @@ public class BotListener implements Listener
         antibot.getHandler().getBotHandler().onPlayerKick(event);
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler
     public void onPlayerMove(PlayerMoveEvent event)
     {
         if (!Settings.enabled)
