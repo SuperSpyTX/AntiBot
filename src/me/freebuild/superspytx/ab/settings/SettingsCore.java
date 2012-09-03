@@ -18,6 +18,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import me.freebuild.superspytx.ab.AntiBot;
+import me.freebuild.superspytx.ab.settings.Settings;
 import net.h31ix.anticheat.api.*;
 import net.h31ix.anticheat.manage.CheckType;
 
@@ -77,7 +78,7 @@ public class SettingsCore
         config.put("AntiBot.TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.InstallDate", System.currentTimeMillis());
         config.put("AntiBot.TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.CheckUpdates", Settings.checkupdates);
         config.put("AntiBot.TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.DebugMode", Settings.debugmode);
-        config.put("AntiBot.TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.ABVersion", antibot.getVersion());
+       // config.put("AntiBot.TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.ABVersion", antibot.getVersion());
 
         antibot.getConfig().addDefaults(config);
         FileConfiguration lang = YamlConfiguration.loadConfiguration(new File(antibot.getDataFolder(), "language.yml"));
@@ -221,11 +222,11 @@ public class SettingsCore
                 }
                 else if (conf.equalsIgnoreCase("CountryBans.Countries"))
                 {
-                    antibot.getDataTrack().getLoginTracker().countryBans = antibot.getConfig().getStringList(oh.getKey());
+                  /*  antibot.getDataTrack().getLoginTracker().countryBans = antibot.getConfig().getStringList(oh.getKey());
                     for(String s : antibot.getDataTrack().getLoginTracker().countryBans)
                     {
                         antibot.getUtility().getDebug().debug(s);
-                    }
+                    } */
                 }
                 else if (conf.equalsIgnoreCase("LoginDelay.Enabled"))
                 {
@@ -241,7 +242,7 @@ public class SettingsCore
                 }
                 else if (conf.equalsIgnoreCase("TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.InstallDate"))
                 {
-                    antibot.setInstalldate((Long) duh);
+                   // antibot.setInstalldate((Long) duh);
                 }
                 else if (conf.equalsIgnoreCase("TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.CheckUpdates"))
                 {
@@ -283,12 +284,12 @@ public class SettingsCore
 
             }, 600L); //start in 30 seconds.
 
-            if (antibot.firsttime)
+           /* if (antibot.firsttime)
             {
                 antibot.setInstalldate(System.currentTimeMillis());
                 antibot.getConfig().set("TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.InstallDate", antibot.getInstalldate());
                 antibot.firsttime = false;
-            }
+            } */
 
             // load messages
             langs.put("AntiBot.Messages.Kick", Settings.kickMsg);
@@ -333,19 +334,6 @@ public class SettingsCore
             catch (Exception e)
             {
                 //fail.
-            }
-
-            try
-            {
-                boolean development = (antibot.getVersion().contains("-SNAPSHOT"));
-                if (development)
-                {
-                    Settings.checkupdates = false;
-                }
-            }
-            catch (NullPointerException e)
-            {
-                // server startup.
             }
 
             System.out.print("AntiBot: Configuration Loaded Successfully!");

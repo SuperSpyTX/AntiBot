@@ -5,10 +5,11 @@ import me.freebuild.superspytx.ab.AntiBot;
 public class Settings
 {
     public static AntiBot core = null;
-    public static int interval = 5000;
+    public static int interval = 5000; // Bot: Interval
     public static int accounts = 4;
     public static int spamam = 4;
-    public static int spamtime = 1500;
+    public static int spamtime = 2500;
+    public static int spamdiffct = 10;
     public static int connectFor = 30000;
     public static long startdelay = 60L;
     public static int timetooverflow = 5000;
@@ -43,5 +44,16 @@ public class Settings
     public static String connectMsg = "You are not on the whitelist!";
     public static String connectInvasion = "The server is currently under attack.";
     public static String prefix = "\247f[\247bAntiBot\247f] ";
+    private static boolean setup = false;
+    
+    public static boolean isSet()
+    {
+        return setup;
+    }
+    
+    public static void setup()
+    {
+        setup = true;
+    }
 
 }
