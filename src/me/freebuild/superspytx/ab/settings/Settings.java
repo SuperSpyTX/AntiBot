@@ -9,7 +9,7 @@ public class Settings
     public static int accounts = 4;
     public static int spamam = 4;
     public static int spamtime = 2500;
-    public static int spamdiffct = 10;
+    public static int spamdiffct = 3;
     public static int connectFor = 30000;
     public static long startdelay = 60L;
     public static int timetooverflow = 5000;
@@ -22,7 +22,7 @@ public class Settings
     public static boolean useWhiteListPerms = false;
     public static boolean useOpPerms = false;
     public static boolean enabled = true;
-    public static boolean debugmode = false;
+    public static boolean debugmode = false; //TODO: set to false!
     public static boolean whiteList = false;
     public static boolean enableAntiSpam = true;
     public static boolean chatMute = false;

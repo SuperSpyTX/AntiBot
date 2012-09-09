@@ -4,15 +4,15 @@ import org.bukkit.Bukkit;
 
 import me.freebuild.superspytx.ab.AntiBot;
 import me.freebuild.superspytx.ab.abs.EventAction;
+import me.freebuild.superspytx.ab.abs.Handler;
 import me.freebuild.superspytx.ab.abs.PI;
-import me.freebuild.superspytx.ab.handlers.Handler;
 import me.freebuild.superspytx.ab.settings.Settings;
-import me.freebuild.superspytx.ab.utils.MathUtils;
+import me.freebuild.superspytx.ab.tils.MathTils;
 import me.freebuild.superspytx.ab.workflow.GD;
 
 public class BotHandler implements Handler
 {
-
+    //TODO: If last player joined has same IP as this guy, count towards bot kicks.
     @Override
     public boolean run(EventAction info)
     {
@@ -24,7 +24,7 @@ public class BotHandler implements Handler
         
         if (GD.b_lc != 0L)
         {
-            if (MathUtils.getLongDiff(GD.b_lc) < Settings.interval)
+            if (MathTils.getLongDiff(GD.b_lc) < Settings.interval)
             {
                 GD.b_cts++;
                 if (GD.b_cts >= Settings.accounts)
@@ -52,7 +52,7 @@ public class BotHandler implements Handler
     {
         for (final PI pl : GD.b_cp)
         {
-            if (MathUtils.getLongDiff(pl.b_connectfor) < Settings.connectFor)
+            if (MathTils.getLongDiff(pl.b_connectfor) < Settings.connectFor)
             {
                 if(pl.pl.isOp()) continue; // debug.
                 Bukkit.getScheduler().scheduleSyncDelayedTask(AntiBot.getInstance(), new Runnable() {

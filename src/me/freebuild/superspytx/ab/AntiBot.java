@@ -11,26 +11,25 @@ public class AntiBot extends JavaPlugin
 {
     private static AntiBot instance;
     private String version;
-    
+
     public void onDisable()
     {
         Bukkit.getScheduler().cancelAllTasks();
     }
-    
+
     public void onEnable()
     {
         instance = this;
         /* Events */
         (new CallUnit()).registerUnits();
-        
+
         /* Configuration goes here */
-        
-        
+
         /* All finished */
         PluginDescriptionFile pdfFile = getDescription();
         version = pdfFile.getVersion();
         boolean development = (version.contains("-SNAPSHOT"));
-        
+
         if (development)
         {
             Settings.checkupdates = false;
@@ -40,13 +39,21 @@ public class AntiBot extends JavaPlugin
         {
             getLogger().info("If you have any issues with AntiBot.  Or there is a false positive! Don't be afraid to make a ticket!");
         }
-        
+
         getLogger().info("AntiBot v" + version + " (Notorious UnLeet & deRobert Edition) enabled!");
     }
-    
+
     public static AntiBot getInstance()
     {
         return instance;
+    }
+    
+    public static void log(String e)
+    {
+        if(Settings.debugmode) {
+            getInstance().getLogger().info("Debug: " + e);
+            Bukkit.broadcastMessage(Settings.prefix + "Debug: " + e);
+        }
     }
 
 }

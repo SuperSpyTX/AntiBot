@@ -1,6 +1,5 @@
-package me.freebuild.superspytx.ab.handlers;
+package me.freebuild.superspytx.ab.abs;
 
-import me.freebuild.superspytx.ab.abs.EventAction;
 
 public interface Handler
 {

@@ -20,7 +20,13 @@ public class GD
     public static CopyOnWriteArrayList<PI> b_cp = new CopyOnWriteArrayList<PI>();
     
     /* Chat Flow */
+    public static boolean cf_gm = false;
     public static int cf_cts = 0;
+    public static long cf_ttmf = 5L;
+    public static long cf_lmt = 0L;
+    public static String cf_lm = "";
+    public static String cf_lp = "";
+    
     
     public static PI getPI(Player player)
     {
