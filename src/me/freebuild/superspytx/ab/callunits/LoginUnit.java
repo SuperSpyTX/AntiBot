@@ -14,10 +14,10 @@ public class LoginUnit extends CallUnit
     public void join(PlayerJoinEvent e)
     {
         GD.getPI(e.getPlayer()); // register their join time....accurately.
-      /*  if(WorkflowAgent.dispatchUnit(e, Handlers.BOT, false))
+        if(WorkflowAgent.dispatchUnit(e, Handlers.BOT, false))
         {
             e.setJoinMessage(null);
-        } */
+        } 
     }
 
 }
