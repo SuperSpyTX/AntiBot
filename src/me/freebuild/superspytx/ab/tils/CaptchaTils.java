@@ -175,12 +175,15 @@ public class CaptchaTils
         String[] p1 = strFormat(str.toCharArray()[1]);
         String[] p2 = strFormat(str.toCharArray()[2]);
         String[] p3 = strFormat(str.toCharArray()[3]);
-        puzzle[0] = spec + p0[0] + "  " + p1[0] + "  " + p2[0] + "  " + p3[0];
-        puzzle[1] = spec + p0[1] + "  " + p1[1] + "  " + p2[1] + "  " + p3[1];
-        puzzle[2] = spec + p0[2] + "  " + p1[2] + "  " + p2[2] + "  " + p3[2];
-        puzzle[3] = spec + p0[3] + "  " + p1[3] + "  " + p2[3] + "  " + p3[3];
-        puzzle[4] = spec + p0[4] + "  " + p1[4] + "  " + p2[4] + "  " + p3[4];
-        puzzle[5] = str;
+        for(int i = 0; i < 6; i++)
+        {
+            if(i > 4)
+                puzzle[i] = str;
+            else
+            {
+                puzzle[i] = spec + p0[i] + "  " + p1[i] + "  " + p2[i] + "  " + p3[i];
+            }
+        }
         return puzzle;
     }
 
