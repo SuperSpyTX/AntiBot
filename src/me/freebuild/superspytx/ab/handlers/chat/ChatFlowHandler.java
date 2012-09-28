@@ -2,6 +2,7 @@ package me.freebuild.superspytx.ab.handlers.chat;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 import me.freebuild.superspytx.ab.AB;
 import me.freebuild.superspytx.ab.AntiBot;
@@ -24,45 +25,48 @@ public class ChatFlowHandler implements Handler
             return false;
         if ((GD.getPI(info.player).cs_trig))
             return false; // triggered spam? don't count towards chat flow.
-        AB.log("Chat Flow debug");
+        AB.debug("Chat Flow debug");
+        int ct = 0;
         if (GD.cf_lmt != 0L)
         {
-            AB.log("CF_LMT > 0");
-            int ct = 0;
-            if (StringTils.strDiffCounter(info.message, GD.cf_lm) < Settings.spamdiffct && !GD.cf_lp.equalsIgnoreCase(info.player.getName()))
-            {
-                AB.log("Str diff: " + StringTils.strDiffCounter(info.message, GD.cf_lm));
-                GD.cf_cts++;
-                ct++;
-                AB.log("VL: " + GD.cf_cts);
-            }
             if (MathTils.getLongDiff(GD.cf_lmt) < Settings.timetooverflow)
             {
-                AB.log("Time diff: " + MathTils.getLongDiff(GD.cf_lmt));
+                AB.debug("Time diff: " + MathTils.getLongDiff(GD.cf_lmt));
                 GD.cf_cts++;
                 ct++;
-                AB.log("VL: " + GD.cf_cts);
+                AB.debug("VL: " + GD.cf_cts);
+                // TODO: Find if this causes false positives or not.
+                if (StringTils.strDiffCounter(info.message, GD.cf_lm) < Settings.spamdiffct && !GD.cf_lp.equalsIgnoreCase(info.player.getName()))
+                {
+                    AB.debug("Str diff: " + StringTils.strDiffCounter(info.message, GD.cf_lm));
+                    GD.cf_cts+=2;
+                    ct+=2;
+                    AB.debug("VL: " + GD.cf_cts);
+                }
+                if (GD.cf_cts >= Settings.overflows)
+                {
+                    AB.debug("Chat overflow! " + GD.cf_cts);
+                    AB.debug("VL: " + GD.cf_cts);
+                    // TODO: Perform Action - Chat Overflow.
+                    return true;
+                }
+                if (ct < 1 && GD.cf_cts > 0)
+                {
+                    GD.cf_cts -= 1;
+                }
+                AB.debug("ChatFlow VL: " + GD.cf_cts);
+                return false;
             }
-            if (GD.cf_cts >= Settings.overflows)
-            {
-                AB.log("Chat overflow! " + GD.cf_cts);
-                AB.log("VL: " + GD.cf_cts);
-                // TODO: Perform Action - Chat Overflow.
-                return true;
-            }
-            if (ct < 1 && GD.cf_cts > 0)
-            {
-                GD.cf_cts -= 1;
-            }
-            AB.log("ChatFlow VL: " + GD.cf_cts);
         }
-        AB.log("Chat not overflowed.");
+        
+        AB.debug("Chat not overflowed.");
+        GD.cf_cts = 0;
         GD.cf_lmt = System.currentTimeMillis();
         GD.cf_lm = info.message;
-        AB.log("Last message: " + info.message + " time: " + GD.cf_lmt);
+        AB.debug("Last message: " + info.message + " time: " + GD.cf_lmt);
         if (!GD.cf_lp.equalsIgnoreCase(info.player.getName()) || GD.cf_lp.length() == 0)
         {
-            AB.log("Last player: " + GD.cf_lp);
+            AB.debug("Last player: " + GD.cf_lp);
             GD.cf_lp = info.player.getName();
         }
         return false;

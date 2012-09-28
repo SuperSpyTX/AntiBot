@@ -6,6 +6,7 @@ import me.freebuild.superspytx.ab.handlers.Handlers;
 import me.freebuild.superspytx.ab.settings.Settings;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
 public class WorkflowAgent
@@ -16,6 +17,8 @@ public class WorkflowAgent
         if(!Settings.enabled) return false;
         if((new EventAction(event, false).cancelled) && !handleAnyways)
             return false;
+        
+        if(!handle.checkUser((new EventAction(event, false)).player)) return false;
         
         if(handle.getHandler().run(new EventAction(event, false))) {
            handle.getHandler().performActions(new EventAction(event, false));
@@ -32,11 +35,14 @@ public class WorkflowAgent
         Bukkit.getScheduler().scheduleAsyncDelayedTask(AntiBot.getInstance(), new Runnable() {
             public void run()
             {
-                if((new EventAction(event, true)).cancelled)
+                if(!Settings.enabled) return;
+                if((new EventAction(event, false).cancelled))
                     return;
                 
-                if(handle.getHandler().run(new EventAction(event, true))) {
-                    handle.getHandler().performActions(new EventAction(event, true));
+                if(!handle.checkUser((new EventAction(event, false)).player)) return;
+                
+                if(handle.getHandler().run(new EventAction(event, false))) {
+                   handle.getHandler().performActions(new EventAction(event, false));
                 }
             }
         }, 20L);

@@ -12,12 +12,12 @@ public class StringTils
         int ct = 0;
         while (!g)
         {
-            if ((n.length) >= ct)
+            if (ct >= n.length)
             {
                 record += Math.abs(b.length - n.length) * 2;
                 break;
             }
-            else if ((b.length) >= ct)
+            else if (ct >= b.length)
             {
                 record += Math.abs(n.length - b.length) * 2;
                 break;
@@ -30,6 +30,10 @@ public class StringTils
 
             ct++;
         }
+        
+        // Don't give players a harsh punishment if both messages were only 2 chars or less...
+        if (record == 0 && now.length() < 3 && before.length() < 3)
+            record++;
 
         return record;
     }

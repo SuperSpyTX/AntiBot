@@ -19,61 +19,68 @@ public class ChatSpamHandler implements Handler
 
         PI pli = GD.getPI(info.player);
         pli.cs_trig = false;
-        if (MathTils.getLongDiff(pli.b_connectfor) < 5000L)
+        if (MathTils.getLongDiff(pli.b_connectfor) < 2000L && !pli.ab_loggedin)
             pli.cs_ct+= 2;
         
-        AB.log("Chat spam check for " + info.player.getName());
+        AB.debug("Chat spam check for " + info.player.getName());
         if (pli.cs_lmt != 0L)
         {
-            AB.log("CS_LMT > 0");
+            AB.debug("CS_LMT > 0");
             int ct = 0;
             if (StringTils.strDiffCounter(info.message, pli.cs_lm) < Settings.spamdiffct)
             {
-                AB.log("Str Diff L: " + StringTils.strDiffCounter(info.message, pli.cs_lm));
+                AB.debug("Str Diff L: " + StringTils.strDiffCounter(info.message, pli.cs_lm));
                 pli.cs_ct++;
                 ct++;
-                AB.log("VL: " + pli.cs_ct);
+                AB.debug("VL: " + pli.cs_ct);
             }
-            if (StringTils.strDiffCounter(info.message, GD.cf_lm) < 1)
+            if (StringTils.strDiffCounter(info.message, GD.cf_lm) < Settings.spamdiffct)
             {
-                AB.log("Str Diff G: " + StringTils.strDiffCounter(info.message, pli.cs_lm));
-                pli.cs_ct+= 1337;
-                ct+=1337;
-                AB.log("VL: " + pli.cs_ct);
+                AB.debug("Str Diff G: " + StringTils.strDiffCounter(info.message, pli.cs_lm));
+                pli.cs_ct++;
+                ct++;
+                AB.debug("VL: " + pli.cs_ct);
+            }
+            if (StringTils.strDiffCounter(info.message, GD.cf_lm) < 0)
+            {
+                AB.debug("Str Diff HG: " + StringTils.strDiffCounter(info.message, pli.cs_lm));
+                pli.cs_ct+=2;
+                ct+=2;
+                AB.debug("VL: " + pli.cs_ct);
             }
             if (MathTils.getLongDiff(pli.cs_lmt) < Settings.spamtime)
             {
-                AB.log("Time diff: " + MathTils.getLongDiff(pli.cs_lmt));
+                AB.debug("Time diff: " + MathTils.getLongDiff(pli.cs_lmt));
                 pli.cs_ct++;
                 ct++;
-                AB.log("VL: " + pli.cs_ct);
+                AB.debug("VL: " + pli.cs_ct);
             } else if (MathTils.consistency(pli, pli.cs_lmt))
             {
-                pli.cs_ct++;
-                ct++;
-                AB.log("TC VL: " + pli.cs_ct);
+                pli.cs_ct+=2;
+                ct+=2;
+                AB.debug("TC VL: " + pli.cs_ct);
             }
 
             if (pli.cs_ct >= Settings.spamam)
             {
                 // TODO: Perform Action - Chat Message Spam.
-                AB.log("Chat spam detected!");
-                AB.log("VL: " + pli.cs_ct);
+                AB.debug("Chat spam detected!");
+                AB.debug("VL: " + pli.cs_ct);
                 pli.cs_trig = true;
                 return true;
             }
             
             if (ct < 1 && pli.cs_ct > 0)
             {
-                AB.log("Decrease for ChatSpam");
+                AB.debug("Decrease for ChatSpam");
                 pli.cs_ct -= 1;
             }
-            AB.log("ChatSpam VL: " + pli.cs_ct);
+            AB.debug("ChatSpam VL: " + pli.cs_ct);
         }
-        AB.log("Chat Spam not detected");
+        AB.debug("Chat Spam not detected");
         pli.cs_lm = info.message;
         pli.cs_lmt = System.currentTimeMillis();
-        AB.log("Last Message: " + pli.cs_lm + " time: " + pli.cs_lmt);
+        AB.debug("Last Message: " + pli.cs_lm + " time: " + pli.cs_lmt);
         return false;
     }
 

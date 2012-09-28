@@ -12,7 +12,7 @@ import me.freebuild.superspytx.ab.workflow.GD;
 
 public class BotHandler implements Handler
 {
-    //TODO: If last player joined has same IP as this guy, count towards bot kicks.
+    
     @Override
     public boolean run(EventAction info)
     {
@@ -54,7 +54,6 @@ public class BotHandler implements Handler
         {
             if (MathTils.getLongDiff(pl.b_connectfor) < Settings.connectFor)
             {
-                if(pl.pl.isOp()) continue; // debug.
                 Bukkit.getScheduler().scheduleSyncDelayedTask(AntiBot.getInstance(), new Runnable() {
                     public void run()
                     {

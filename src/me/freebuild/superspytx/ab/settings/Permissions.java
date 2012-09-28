@@ -16,8 +16,8 @@ public enum Permissions
     COUNTRYBAN("countryban", 1),
 
     //admin level permissions
-    ADMIN_PLUS("admin.plus", 3),
-    ADMIN("admin", 2),
+    ADMIN_PLUS("admin.basic", 2),
+    ADMIN("admin", 3),
 
     //individual permissions.
     ADMIN_RELOAD("admin.reload", 3),

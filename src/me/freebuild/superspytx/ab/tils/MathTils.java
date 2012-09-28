@@ -15,15 +15,15 @@ public class MathTils
         
         // round the difference.
         long diff = getLongDiff(time);
-        long round = Math.round(diff);
+        long round = diff - (diff % 1000); // Thanks overflowed stacks!
         
         
         // begin identifying patterns.  By 5 seconds.
         if(pl.cs_rd != 0L)
         {
-            long max = pl.cs_rd - 500L; // drop .5 seconds from the stored rounded difference.
-            AB.log("Max: " + Long.toString(max) + " Round: " + Long.toString(round) + " Diff: " + Long.toString(diff));
-            if(diff < pl.cs_rd && diff > max)
+            long max = pl.cs_rd - 800L; // drop .8 seconds from the stored rounded difference.
+            AB.debug("Max: " + Long.toString(max) + " Round: " + Long.toString(round) + " Diff: " + Long.toString(diff));
+            if(diff <= pl.cs_rd && diff >= max)
                 return true;
         }
         

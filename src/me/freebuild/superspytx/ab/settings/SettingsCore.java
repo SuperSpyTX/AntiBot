@@ -19,6 +19,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import me.freebuild.superspytx.ab.AntiBot;
 import me.freebuild.superspytx.ab.settings.Settings;
+import me.freebuild.superspytx.ab.workflow.GD;
 import net.h31ix.anticheat.api.*;
 import net.h31ix.anticheat.manage.CheckType;
 
@@ -222,6 +223,7 @@ public class SettingsCore
                 }
                 else if (conf.equalsIgnoreCase("CountryBans.Countries"))
                 {
+                    GD.cb_cds = antibot.getConfig().getStringList(oh.getKey());
                   /*  antibot.getDataTrack().getLoginTracker().countryBans = antibot.getConfig().getStringList(oh.getKey());
                     for(String s : antibot.getDataTrack().getLoginTracker().countryBans)
                     {

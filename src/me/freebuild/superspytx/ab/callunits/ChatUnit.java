@@ -7,6 +7,7 @@ import me.freebuild.superspytx.ab.workflow.WorkflowAgent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 public class ChatUnit extends CallUnit
 {
@@ -16,7 +17,14 @@ public class ChatUnit extends CallUnit
         if (WorkflowAgent.dispatchUnit(e, Handlers.CHATSPAM, true))
             e.setCancelled(true);
     }
-
+    
+    @EventHandler(priority = EventPriority.HIGH)
+    public void cmd(PlayerCommandPreprocessEvent e)
+    {
+        if (WorkflowAgent.dispatchUnit(e, Handlers.CHATSPAM, true))
+            e.setCancelled(true);
+    }
+    
     @EventHandler(priority = EventPriority.HIGHEST)
     public void highest(AsyncPlayerChatEvent e)
     {
