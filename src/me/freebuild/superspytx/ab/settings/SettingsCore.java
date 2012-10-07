@@ -54,6 +54,7 @@ public class SettingsCore
         config.put("AntiBot.Bot.ConnectionTime", Settings.connectFor);
         config.put("AntiBot.AntiSpam.Enabled", Settings.enableAntiSpam);
         config.put("AntiBot.AntiSpam.Amount", Settings.spamam);
+        config.put("AntiBot.AntiSpam.StringDiffMin", Settings.spamdiffct);
         config.put("AntiBot.AntiSpam.Time", Settings.spamtime);
         config.put("AntiBot.AntiSpam.MutePlayerIfCaptchaNotEnabled", Settings.chatMute);
         config.put("AntiBot.ChatFlow.Enabled", Settings.flowEnabled);
@@ -172,6 +173,10 @@ public class SettingsCore
                 else if (conf.equalsIgnoreCase("AntiSpam.Amount"))
                 {
                     Settings.spamam = (Integer) duh;
+                }
+                else if (conf.equalsIgnoreCase("AntiSpam.StringDiffMin"))
+                {
+                    Settings.spamdiffct = (Integer) duh;
                 }
                 else if (conf.equalsIgnoreCase("AntiSpam.Time"))
                 {

@@ -9,7 +9,9 @@ public class PI
     public Player pl;
     public String p_name;
     public boolean online = true;
-    public boolean ab_loggedin = false; // true if already logged in.
+    public long ab_lastdc = 0L;
+    public boolean ab_alreadyin = false; // true if already logged in.
+    public boolean ab_online = true;
 
     /* Bot Handler Data */
     public long b_connectfor = 0L;
@@ -23,6 +25,7 @@ public class PI
     
     /* Captcha Data */
     public boolean cp_haspuzzle = false;
+    public Puzzle cp_puzzle;
     
     
     public PI(Player pl)
@@ -41,11 +44,23 @@ public class PI
     
     public boolean updateOnlineStatus()
     {
-        if(pl != null)
-            return true;
-        
         pl = Bukkit.getPlayerExact(p_name);
+        if(pl != null)
+            this.clean();
         return (pl != null);
+    }
+    
+    public void clean()
+    {
+        this.b_connectfor = System.currentTimeMillis();
+        this.ab_lastdc = 0L;
+        this.ab_online = true;
+        this.cp_haspuzzle = false;
+        this.cs_ct = 0;
+        this.cs_lm = "";
+        this.cs_lmt = 0L;
+        this.cs_rd = 0L;
+        this.cs_trig = false;
     }
 
 }

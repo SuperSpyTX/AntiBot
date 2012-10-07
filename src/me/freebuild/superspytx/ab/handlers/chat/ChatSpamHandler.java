@@ -19,7 +19,7 @@ public class ChatSpamHandler implements Handler
 
         PI pli = GD.getPI(info.player);
         pli.cs_trig = false;
-        if (MathTils.getLongDiff(pli.b_connectfor) < 2000L && !pli.ab_loggedin)
+        if (MathTils.getLongDiff(pli.b_connectfor) < 2000L && !pli.ab_alreadyin)
             pli.cs_ct+= 2;
         
         AB.debug("Chat spam check for " + info.player.getName());

@@ -36,13 +36,13 @@ public class WorkflowAgent
             public void run()
             {
                 if(!Settings.enabled) return;
-                if((new EventAction(event, false).cancelled))
+                if((new EventAction(event, true).cancelled))
                     return;
                 
-                if(!handle.checkUser((new EventAction(event, false)).player)) return;
+                if(!handle.checkUser((new EventAction(event, true)).player)) return;
                 
-                if(handle.getHandler().run(new EventAction(event, false))) {
-                   handle.getHandler().performActions(new EventAction(event, false));
+                if(handle.getHandler().run(new EventAction(event, true))) {
+                   handle.getHandler().performActions(new EventAction(event, true));
                 }
             }
         }, 20L);

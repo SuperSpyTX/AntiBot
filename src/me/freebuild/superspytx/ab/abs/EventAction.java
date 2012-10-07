@@ -4,7 +4,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
@@ -52,6 +51,9 @@ public class EventAction
         if(e instanceof Cancellable)
         {
             if(((Cancellable) e).isCancelled())
+                cancelled = true;
+            
+            if(message == null)
                 cancelled = true;
         }
         async = isasync;

@@ -23,7 +23,7 @@ public class CountryHandler implements Handler
     @Override
     public void performActions(EventAction info)
     {
-        // do nothing.
+        // do nothing.  the player is already denied access.
     }
 
 }

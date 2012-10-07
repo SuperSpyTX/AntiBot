@@ -18,7 +18,7 @@ public class MathTils
         long round = diff - (diff % 1000); // Thanks overflowed stacks!
         
         
-        // begin identifying patterns.  By 5 seconds.
+        // begin identifying patterns.
         if(pl.cs_rd != 0L)
         {
             long max = pl.cs_rd - 800L; // drop .8 seconds from the stored rounded difference.

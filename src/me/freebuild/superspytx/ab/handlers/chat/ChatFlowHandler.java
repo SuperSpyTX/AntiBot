@@ -2,8 +2,6 @@ package me.freebuild.superspytx.ab.handlers.chat;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
-
 import me.freebuild.superspytx.ab.AB;
 import me.freebuild.superspytx.ab.AntiBot;
 import me.freebuild.superspytx.ab.abs.EventAction;
@@ -19,11 +17,7 @@ public class ChatFlowHandler implements Handler
     @Override
     public boolean run(EventAction info)
     {
-        if (GD.cf_gm)
-            return false;
-        if (info.message == null)
-            return false;
-        if ((GD.getPI(info.player).cs_trig))
+        if (GD.cf_gm || info.message == null || (GD.getPI(info.player).cs_trig) || (GD.getPI(info.player).cp_haspuzzle))
             return false; // triggered spam? don't count towards chat flow.
         AB.debug("Chat Flow debug");
         int ct = 0;
@@ -39,8 +33,8 @@ public class ChatFlowHandler implements Handler
                 if (StringTils.strDiffCounter(info.message, GD.cf_lm) < Settings.spamdiffct && !GD.cf_lp.equalsIgnoreCase(info.player.getName()))
                 {
                     AB.debug("Str diff: " + StringTils.strDiffCounter(info.message, GD.cf_lm));
-                    GD.cf_cts+=2;
-                    ct+=2;
+                    GD.cf_cts += 2;
+                    ct += 2;
                     AB.debug("VL: " + GD.cf_cts);
                 }
                 if (GD.cf_cts >= Settings.overflows)
@@ -58,7 +52,7 @@ public class ChatFlowHandler implements Handler
                 return false;
             }
         }
-        
+
         AB.debug("Chat not overflowed.");
         GD.cf_cts = 0;
         GD.cf_lmt = System.currentTimeMillis();
@@ -87,7 +81,7 @@ public class ChatFlowHandler implements Handler
                 Bukkit.broadcastMessage(Settings.prefix + ChatColor.RED + Settings.overflowedmessage.replace("%sec%", Long.toString(GD.cf_ttmf)));
             }
 
-        }, 40L);
+        }, 20L);
         Bukkit.getScheduler().scheduleAsyncDelayedTask(AntiBot.getInstance(), new Runnable()
         {
 

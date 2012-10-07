@@ -16,7 +16,7 @@ public enum Permissions
     COUNTRYBAN("countryban", 1),
 
     //admin level permissions
-    ADMIN_PLUS("admin.basic", 2),
+    ADMIN_BASIC("admin.basic", 2),
     ADMIN("admin", 3),
 
     //individual permissions.
@@ -41,7 +41,7 @@ public enum Permissions
 
     public boolean isLevelPermission()
     {
-        return baseperm == ADMIN.baseperm || baseperm == ADMIN_PLUS.baseperm;
+        return baseperm == ADMIN.baseperm || baseperm == ADMIN_BASIC.baseperm;
     }
 
     public boolean getPermission(Player pl, CommandSender sender)
@@ -82,12 +82,12 @@ public enum Permissions
                 return false;
             }
 
-            if (ADMIN_PLUS.getPermission(pl) && level >= 3)
+            if (ADMIN.getPermission(pl) && level >= 3)
             {
                 return true;
             }
 
-            if (ADMIN.getPermission(pl) && level < 3)
+            if (ADMIN_BASIC.getPermission(pl) && level < 3)
             {
                 return true;
             }

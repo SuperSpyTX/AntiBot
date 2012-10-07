@@ -41,7 +41,7 @@ public class GD
     public static PI getPI(String player)
     {
         if(opii.containsKey(player))
-            updateOfflineData(player);
+            return updateOfflineData(player);
         if(pii.containsKey(player))
             return pii.get(player);
         else
@@ -59,21 +59,26 @@ public class GD
     
     public static void unregisterPI(String player)
     {
+        getPI(player).ab_lastdc = System.currentTimeMillis();
+        getPI(player).ab_online = false;
         opii.put(player, getPI(player));
         pii.remove(player);
     }
     
-    private static void updateOfflineData(String player)
+    private static PI updateOfflineData(String player)
     {
         if(opii.get(player) != null)
         {
             PI bug = opii.get(player);
             if(bug.updateOnlineStatus())
             {
-                opii.remove(player);
                 pii.put(player, bug);
+                opii.remove(player);
             }
+            return bug;
         }
+        
+        return null;
     }
 
 }

@@ -28,7 +28,7 @@ public class ChatUnit extends CallUnit
     @EventHandler(priority = EventPriority.HIGHEST)
     public void highest(AsyncPlayerChatEvent e)
     {
-        if(WorkflowAgent.dispatchUnit(e, Handlers.CHATFLOW, true))
+        if(WorkflowAgent.dispatchUnit(e, Handlers.CHATFLOW, false))
             e.setCancelled(true);
     }
 
@@ -36,6 +36,9 @@ public class ChatUnit extends CallUnit
     public void low(AsyncPlayerChatEvent e)
     {
         if (GD.cf_gm)
+            e.setCancelled(true);
+        
+        if (WorkflowAgent.dispatchUnit(e, Handlers.CAPTCHA, true))
             e.setCancelled(true);
     }
 }

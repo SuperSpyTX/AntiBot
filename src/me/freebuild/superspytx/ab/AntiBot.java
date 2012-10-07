@@ -40,7 +40,7 @@ public class AntiBot extends JavaPlugin
         /* Register players on server */
         for(Player pl : this.getServer().getOnlinePlayers())
         {
-            GD.getPI(pl).ab_loggedin = true;
+            GD.getPI(pl).ab_alreadyin = true;
         }
         
         /* All finished */
