@@ -2,11 +2,15 @@ package me.freebuild.superspytx.ab.handlers.chat;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+
 import me.freebuild.superspytx.ab.AB;
 import me.freebuild.superspytx.ab.AntiBot;
 import me.freebuild.superspytx.ab.abs.EventAction;
 import me.freebuild.superspytx.ab.abs.Handler;
+import me.freebuild.superspytx.ab.settings.Permissions;
 import me.freebuild.superspytx.ab.settings.Settings;
+import me.freebuild.superspytx.ab.tils.CaptchaTils;
 import me.freebuild.superspytx.ab.tils.MathTils;
 import me.freebuild.superspytx.ab.tils.StringTils;
 import me.freebuild.superspytx.ab.workflow.GD;
@@ -79,6 +83,17 @@ public class ChatFlowHandler implements Handler
             public void run()
             {
                 Bukkit.broadcastMessage(Settings.prefix + ChatColor.RED + Settings.overflowedmessage.replace("%sec%", Long.toString(GD.cf_ttmf)));
+                
+                if(Settings.captchaEnabled && Settings.forceCaptchaOnChatFlow)
+                {
+                	for(Player pl : Bukkit.getOnlinePlayers())
+                	{
+                		if(!Permissions.CAPTCHA.getPermission(pl))
+                		{
+                			CaptchaTils.sendCaptchaToPlayer(pl);
+                		}
+                	}
+                }
             }
 
         }, 20L);

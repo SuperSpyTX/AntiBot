@@ -11,12 +11,12 @@ public class Settings
     public static int spamtime = 2500;
     public static int spamdiffct = 3;
     public static int connectFor = 30000;
-    public static long startdelay = 60L;
     public static int timetooverflow = 5000;
     public static int overflows = 5;
-    public static int loginDelay = 10000;
-    public static int loginHold = 10000;
-    public static String overflowedmessage = "SILENCE! Let's cool it down for %sec% seconds.";
+    public static int captchaAttempts = 3;
+    public static long startdelay = 60L;
+    public static long loginDelay = 10000L;
+    public static long loginHold = 10000L;
     public static boolean flowEnabled = true;
     public static boolean notify = true;
     public static boolean useWhiteListPerms = false;
@@ -25,7 +25,6 @@ public class Settings
     public static boolean debugmode = false; //TODO: set to false!
     public static boolean whiteList = false;
     public static boolean enableAntiSpam = true;
-    public static boolean chatMute = false;
     public static boolean enableMultiAccs = false;
     public static boolean banUsers = false;
     public static boolean geoIP = true;
@@ -35,6 +34,7 @@ public class Settings
     public static boolean delayedStart = true;
     public static boolean captchaEnabled = true;
     public static boolean forceCaptchaOnJoin = false;
+    public static boolean forceCaptchaOnChatSpam = true;
     public static boolean forceCaptchaOnChatFlow = true;
     public static boolean forceCaptchaOnMultiAcc = true;
     public static boolean forceCaptchaOnBotSpam = true;
@@ -43,6 +43,8 @@ public class Settings
     public static String countryBanMsg = "Your country is banned from this server!";
     public static String connectMsg = "You are not on the whitelist!";
     public static String connectInvasion = "The server is currently under attack.";
+    public static String overflowedmessage = "SILENCE! Let's cool it down for %sec% seconds.";
+    public static String loginDelayMsg = "You logged in too quickly! Please wait &sec& second(s).";
     public static String prefix = "\247f[\247bAntiBot\247f] ";
     private static boolean setup = false;
     

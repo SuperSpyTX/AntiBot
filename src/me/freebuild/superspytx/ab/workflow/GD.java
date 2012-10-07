@@ -2,19 +2,21 @@ package me.freebuild.superspytx.ab.workflow;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import me.freebuild.superspytx.ab.abs.PI;
+import me.freebuild.superspytx.ab.tils.MathTils;
 
 public class GD
 {
     /* Global Data for AntiBot */
     private static Map<String, PI> pii = new ConcurrentHashMap<String, PI>();
     private static Map<String, PI> opii = new ConcurrentHashMap<String, PI>();
+    private static long ab_installdate = 0L;
     
     /* Bot Throttler */
     public static int b_cts = 0;
@@ -32,6 +34,16 @@ public class GD
     /* Country Bans */
     public static List<String> cb_cds = new CopyOnWriteArrayList<String>();
     
+    public static void setInstallDate(long install)
+    {
+    	if(ab_installdate == 0L)
+    		ab_installdate = install;
+    }
+    
+    public static long getInstallDate()
+    {
+    	return ab_installdate;
+    }
     
     public static PI getPI(Player player)
     {
@@ -79,6 +91,15 @@ public class GD
         }
         
         return null;
+    }
+    
+    public static void updateTask()
+    {
+    	for(Entry<String, PI> g : opii.entrySet())
+    	{
+    		if(MathTils.getLongDiff(g.getValue().ab_lastdc) > 60000L)
+    			opii.remove(g.getKey());
+    	}
     }
 
 }

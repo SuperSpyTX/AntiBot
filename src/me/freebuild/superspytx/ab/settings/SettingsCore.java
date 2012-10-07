@@ -1,44 +1,27 @@
 package me.freebuild.superspytx.ab.settings;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Properties;
-import java.util.Set;
-import java.util.logging.Level;
-
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import me.freebuild.superspytx.ab.AntiBot;
+import me.freebuild.superspytx.ab.AB;
 import me.freebuild.superspytx.ab.settings.Settings;
 import me.freebuild.superspytx.ab.workflow.GD;
-import net.h31ix.anticheat.api.*;
-import net.h31ix.anticheat.manage.CheckType;
 
 public class SettingsCore
 {
 
-    public AntiBot antibot = null;
     public int reloads = 0;
     public Map<String, Object> config = new HashMap<String, Object>();
     public Map<String, Object> langs = new HashMap<String, Object>();
 
-    public SettingsCore(AntiBot instance)
-    {
-        antibot = instance;
-    }
-
     public void loadDefaults()
     {
-        Settings.core = antibot;
         config.put("AntiBot.Main.Prefix", Settings.prefix);
         config.put("AntiBot.Main.EnableByDefault", Settings.enabled);
         config.put("AntiBot.Main.Notifications", Settings.notify);
@@ -56,13 +39,14 @@ public class SettingsCore
         config.put("AntiBot.AntiSpam.Amount", Settings.spamam);
         config.put("AntiBot.AntiSpam.StringDiffMin", Settings.spamdiffct);
         config.put("AntiBot.AntiSpam.Time", Settings.spamtime);
-        config.put("AntiBot.AntiSpam.MutePlayerIfCaptchaNotEnabled", Settings.chatMute);
         config.put("AntiBot.ChatFlow.Enabled", Settings.flowEnabled);
         config.put("AntiBot.ChatFlow.Amount", Settings.overflows);
         config.put("AntiBot.ChatFlow.Time", Settings.timetooverflow);
         config.put("AntiBot.Captcha.Enabled", Settings.captchaEnabled);
+        config.put("AntiBot.Captcha.MaxAttempts", Settings.captchaAttempts);
         config.put("AntiBot.Captcha.Triggers.PlayerJoin", Settings.forceCaptchaOnJoin);
         config.put("AntiBot.Captcha.Triggers.ChatOverflow", Settings.forceCaptchaOnChatFlow);
+        config.put("AntiBot.Captcha.Triggers.ChatSpam", Settings.forceCaptchaOnChatSpam);
         config.put("AntiBot.Captcha.Triggers.BotSpam", Settings.forceCaptchaOnBotSpam);
         config.put("AntiBot.Captcha.Triggers.MultiAccount", Settings.forceCaptchaOnMultiAcc);
         config.put("AntiBot.CountryBans.Enabled", Settings.geoIP);
@@ -77,42 +61,36 @@ public class SettingsCore
         langs.put("AntiBot.Messages.ChatOverflow", Settings.overflowedmessage);
         langs.put("AntiBot.Messages.CountryBan", Settings.countryBanMsg);
         langs.put("AntiBot.Messages.ConnectInvasion", Settings.connectInvasion);
-        config.put("AntiBot.TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.InstallDate", System.currentTimeMillis());
-        config.put("AntiBot.TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.CheckUpdates", Settings.checkupdates);
-        config.put("AntiBot.TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.DebugMode", Settings.debugmode);
-       // config.put("AntiBot.TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.ABVersion", antibot.getVersion());
+        langs.put("AntiBot.Messages.LoginDelay", Settings.loginDelayMsg);
+        config.put("AntiBot.TouchTheseAnd.MbaxterWillComeAfterYou.AndKittiesWillDie.InstallDate", System.currentTimeMillis());
+        config.put("AntiBot.TouchTheseAnd.MbaxterWillComeAfterYou.AndKittiesWillDie.CheckUpdates", Settings.checkupdates);
+        config.put("AntiBot.TouchTheseAnd.MbaxterWillComeAfterYou.AndKittiesWillDie.DebugMode", Settings.debugmode);
+       // config.put("AntiBot.TouchTheseAnd.MbaxterWillComeAfterYou.AndKittiesWillDie.ABVersion", AB.getInstance().getVersion());
 
-        antibot.getConfig().addDefaults(config);
-        FileConfiguration lang = YamlConfiguration.loadConfiguration(new File(antibot.getDataFolder(), "language.yml"));
+        AB.getInstance().getConfig().addDefaults(config);
+        FileConfiguration lang = YamlConfiguration.loadConfiguration(new File(AB.getInstance().getDataFolder(), "language.yml"));
         lang.addDefaults(langs);
         lang.options().copyDefaults(true);
-        try
-        {
-            lang.save(new File(antibot.getDataFolder(), "language.yml"));
-        }
-        catch (IOException e)
-        {
-        }
-
-        antibot.getConfig().options().copyDefaults(true);
-        antibot.saveConfig();
+        try {lang.save(new File(AB.getInstance().getDataFolder(), "language.yml"));}catch (IOException e){ AB.log("Failed to save language configuration."); e.printStackTrace(); } // OMG SO PRO!
+        AB.getInstance().getConfig().options().copyDefaults(true);
+        AB.getInstance().saveConfig();
     }
 
     public boolean loadSettings()
     {
 
-        System.out.print("AntiBot: Attempt to do the impossible - Eminem.");
+        AB.log("AntiBot: Attempt to do the impossible - Eminem.");
 
-        antibot.reloadConfig();
+        AB.getInstance().reloadConfig();
 
-        FileConfiguration lang = YamlConfiguration.loadConfiguration(new File(antibot.getDataFolder(), "language.yml"));
+        FileConfiguration lang = YamlConfiguration.loadConfiguration(new File(AB.getInstance().getDataFolder(), "language.yml"));
 
         try
         {
             for (Entry<String, Object> oh : config.entrySet())
             {
                 String conf = oh.getKey().replace("AntiBot.", "");
-                Object duh = antibot.getConfig().get(oh.getKey());
+                Object duh = AB.getInstance().getConfig().get(oh.getKey());
 
                 if (conf.equalsIgnoreCase("Main.prefix"))
                 {
@@ -182,10 +160,6 @@ public class SettingsCore
                 {
                     Settings.spamtime = (Integer) duh;
                 }
-                else if (conf.equalsIgnoreCase("AntiSpam.MutePlayerIfCaptchaNotEnabled"))
-                {
-                    Settings.chatMute = (Boolean) duh;
-                }
                 else if (conf.equalsIgnoreCase("ChatFlow.Enabled"))
                 {
                     Settings.flowEnabled = (Boolean) duh;
@@ -202,6 +176,10 @@ public class SettingsCore
                 {
                     Settings.captchaEnabled = (Boolean) duh;
                 }
+                else if (conf.equalsIgnoreCase("Captcha.MaxAttempts"))
+                {
+                    Settings.captchaAttempts = (Integer) duh;
+                }
                 else if (conf.equalsIgnoreCase("Captcha.Triggers.PlayerJoin"))
                 {
                     Settings.forceCaptchaOnJoin = (Boolean) duh;
@@ -209,6 +187,10 @@ public class SettingsCore
                 else if (conf.equalsIgnoreCase("Captcha.Triggers.ChatOverflow"))
                 {
                     Settings.forceCaptchaOnChatFlow = (Boolean) duh;
+                }
+                else if (conf.equalsIgnoreCase("Captcha.Triggers.ChatSpam"))
+                {
+                    Settings.forceCaptchaOnChatSpam = (Boolean) duh;
                 }
                 else if (conf.equalsIgnoreCase("Captcha.Triggers.BotSpam"))
                 {
@@ -228,11 +210,11 @@ public class SettingsCore
                 }
                 else if (conf.equalsIgnoreCase("CountryBans.Countries"))
                 {
-                    GD.cb_cds = antibot.getConfig().getStringList(oh.getKey());
-                  /*  antibot.getDataTrack().getLoginTracker().countryBans = antibot.getConfig().getStringList(oh.getKey());
-                    for(String s : antibot.getDataTrack().getLoginTracker().countryBans)
+                    GD.cb_cds = AB.getInstance().getConfig().getStringList(oh.getKey());
+                  /*  AB.getInstance().getDataTrack().getLoginTracker().countryBans = AB.getInstance().getConfig().getStringList(oh.getKey());
+                    for(String s : AB.getInstance().getDataTrack().getLoginTracker().countryBans)
                     {
-                        antibot.getUtility().getDebug().debug(s);
+                        AB.getInstance().getUtility().getDebug().debug(s);
                     } */
                 }
                 else if (conf.equalsIgnoreCase("LoginDelay.Enabled"))
@@ -241,25 +223,25 @@ public class SettingsCore
                 }
                 else if (conf.equalsIgnoreCase("LoginDelay.Delay"))
                 {
-                    Settings.loginDelay = (Integer) duh;
+                    Settings.loginDelay = (Long) duh;
                 }
                 else if (conf.equalsIgnoreCase("LoginDelay.HoldTime"))
                 {
-                    Settings.loginHold = (Integer) duh;
+                    Settings.loginHold = (Long) duh;
                 }
-                else if (conf.equalsIgnoreCase("TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.InstallDate"))
+                else if (conf.equalsIgnoreCase("TouchTheseAnd.MbaxterWillComeAfterYou.AndKittiesWillDie.InstallDate"))
                 {
-                   // antibot.setInstalldate((Long) duh);
+                    GD.setInstallDate((Long) duh);
                 }
-                else if (conf.equalsIgnoreCase("TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.CheckUpdates"))
+                else if (conf.equalsIgnoreCase("TouchTheseAnd.MbaxterWillComeAfterYou.AndKittiesWillDie.CheckUpdates"))
                 {
                     Settings.checkupdates = (Boolean) duh;
                 }
-                else if (conf.equalsIgnoreCase("TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.DebugMode"))
+                else if (conf.equalsIgnoreCase("TouchTheseAnd.MbaxterWillComeAfterYou.AndKittiesWillDie.DebugMode"))
                 {
                     Settings.debugmode = (Boolean) duh;
                 }
-                else if (conf.equalsIgnoreCase("TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.ABVersion"))
+                else if (conf.equalsIgnoreCase("TouchTheseAnd.MbaxterWillComeAfterYou.AndKittiesWillDie.ABVersion"))
                 {
                     //TODO: Configuration Updates or deprecate.
                 }
@@ -269,42 +251,36 @@ public class SettingsCore
             // we need to disable AntiCheat's anti spam because AntiBot has one
             // already.... or does it?
             // or do we?
-            // Thanks H31IX for approving AntiBot :D
-            antibot.getServer().getScheduler().scheduleAsyncDelayedTask(antibot, new Runnable()
+            // Thanks H31IX for approving AntiBot <3 -- lul
+            AB.getInstance().getServer().getScheduler().scheduleAsyncDelayedTask(AB.getInstance(), new Runnable()
             {
 
                 @Override
                 public void run()
                 {
-                    if (antibot.getServer().getPluginManager().getPlugin("AntiCheat") != null)
+                    if (AB.getInstance().getServer().getPluginManager().getPlugin("AntiCheat") != null)
                     {
                         if (Settings.enableAntiSpam)
                         {
-                            AnticheatAPI.deactivateCheck(CheckType.SPAM);
+                            net.h31ix.anticheat.api.AnticheatAPI.deactivateCheck(net.h31ix.anticheat.manage.CheckType.SPAM);
                         }
                         else
                         {
-                            AnticheatAPI.activateCheck(CheckType.SPAM);
+                        	net.h31ix.anticheat.api.AnticheatAPI.activateCheck(net.h31ix.anticheat.manage.CheckType.SPAM);
                         }
                     }
                 }
 
             }, 600L); //start in 30 seconds.
 
-           /* if (antibot.firsttime)
+           /* if (AB.getInstance().firsttime)
             {
-                antibot.setInstalldate(System.currentTimeMillis());
-                antibot.getConfig().set("TouchTheseAndYouDieAHorribleDeath.SeriouslyImNotTryingToCopyMbaxter.InstallDate", antibot.getInstalldate());
-                antibot.firsttime = false;
+                AB.getInstance().setInstalldate(System.currentTimeMillis());
+                AB.getInstance().getConfig().set("TouchTheseAnd.MbaxterWillComeAfterYou.AndKittiesWillDie.InstallDate", AB.getInstance().getInstalldate());
+                AB.getInstance().firsttime = false;
             } */
 
             // load messages
-            langs.put("AntiBot.Messages.Kick", Settings.kickMsg);
-            langs.put("AntiBot.Messages.Connect", Settings.connectMsg);
-            langs.put("AntiBot.Messages.CaptchaFailure", Settings.captchafail);
-            langs.put("AntiBot.Messages.ChatOverflow", Settings.overflowedmessage);
-            langs.put("AntiBot.Messages.CountryBan", Settings.countryBanMsg);
-            langs.put("AntiBot.Messages.ConnectInvasion", Settings.connectInvasion);
             try
             {
                 for (Entry<String, Object> oh : langs.entrySet())
@@ -336,6 +312,10 @@ public class SettingsCore
                     {
                         Settings.connectInvasion = duh;
                     }
+                    else if (conf.equalsIgnoreCase("Messages.LoginDelay"))
+                    {
+                    	Settings.loginDelayMsg = duh;
+                    }
                 }
             }
             catch (Exception e)
@@ -343,14 +323,14 @@ public class SettingsCore
                 //fail.
             }
 
-            System.out.print("AntiBot: Configuration Loaded Successfully!");
+            AB.log("AntiBot: Configuration Loaded Successfully!");
             reloads++;
             return true;
 
         }
         catch (Exception e)
         {
-            System.out.print("AntiBot: FUCKIN: " + e);
+            AB.log("AntiBot: " + e);
             e.printStackTrace();
             return false;
         }

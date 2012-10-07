@@ -25,6 +25,7 @@ public class PI
     
     /* Captcha Data */
     public boolean cp_haspuzzle = false;
+    public boolean cp_solvedpuzzle = false;
     public Puzzle cp_puzzle;
     
     
@@ -50,12 +51,14 @@ public class PI
         return (pl != null);
     }
     
-    public void clean()
+    private void clean()
     {
         this.b_connectfor = System.currentTimeMillis();
-        this.ab_lastdc = 0L;
+//        this.ab_lastdc = 0L; -- This would make login delay break.
+        this.ab_alreadyin = false;
         this.ab_online = true;
         this.cp_haspuzzle = false;
+        this.cp_solvedpuzzle = false;
         this.cs_ct = 0;
         this.cs_lm = "";
         this.cs_lmt = 0L;

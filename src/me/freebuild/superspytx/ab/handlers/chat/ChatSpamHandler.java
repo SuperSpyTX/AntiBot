@@ -5,6 +5,7 @@ import me.freebuild.superspytx.ab.abs.EventAction;
 import me.freebuild.superspytx.ab.abs.Handler;
 import me.freebuild.superspytx.ab.abs.PI;
 import me.freebuild.superspytx.ab.settings.Settings;
+import me.freebuild.superspytx.ab.tils.CaptchaTils;
 import me.freebuild.superspytx.ab.tils.MathTils;
 import me.freebuild.superspytx.ab.tils.StringTils;
 import me.freebuild.superspytx.ab.workflow.GD;
@@ -87,7 +88,12 @@ public class ChatSpamHandler implements Handler
     @Override
     public void performActions(EventAction info)
     {
-        info.player.kickPlayer(Settings.kickMsg);
+        if(Settings.captchaEnabled && Settings.forceCaptchaOnChatSpam)
+        {
+        	CaptchaTils.sendCaptchaToPlayer(info.player);
+        } else {
+        	info.player.kickPlayer(Settings.kickMsg);
+        }
     }
 
 }

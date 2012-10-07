@@ -1,5 +1,7 @@
 package me.freebuild.superspytx.ab.abs;
 
+import me.freebuild.superspytx.ab.workflow.GD;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -11,6 +13,7 @@ import org.bukkit.event.player.PlayerLoginEvent;
 public class EventAction
 {
     public Player player;
+    public PI pi;
     public String message;
     public String ip;
     public boolean async = false;
@@ -22,6 +25,7 @@ public class EventAction
         if (e instanceof PlayerEvent)
         {
             player = ((PlayerEvent) e).getPlayer();
+            pi = GD.getPI(player);
         }
         try
         {

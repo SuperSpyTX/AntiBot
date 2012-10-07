@@ -1,9 +1,8 @@
 package me.freebuild.superspytx.ab.abs;
 
-import java.util.Random;
-
 import org.bukkit.ChatColor;
 
+import me.freebuild.superspytx.ab.settings.Settings;
 import me.freebuild.superspytx.ab.tils.CaptchaTils;
 
 public class Puzzle
@@ -16,8 +15,9 @@ public class Puzzle
     
     public Puzzle()
     {
-        strikes = 3; // TODO: Make captcha attempts configurable.
-        // generate puzzle.
+        strikes = Settings.captchaAttempts;
+        // old code.
+        /*
         Random rdm = new Random();
         switch (rdm.nextInt(1))
         {
@@ -38,7 +38,10 @@ public class Puzzle
             puzzle = CaptchaTils.generatePuzzleV2();
             answer = puzzle[5];
             break;
-        }
+        }*/
+        version2 = true;
+        puzzle = CaptchaTils.generatePuzzleV2();
+        answer = puzzle[5];
     }
     
     public boolean isVersion2()
@@ -48,7 +51,7 @@ public class Puzzle
     
     public boolean overboard()
     {
-        return strikes == 0; // TODO: Make captcha attempts configurable.
+        return strikes == 0;
     }
     
     public int getAttempts()

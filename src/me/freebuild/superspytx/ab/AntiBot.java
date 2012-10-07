@@ -19,7 +19,7 @@ public class AntiBot extends JavaPlugin
 
     public void onDisable()
     {
-        Bukkit.getScheduler().cancelAllTasks();
+        Bukkit.getScheduler().cancelTasks(this); // Wow? cancelAllTasks would fuck up plugins now wouldn't it? lul.
     }
 
     public void onEnable()
@@ -32,8 +32,8 @@ public class AntiBot extends JavaPlugin
         /* Events */
         (new CallUnit()).registerUnits();
 
-        /* Configuration goes here */
-        settingscore = new SettingsCore(this);
+        /* Configuration */
+        settingscore = new SettingsCore();
         settingscore.loadDefaults();
         settingscore.loadSettings();
 
@@ -42,6 +42,14 @@ public class AntiBot extends JavaPlugin
         {
             GD.getPI(pl).ab_alreadyin = true;
         }
+        
+        /* Setup minute running task */
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
+        	public void run()
+        	{
+        		GD.updateTask();
+        	}
+        }, 1200L, 1200L);
         
         /* All finished */
         PluginDescriptionFile pdfFile = getDescription();

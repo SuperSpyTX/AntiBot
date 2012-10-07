@@ -14,6 +14,7 @@ public enum Handlers
     CHATSPAM(new ChatSpamHandler(), new ChatUnit(), Permissions.CHATSPAM),
     CHATFLOW(new ChatFlowHandler(), null, Permissions.VOICE),
     COUNTRYBANS(new CountryHandler(), null, Permissions.COUNTRYBAN),
+    LOGINDELAY(new LoginDelayHandler(), null, Permissions.LOGINDELAY),
     CAPTCHA(new CaptchaHandler(), null, Permissions.CAPTCHA);
 
     private Handler handlerinstance;

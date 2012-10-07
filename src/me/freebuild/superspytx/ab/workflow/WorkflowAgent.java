@@ -6,7 +6,6 @@ import me.freebuild.superspytx.ab.handlers.Handlers;
 import me.freebuild.superspytx.ab.settings.Settings;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
 public class WorkflowAgent

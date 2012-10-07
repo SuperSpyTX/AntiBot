@@ -38,7 +38,10 @@ public class ChatUnit extends CallUnit
         if (GD.cf_gm)
             e.setCancelled(true);
         
-        if (WorkflowAgent.dispatchUnit(e, Handlers.CAPTCHA, true))
-            e.setCancelled(true);
+        if ((GD.getPI(e.getPlayer()).cp_haspuzzle))
+        {
+        	e.setCancelled(true);
+        	WorkflowAgent.asyncDispatchUnit(e, Handlers.CAPTCHA);
+        }
     }
 }

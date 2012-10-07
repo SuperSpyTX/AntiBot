@@ -71,8 +71,9 @@ public enum Permissions
             {
                 return true;
             }
-
-            if (pl.isWhitelisted() && Settings.useWhiteListPerms && this.level < 2)
+            
+            //BUG: May not work with equals().
+            if (pl.isWhitelisted() && Settings.useWhiteListPerms && this.equals(JOIN))
             {
                 return true;
             }
@@ -96,7 +97,7 @@ public enum Permissions
         }
         else
         {
-            return true; // console.
+            return true; // console?
         }
 
     }

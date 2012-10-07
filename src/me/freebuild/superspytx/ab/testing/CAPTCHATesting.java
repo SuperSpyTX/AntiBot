@@ -11,8 +11,6 @@ public class CAPTCHATesting
         {
             System.out.println(l);
         }
-        
-        System.out.println(CaptchaTils.generatePuzzle());
     }
 
 }
