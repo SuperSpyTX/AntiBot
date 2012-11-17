@@ -27,7 +27,7 @@ public class ChatFlowHandler implements Handler
         int ct = 0;
         if (GD.cf_lmt != 0L)
         {
-            if (MathTils.getLongDiff(GD.cf_lmt) < Settings.timetooverflow)
+			if (MathTils.getLongDiff(GD.cf_lmt) < Settings.timetooverflow)
             {
                 AB.debug("Time diff: " + MathTils.getLongDiff(GD.cf_lmt));
                 GD.cf_cts++;

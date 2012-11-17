@@ -26,7 +26,8 @@ public enum Permissions
     ADMIN_NOTIFY("admin.notify", 2),
     ADMIN_CHATMUTE("admin.chatmute", 2),
     ADMIN_FLUSH("admin.flush", 2),
-    ADMIN_TOGGLE("admin.toggle", 3);
+    ADMIN_TOGGLE("admin.toggle", 3),
+    ADMIN_DEBUG("admin.debug", 3);
 
     String perm = "";
     String baseperm = "";

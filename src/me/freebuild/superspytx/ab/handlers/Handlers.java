@@ -10,7 +10,9 @@ import me.freebuild.superspytx.ab.settings.Permissions;
 
 public enum Handlers
 {
+	/* NOTE: Do not use formatter! */
     BOT(new BotHandler(), new LoginUnit(), Permissions.JOIN),
+    COMMAND(new CommandHandler(), null, null),
     CHATSPAM(new ChatSpamHandler(), new ChatUnit(), Permissions.CHATSPAM),
     CHATFLOW(new ChatFlowHandler(), null, Permissions.VOICE),
     COUNTRYBANS(new CountryHandler(), null, Permissions.COUNTRYBAN),
@@ -40,6 +42,7 @@ public enum Handlers
     
     public boolean checkUser(Player pl)
     {
+    	if(perm == null) return true;
         return !(perm.getPermission(pl));
     }
 }
