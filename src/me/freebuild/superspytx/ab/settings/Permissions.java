@@ -22,10 +22,8 @@ public enum Permissions
     //individual permissions.
     ADMIN_RELOAD("admin.reload", 3),
     ADMIN_INFO("admin.info", 2),
-    ADMIN_ATTACK("admin.attack", 3),
     ADMIN_NOTIFY("admin.notify", 2),
     ADMIN_CHATMUTE("admin.chatmute", 2),
-    ADMIN_FLUSH("admin.flush", 2),
     ADMIN_TOGGLE("admin.toggle", 3),
     ADMIN_DEBUG("admin.debug", 3);
 

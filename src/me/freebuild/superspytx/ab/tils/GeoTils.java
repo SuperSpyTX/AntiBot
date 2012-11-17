@@ -36,7 +36,10 @@ public class GeoTils {
 						}
 					}, 1200L);
 				}
+			} else {
+				dlSuccessful = true;
 			}
+			
 			if(dlSuccessful) {
 				AB.log("Loading GeoIP..");
 				lkup = new LookupService(db, LookupService.GEOIP_MEMORY_CACHE);
@@ -49,6 +52,7 @@ public class GeoTils {
 	}
 	
 	public static boolean skidtector(String ip) {
+		if(lkup == null) return false;
 		String cd = lkup.getCountry(ip).getCode();
 		if (GD.cb_cds.contains(cd)) {
 			if (Settings.whiteListCountry)
@@ -72,7 +76,7 @@ public class GeoTils {
 	
 	private static boolean preDownload() {
 		try {
-			String URL = "http://cache.mn.vc/GeoIP.dat.gz"; //Temporary until Geolite stops being gay.
+			String URL = "https://raw.github.com/SuperSpyTX/AntiBot/blob/master/dl/GeoIP.dat.gz"; //Temporary until Geolite stops being gay.
 			URL downloadUrl = new URL(URL);
 			URLConnection conn = downloadUrl.openConnection();
 			conn.setConnectTimeout(10000);

@@ -93,7 +93,7 @@ public class SettingsCore {
 				
 				if (conf.equalsIgnoreCase("Main.prefix")) {
 					Settings.prefix = (String) duh;
-				} else if (conf.equalsIgnoreCase("Main.EnableByDefault")) {
+				} else if (conf.equalsIgnoreCase("Main.EnableByDefault") && !Settings.delayingStart) {
 					Settings.enabled = (Boolean) duh;
 				} else if (conf.equalsIgnoreCase("Main.Notifications")) {
 					Settings.notify = (Boolean) duh;

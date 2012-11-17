@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import org.bukkit.entity.Player;
 import me.freebuild.superspytx.ab.abs.PI;
+import me.freebuild.superspytx.ab.settings.Settings;
 import me.freebuild.superspytx.ab.tils.MathTils;
 
 public class GD {
@@ -16,6 +17,7 @@ public class GD {
 	
 	/* Bot Throttler */
 	public static int b_cts = 0;
+	public static boolean b_kicking = false;
 	public static long b_lc = 0L;
 	public static List<PI> b_cp = new CopyOnWriteArrayList<PI>();
 	
@@ -27,6 +29,13 @@ public class GD {
 	public static String cf_lm = "";
 	public static String cf_lp = "";
 	
+	/* Statistics */
+	public static int b_blks = 0;
+	public static int cf_ovfl = 0;
+	public static int cp_caps = 0;
+	public static int cs_spams = 0;
+	public static int cb_invs = 0;
+	
 	/* Country Bans */
 	public static List<String> cb_cds = new CopyOnWriteArrayList<String>();
 	
@@ -36,9 +45,10 @@ public class GD {
 	
 	public static PI getPI(String player) {
 		if (opii.containsKey(player)) return updateOfflineData(player);
-		if (pii.containsKey(player))
+		if (pii.containsKey(player)) {
+			pii.get(player).updateStatus();
 			return pii.get(player);
-		else {
+		} else {
 			PI bug = new PI(player);
 			pii.put(player, bug);
 			return bug;
@@ -72,6 +82,14 @@ public class GD {
 	public static void updateTask() {
 		for (Entry<String, PI> g : opii.entrySet()) {
 			if (MathTils.getLongDiff(g.getValue().ab_lastdc) > 60000L) opii.remove(g.getKey());
+		}
+		
+		if (!b_kicking && b_cp.size() > 0) {
+			int i = 0;
+			for (final PI pl : b_cp) {
+				if (MathTils.getLongDiff(pl.b_connectfor) < Settings.connectFor) b_cp.remove(i);
+				i++;
+			}
 		}
 	}
 	

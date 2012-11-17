@@ -46,6 +46,10 @@ public class PI {
 		return (pl != null);
 	}
 	
+	public void updateStatus() {
+		if (pl == null) pl = Bukkit.getPlayerExact(p_name);
+	}
+	
 	private void clean() {
 		this.b_connectfor = System.currentTimeMillis();
 		// this.ab_lastdc = 0L; -- This would make login delay break.

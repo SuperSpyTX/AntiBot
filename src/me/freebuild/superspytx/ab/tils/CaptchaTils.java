@@ -105,8 +105,11 @@ public class CaptchaTils {
 			p.pl.kickPlayer(Settings.kickMsg);
 			return;
 		}
+		
 		p.cp_haspuzzle = true;
 		p.cp_puzzle = new Puzzle();
+		GD.cp_caps++;
+		
 		if (p.cp_puzzle.isVersion2()) {
 			pl.sendMessage(Settings.prefix + '\247' + "c" + "Please enter the numbers printed below into chat:");
 			for (int i = 0; i < 5; i++)

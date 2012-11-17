@@ -57,6 +57,7 @@ public class ChatSpamHandler implements Handler {
 				AB.debug("Chat spam detected!");
 				AB.debug("VL: " + pli.cs_ct);
 				pli.cs_trig = true;
+				GD.cs_spams++;
 				return true;
 			}
 			
