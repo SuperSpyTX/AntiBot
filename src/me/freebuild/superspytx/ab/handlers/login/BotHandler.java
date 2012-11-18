@@ -51,7 +51,10 @@ public class BotHandler implements Handler {
 	@Override
 	public void performActions(EventAction info) {
 		if (GD.b_kicking) {
-			info.player.kickPlayer(Language.kickMsg);
+			if (Settings.captchaEnabled && Settings.forceCaptchaOnBotSpam)
+				CaptchaTils.sendCaptchaToPlayer(info.player);
+			else
+				info.player.kickPlayer(Language.kickMsg);
 			return;
 		}
 		GD.b_kicking = true;
