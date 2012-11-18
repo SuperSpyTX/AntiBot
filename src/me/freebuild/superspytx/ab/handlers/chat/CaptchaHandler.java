@@ -18,7 +18,7 @@ public class CaptchaHandler implements Handler {
 			else {
 				if (!pli.cp_puzzle.checkAnswer(info.message)) {
 					String wrong = pli.cp_puzzle.getAttempts() == 1 ? Language.captoneLeft : pli.cp_puzzle.getAttempts() + " " + Language.captattemptsLeft;
-					info.player.sendMessage('\247' + "c" + "Incorrect CAPTCHA! You have " + wrong);
+					info.player.sendMessage(Language.prefix + '\247' + "c" + "Incorrect CAPTCHA! You have " + wrong);
 				} else {
 					pli.cp_haspuzzle = false;
 					pli.cp_solvedpuzzle = true;

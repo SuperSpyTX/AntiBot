@@ -21,7 +21,7 @@ public class Settings {
 	public static boolean flowEnabled = true;
 	public static boolean notify = true;
 	public static boolean useWhiteListPerms = false;
-	public static boolean useOpPerms = false;
+	public static boolean useOpPerms = true; // Because of new race condition fix.
 	public static boolean enabled = true;
 	public static boolean debugmode = false; // TODO: set to false!
 	public static boolean enableAntiSpam = true;

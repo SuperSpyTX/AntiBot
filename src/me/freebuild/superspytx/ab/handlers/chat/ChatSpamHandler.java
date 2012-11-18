@@ -77,8 +77,10 @@ public class ChatSpamHandler implements Handler {
 	@Override
 	public void performActions(EventAction info) {
 		if (Settings.captchaEnabled && Settings.forceCaptchaOnChatSpam) {
+			AB.debug("Sending CAPTCHA for " + info.pi.p_name);
 			CaptchaTils.sendCaptchaToPlayer(info.player);
 		} else {
+			AB.debug("Kicking player " + info.pi.p_name);
 			AB.kickPlayer(info.player);
 		}
 	}

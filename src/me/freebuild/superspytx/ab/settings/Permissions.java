@@ -1,5 +1,6 @@
 package me.freebuild.superspytx.ab.settings;
 
+import me.freebuild.superspytx.ab.AB;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -60,8 +61,7 @@ public enum Permissions
     {
         if (pl != null)
         {
-
-            if (pl.hasPermission(perm))
+            if (pl.hasPermission(perm) && !pl.isOp())
             {
                 return true;
             }

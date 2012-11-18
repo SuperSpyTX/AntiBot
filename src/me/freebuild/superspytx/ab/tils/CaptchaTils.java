@@ -97,10 +97,12 @@ public class CaptchaTils {
 	
 	public static void sendCaptchaToPlayer(Player pl) {
 		PI p = GD.getPI(pl);
+		
 		if (p.cp_haspuzzle) return;
 		
 		if (Permissions.CAPTCHA.getPermission(pl)) {
 			p.cp_solvedpuzzle = true;
+			p.resetSpamData();
 			return;
 		}
 		
