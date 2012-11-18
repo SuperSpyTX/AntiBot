@@ -19,8 +19,14 @@ public class LoginUnit extends CallUnit {
 		if (WorkflowAgent.dispatchUnit(e, Handlers.BOT, false)) e.setJoinMessage(null);
 		
 		/* Admin Notify */
-		if (Permissions.ADMIN_NOTIFY.getPermission(e.getPlayer()) && Settings.delayingStart) {
-			e.getPlayer().sendMessage(Language.prefix + Language.adminDSNotify);
+		if (Permissions.ADMIN_NOTIFY.getPermission(e.getPlayer())) {
+			if(Settings.delayingStart) {
+				e.getPlayer().sendMessage(Language.prefix + Language.adminDSNotify);
+			}
+			
+			if(Settings.newVersion) {
+				e.getPlayer().sendMessage(Language.prefix + Language.adminNVNotify);
+			}
 		}
 	}
 	

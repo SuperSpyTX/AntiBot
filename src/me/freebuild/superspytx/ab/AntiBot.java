@@ -171,6 +171,11 @@ public class AntiBot extends JavaPlugin {
 		return version;
 	}
 	
+	public static String getRealVersion() {
+		if (version.contains("-")) { return version.split("-")[0]; }
+		return version;
+	}
+	
 	public static boolean isDevelopment() {
 		return development;
 	}

@@ -62,6 +62,7 @@ public class SettingsCore {
 		langs.put("AntiBot.Messages.CountryBan", Language.countryBanMsg);
 		langs.put("AntiBot.Messages.LoginDelay", Language.loginDelayMsg);
 		langs.put("AntiBot.Messages.Admins.DSNotify", Language.adminDSNotify);
+		langs.put("AntiBot.Messages.Admins.NVNotify", Language.adminNVNotify);
 		
 		AB.getInstance().getConfig().addDefaults(config);
 		FileConfiguration lang = YamlConfiguration.loadConfiguration(new File(AB.getInstance().getDataFolder(), "language.yml"));
@@ -214,7 +215,10 @@ public class SettingsCore {
 						Language.loginDelayMsg = duh;
 					} else if (conf.equalsIgnoreCase("Messages.Admins.DSNotify")) {
 						Language.adminDSNotify = duh;
-					}	
+					} else if (conf.equalsIgnoreCase("Messages.Admins.NVNotify")) {
+						Language.adminNVNotify = duh;
+					}
+					
 				}
 			} catch (Exception e) {
 				// fail.

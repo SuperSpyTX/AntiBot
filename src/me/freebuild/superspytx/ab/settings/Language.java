@@ -9,7 +9,10 @@ public class Language {
 	
 	public static String prefix = "\247f[\247bAntiBot\247f] ";
 	public static String kickMsg = "[AntiBot] Tripwired protection!";
+	
+	/* Admin Notifications */
 	public static String adminDSNotify = "\247cAntiBot is currently under delayed start.  Chat Spam is not protected yet.";
+	public static String adminNVNotify = "\247aAntiBot has a new version available! New version: &nv& Your version: &ov&";
 	
 	/* Country Ban */
 	public static String countryBanMsg = "Your country is banned from this server!";

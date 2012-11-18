@@ -9,8 +9,6 @@ import me.freebuild.superspytx.ab.settings.Settings;
 
 public class Updates implements Runnable
 {
-    public String version = "";
-    public boolean newVersion = false;
 
     @Override
     public void run()
@@ -20,12 +18,12 @@ public class Updates implements Runnable
             if (Settings.checkupdates)
             {
                 String check = check("https://raw.github.com/SuperSpyTX/AntiBot/master/dl/update.txt").split("SERVERREPORT6356574309780958632018")[1];
-                if (!AB.getVersion().replace("-SNAPSHOT",  "").equals(check))
+                if (!AB.getRealVersion().equals(check))
                 {
-                    newVersion = true;
-                    version = check;
+                    Settings.newVersion = true;
+                    Settings.version = check;
                     AB.log("YAY! A new update is currently available for AntiBot!");
-                    AB.log("New version: " + version + " Your version: " + AB.getVersion());
+                    AB.log("New version: " + Settings.version + " Your version: " + AB.getVersion());
                     AB.log("Check at http://dev.bukkit.org/server-mods/antibot/");
                 }
             }

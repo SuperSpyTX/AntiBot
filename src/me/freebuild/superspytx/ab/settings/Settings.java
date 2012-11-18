@@ -17,6 +17,8 @@ public class Settings {
 	public static long loginDelay = (long) 10000L;
 	public static long loginHold = (long) 10000L;
 	public static long installdate = 0L;
+	public static String version = "";
+	public static boolean newVersion = false;
 	public static boolean delayingStart = false;
 	public static boolean flowEnabled = true;
 	public static boolean notify = true;
