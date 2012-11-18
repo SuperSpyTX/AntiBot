@@ -69,7 +69,7 @@ public class GeoTils {
 	
 	private static boolean preDownload() {
 		try {
-			String URL = "https://raw.github.com/SuperSpyTX/AntiBot/blob/master/dl/GeoIP.dat.gz"; // Temporary until Geolite stops being gay.
+			String URL = "https://github.com/SuperSpyTX/AntiBot/blob/master/dl/GeoIP.dat.gz?raw=true"; // Temporary until Geolite stops being gay.
 			URL downloadUrl = new URL(URL);
 			URLConnection conn = downloadUrl.openConnection();
 			conn.setConnectTimeout(10000);
@@ -90,6 +90,8 @@ public class GeoTils {
 			return true;
 		} catch (Exception e) {
 			AB.log("An error had occured while trying to download DB.");
+			AB.log("Here are the logs you can use to report to the AntiBot Ticket Tracker.");
+			e.printStackTrace();
 			return false;
 		}
 		
