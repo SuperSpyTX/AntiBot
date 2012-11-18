@@ -10,9 +10,6 @@ commands:
     usage: |
       /<command> help - Help menu on the AntiBot system.
 permissions:
-  antibot.notify:
-    default: false
-    description: Notifies the player if there is a current invasion.
   antibot.join:
     default: false
     description: Allow users to bypass anti bot spam.
@@ -28,10 +25,10 @@ permissions:
   antibot.logindelay:
     default: false
     description: Should users be able to log back into the server rapidly?
-  antibot.admin:
+  antibot.admin.basic:
     default: false
-    description: Basic Permissions to the Antibot system.
-  antibot.admin.plus:
+    description: Basic permissions to the Antibot system.
+  antibot.admin:
     default: false
     description: Gives full access to the system.
   antibot.admin.reload:
@@ -43,18 +40,12 @@ permissions:
   antibot.admin.info:
     default: false
     description: Check the status of antibot.
-  antibot.admin.attack:
-    default: false
-    description: Turns on Invasion Mode manually.  Good if you know you're about to get attacked.
   antibot.admin.notify:
     default: false
     description: Gives extra details during invasions.  Tells this user if a system flush is needed.
   antibot.admin.flush:
     default: false
     description: Flush all connection throttling.  This could be on accident.
-  antibot.admin.changeconf:
-    default: false
-    description: Change 2 configuration values ingame.  Amount of accounts and the time interval.
   antibot.admin.toggle:
     default: false
     description: Toggle AntiBot to be on or off.  Useful when getting legitimate players.
