@@ -5,12 +5,14 @@ import me.freebuild.superspytx.ab.abs.EventAction;
 import me.freebuild.superspytx.ab.abs.Handler;
 import me.freebuild.superspytx.ab.abs.PI;
 import me.freebuild.superspytx.ab.settings.Language;
+import me.freebuild.superspytx.ab.settings.Settings;
 import me.freebuild.superspytx.ab.workflow.GD;
 
 public class CaptchaHandler implements Handler {
 	
 	@Override
 	public boolean run(EventAction info) {
+		if (!Settings.captchaEnabled) return false;
 		PI pli = GD.getPI(info.player);
 		if (pli.cp_haspuzzle) {
 			if (pli.cp_puzzle.overboard())

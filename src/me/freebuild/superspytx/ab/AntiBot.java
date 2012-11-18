@@ -24,6 +24,7 @@ public class AntiBot extends JavaPlugin {
 	private static AntiBot instance;
 	private static SettingsCore settingscore;
 	private static String version;
+	private static boolean development;
 	private Updates updates;
 	
 	public void onDisable() {
@@ -125,26 +126,12 @@ public class AntiBot extends JavaPlugin {
 			AB.log("System is now having a delayed start!");
 		}
 		
-		/* Setup one minute running task */
+		/* Setup GD update task */
 		Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
 			public void run() {
 				GD.updateTask();
 			}
 		}, 1200L, 1200L);
-		
-		/* Almost finished */
-		PluginDescriptionFile pdfFile = getDescription();
-		version = pdfFile.getVersion();
-		boolean development = (version.contains("-SNAPSHOT"));
-		
-		if (development) {
-			Settings.checkupdates = false;
-			getLogger().info("This is a development version of AntiBot and not a official release.  Please be careful.  Please report bugs as you find them.");
-			getLogger().info("Please check back the BukkitDev page for updates!");
-		} else {
-			if (metrics != null) metrics.start();
-			getLogger().info("If you have any issues with AntiBot.  Or there is a false positive! Don't be afraid to make a ticket!");
-		}
 		
 		/* Setup updates task */
 		updates = new Updates();
@@ -160,6 +147,18 @@ public class AntiBot extends JavaPlugin {
 			}, 140L, 12000L);
 		}
 		
+		/* Almost finished */
+		PluginDescriptionFile pdfFile = getDescription();
+		version = pdfFile.getVersion();
+		development = (version.contains("-SNAPSHOT"));
+		
+		if (development) {
+			getLogger().info("This is a development version of AntiBot and not a official release.  Please be careful.  Please report bugs as you find them.");
+		} else {
+			if (metrics != null) metrics.start();
+			getLogger().info("If you have any issues with AntiBot.  Or there is a false positive! Don't be afraid to make a ticket!");
+		}
+		
 		/* Now all finished */
 		getLogger().info("AntiBot v" + version + " (Notorious UnLeet & deRobert Edition) enabled!");
 	}
@@ -170,6 +169,10 @@ public class AntiBot extends JavaPlugin {
 	
 	public static String getVersion() {
 		return version;
+	}
+	
+	public static boolean isDevelopment() {
+		return development;
 	}
 	
 	public static SettingsCore getSettingsCore() {

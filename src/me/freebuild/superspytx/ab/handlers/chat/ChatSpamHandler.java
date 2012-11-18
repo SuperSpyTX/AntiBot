@@ -12,6 +12,7 @@ import me.freebuild.superspytx.ab.workflow.GD;
 public class ChatSpamHandler implements Handler {
 	@Override
 	public boolean run(EventAction info) {
+		if (!Settings.enableAntiSpam) return false;
 		if (info.message == null) return false;
 		
 		PI pli = GD.getPI(info.player);

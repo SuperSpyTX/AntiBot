@@ -20,7 +20,7 @@ public class Updates implements Runnable
             if (Settings.checkupdates)
             {
                 String check = check("https://raw.github.com/SuperSpyTX/AntiBot/master/dl/update.txt").split("SERVERREPORT6356574309780958632018")[1];
-                if (!AB.getVersion().equals(check))
+                if (!AB.getVersion().replace("-SNAPSHOT",  "").equals(check))
                 {
                     newVersion = true;
                     version = check;

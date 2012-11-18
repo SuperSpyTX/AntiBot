@@ -61,6 +61,7 @@ public class SettingsCore {
 		langs.put("AntiBot.Messages.ChatOverflow", Language.overflowedMessage);
 		langs.put("AntiBot.Messages.CountryBan", Language.countryBanMsg);
 		langs.put("AntiBot.Messages.LoginDelay", Language.loginDelayMsg);
+		langs.put("AntiBot.Messages.Admins.DSNotify", Language.adminDSNotify);
 		
 		AB.getInstance().getConfig().addDefaults(config);
 		FileConfiguration lang = YamlConfiguration.loadConfiguration(new File(AB.getInstance().getDataFolder(), "language.yml"));
@@ -199,15 +200,21 @@ public class SettingsCore {
 					
 					if (conf.equalsIgnoreCase("Messages.Kick")) {
 						Language.kickMsg = duh;
-					} else if (conf.equalsIgnoreCase("Messages.CaptchaKick")) {
+					} else if (conf.equalsIgnoreCase("Messages.Captcha.Kick")) {
 						Language.captchaKick = duh;
+					} else if (conf.equalsIgnoreCase("Messages.Captcha.OneAttemptLeft")) {
+						Language.captoneLeft = duh;
+					} else if (conf.equalsIgnoreCase("Messages.Captcha.AttemptsLeft")) {
+						Language.captattemptsLeft = duh;
 					} else if (conf.equalsIgnoreCase("Messages.ChatOverflow")) {
 						Language.overflowedMessage = duh;
 					} else if (conf.equalsIgnoreCase("Messages.CountryBan")) {
 						Language.countryBanMsg = duh;
 					} else if (conf.equalsIgnoreCase("Messages.LoginDelay")) {
 						Language.loginDelayMsg = duh;
-					}
+					} else if (conf.equalsIgnoreCase("Messages.Admins.DSNotify")) {
+						Language.adminDSNotify = duh;
+					}	
 				}
 			} catch (Exception e) {
 				// fail.

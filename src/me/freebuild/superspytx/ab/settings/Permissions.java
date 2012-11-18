@@ -1,6 +1,5 @@
 package me.freebuild.superspytx.ab.settings;
 
-import me.freebuild.superspytx.ab.AB;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

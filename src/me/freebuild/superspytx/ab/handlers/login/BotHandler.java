@@ -17,6 +17,8 @@ public class BotHandler implements Handler {
 	
 	@Override
 	public boolean run(EventAction info) {
+		if (Settings.interval < 1) return false;
+		
 		if (!GD.b_cp.contains(info.player.getName())) GD.b_cp.add(GD.getPI(info.player));
 		
 		if ((GD.getPI(info.player)).b_connectfor == 0L) (GD.getPI(info.player)).b_connectfor = System.currentTimeMillis();

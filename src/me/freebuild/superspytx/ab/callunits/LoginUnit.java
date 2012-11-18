@@ -20,7 +20,7 @@ public class LoginUnit extends CallUnit {
 		
 		/* Admin Notify */
 		if (Permissions.ADMIN_NOTIFY.getPermission(e.getPlayer()) && Settings.delayingStart) {
-			//e.getPlayer().sendMessage(Languag
+			e.getPlayer().sendMessage(Language.prefix + Language.adminDSNotify);
 		}
 	}
 	

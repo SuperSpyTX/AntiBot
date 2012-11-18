@@ -9,12 +9,13 @@ public class Language {
 	
 	public static String prefix = "\247f[\247bAntiBot\247f] ";
 	public static String kickMsg = "[AntiBot] Tripwired protection!";
+	public static String adminDSNotify = "\247cAntiBot is currently under delayed start.  Chat Spam is not protected yet.";
 	
 	/* Country Ban */
 	public static String countryBanMsg = "Your country is banned from this server!";
 	
 	/* Chat Flow */
-	public static String overflowedMessage = "SILENCE! Let's cool it down for %sec% seconds.";	
+	public static String overflowedMessage = "SILENCE! Let's cool it down for %sec% seconds.";
 	
 	/* CAPTCHA */
 	public static String captchaKick = "[AntiBot] CAPTCHA Failed!";

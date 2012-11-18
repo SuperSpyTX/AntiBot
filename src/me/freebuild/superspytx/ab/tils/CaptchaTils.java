@@ -6,6 +6,7 @@ import me.freebuild.superspytx.ab.abs.PI;
 import me.freebuild.superspytx.ab.abs.Puzzle;
 import me.freebuild.superspytx.ab.settings.Language;
 import me.freebuild.superspytx.ab.settings.Permissions;
+import me.freebuild.superspytx.ab.settings.Settings;
 import me.freebuild.superspytx.ab.workflow.GD;
 import org.bukkit.entity.Player;
 
@@ -97,6 +98,8 @@ public class CaptchaTils {
 	
 	public static void sendCaptchaToPlayer(Player pl) {
 		PI p = GD.getPI(pl);
+		
+		if (!Settings.captchaEnabled) return;
 		
 		if (p.cp_haspuzzle) return;
 		

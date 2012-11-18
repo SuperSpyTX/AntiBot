@@ -18,6 +18,7 @@ public class ChatFlowHandler implements Handler {
 	
 	@Override
 	public boolean run(EventAction info) {
+		if (!Settings.flowEnabled) return false;
 		if (GD.cf_gm || info.message == null || (GD.getPI(info.player).cs_trig) || (GD.getPI(info.player).cp_haspuzzle)) return false; // triggered spam? don't count towards chat flow.
 		AB.debug("Chat Flow debug");
 		int ct = 0;
