@@ -1,10 +1,11 @@
 package me.freebuild.superspytx.ab.tils;
 
 import java.util.Random;
+import me.freebuild.superspytx.ab.AB;
 import me.freebuild.superspytx.ab.abs.PI;
 import me.freebuild.superspytx.ab.abs.Puzzle;
+import me.freebuild.superspytx.ab.settings.Language;
 import me.freebuild.superspytx.ab.settings.Permissions;
-import me.freebuild.superspytx.ab.settings.Settings;
 import me.freebuild.superspytx.ab.workflow.GD;
 import org.bukkit.entity.Player;
 
@@ -46,7 +47,7 @@ public class CaptchaTils {
 			if (i > 4)
 				puzzle[i] = str;
 			else {
-				puzzle[i] = spec + p0[i] + "  " + p1[i] + "  " + p2[i] + "  " + p3[i];
+				puzzle[i] = (spec + p0[i] + "   " + p1[i] + "   " + p2[i] + "   " + p3[i]).replace(" ", "_");
 			}
 		}
 		return puzzle;
@@ -54,7 +55,7 @@ public class CaptchaTils {
 	
 	private static String[] strFormat(char g) {
 		if (g == "0".toCharArray()[0]) { return new String[] { "####", "#  #", "#  #", "#  #", "####" }; }
-		if (g == "1".toCharArray()[0]) { return new String[] { " # ", "## ", " # ", " # ", "###" }; }
+		if (g == "1".toCharArray()[0]) { return new String[] { " # ",  "## ", " # ",  " # ",  "###" }; }
 		if (g == "2".toCharArray()[0]) { return new String[] { "####", "   #", "####", "#   ", "####" }; }
 		if (g == "3".toCharArray()[0]) { return new String[] { "####", "   #", " ###", "   #", "####" }; }
 		if (g == "4".toCharArray()[0]) { return new String[] { "#  #", "#  #", "####", "   #", "   #" }; }
@@ -96,13 +97,15 @@ public class CaptchaTils {
 	
 	public static void sendCaptchaToPlayer(Player pl) {
 		PI p = GD.getPI(pl);
+		if (p.cp_haspuzzle) return;
+		
 		if (Permissions.CAPTCHA.getPermission(pl)) {
 			p.cp_solvedpuzzle = true;
 			return;
 		}
 		
 		if (p.cp_solvedpuzzle) {
-			p.pl.kickPlayer(Settings.kickMsg);
+			AB.kickPlayer(p.pl);
 			return;
 		}
 		
@@ -111,7 +114,7 @@ public class CaptchaTils {
 		GD.cp_caps++;
 		
 		if (p.cp_puzzle.isVersion2()) {
-			pl.sendMessage(Settings.prefix + '\247' + "c" + "Please enter the numbers printed below into chat:");
+			pl.sendMessage(Language.prefix + '\247' + "c" + "Please enter the numbers printed below into chat:");
 			for (int i = 0; i < 5; i++)
 				pl.sendMessage(p.cp_puzzle.getPuzzle()[i]);
 		}

@@ -5,10 +5,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import me.freebuild.superspytx.ab.abs.PI;
+import me.freebuild.superspytx.ab.settings.Language;
 import me.freebuild.superspytx.ab.settings.Settings;
-import me.freebuild.superspytx.ab.tils.MathTils;
+import me.freebuild.superspytx.ab.tils.Tils;
 
 public class GD {
 	/* Global Data for AntiBot */
@@ -46,13 +49,24 @@ public class GD {
 	public static PI getPI(String player) {
 		if (opii.containsKey(player)) return updateOfflineData(player);
 		if (pii.containsKey(player)) {
-			pii.get(player).updateStatus();
 			return pii.get(player);
 		} else {
 			PI bug = new PI(player);
 			pii.put(player, bug);
 			return bug;
 		}
+	}
+	
+	public static PI getUpdatedPI(Player player) {
+		PI i = getPI(player);
+		i.pl = player;
+		return i;
+	}
+	
+	public static PI getUpdatedPI(String player) {
+		PI i = getPI(player);
+		i.updateStatus();
+		return i;
 	}
 	
 	public static void unregisterPI(Player player) {
@@ -81,16 +95,31 @@ public class GD {
 	
 	public static void updateTask() {
 		for (Entry<String, PI> g : opii.entrySet()) {
-			if (MathTils.getLongDiff(g.getValue().ab_lastdc) > 60000L) opii.remove(g.getKey());
+			if (Tils.getLongDiff(g.getValue().ab_lastdc) > 60000L) opii.remove(g.getKey());
 		}
 		
 		if (!b_kicking && b_cp.size() > 0) {
-			int i = 0;
 			for (final PI pl : b_cp) {
-				if (MathTils.getLongDiff(pl.b_connectfor) < Settings.connectFor) b_cp.remove(i);
-				i++;
+				if (Tils.getLongDiff(pl.b_connectfor) < Settings.connectFor) b_cp.remove(pl);
 			}
 		}
+	}
+	
+	public static void reset() {
+		/* Clear all data */
+		pii.clear();
+		opii.clear();
+		b_cts = 0;
+		b_kicking = false;
+		b_lc = 0L;
+		b_cp.clear();
+		if (cf_gm) Bukkit.broadcastMessage(Language.prefix + ChatColor.GREEN + "Chat has been unmuted!");
+		cf_gm = false;
+		cf_cts = 0;
+		cf_ttmf = 5L;
+		cf_lmt = 0L;
+		cf_lm = "";
+		cf_lp = "";
 	}
 	
 }

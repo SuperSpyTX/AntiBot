@@ -7,11 +7,11 @@ import me.freebuild.superspytx.ab.AB;
 import me.freebuild.superspytx.ab.AntiBot;
 import me.freebuild.superspytx.ab.abs.EventAction;
 import me.freebuild.superspytx.ab.abs.Handler;
+import me.freebuild.superspytx.ab.settings.Language;
 import me.freebuild.superspytx.ab.settings.Permissions;
 import me.freebuild.superspytx.ab.settings.Settings;
 import me.freebuild.superspytx.ab.tils.CaptchaTils;
-import me.freebuild.superspytx.ab.tils.MathTils;
-import me.freebuild.superspytx.ab.tils.StringTils;
+import me.freebuild.superspytx.ab.tils.Tils;
 import me.freebuild.superspytx.ab.workflow.GD;
 
 public class ChatFlowHandler implements Handler {
@@ -22,14 +22,14 @@ public class ChatFlowHandler implements Handler {
 		AB.debug("Chat Flow debug");
 		int ct = 0;
 		if (GD.cf_lmt != 0L) {
-			if (MathTils.getLongDiff(GD.cf_lmt) < Settings.timetooverflow) {
-				AB.debug("Time diff: " + MathTils.getLongDiff(GD.cf_lmt));
+			if (Tils.getLongDiff(GD.cf_lmt) < Settings.timetooverflow) {
+				AB.debug("Time diff: " + Tils.getLongDiff(GD.cf_lmt));
 				GD.cf_cts++;
 				ct++;
 				AB.debug("VL: " + GD.cf_cts);
 				// TODO: Find if this causes false positives or not.
-				if (StringTils.strDiffCounter(info.message, GD.cf_lm) < Settings.spamdiffct && !GD.cf_lp.equalsIgnoreCase(info.player.getName())) {
-					AB.debug("Str diff: " + StringTils.strDiffCounter(info.message, GD.cf_lm));
+				if (Tils.strDiffCounter(info.message, GD.cf_lm) < Settings.spamdiffct && !GD.cf_lp.equalsIgnoreCase(info.player.getName())) {
+					AB.debug("Str diff: " + Tils.strDiffCounter(info.message, GD.cf_lm));
 					GD.cf_cts += 2;
 					ct += 2;
 					AB.debug("VL: " + GD.cf_cts);
@@ -69,7 +69,7 @@ public class ChatFlowHandler implements Handler {
 			
 			@Override
 			public void run() {
-				Bukkit.broadcastMessage(Settings.prefix + ChatColor.RED + Settings.overflowedmessage.replace("%sec%", Long.toString(GD.cf_ttmf)));
+				Bukkit.broadcastMessage(Language.prefix + ChatColor.RED + Language.overflowedMessage.replace("%sec%", Long.toString(GD.cf_ttmf)));
 				
 				if (Settings.captchaEnabled && Settings.forceCaptchaOnChatFlow) {
 					for (Player pl : Bukkit.getOnlinePlayers()) {
@@ -91,7 +91,7 @@ public class ChatFlowHandler implements Handler {
 				GD.cf_lp = "";
 				GD.cf_lmt = 0L;
 				GD.cf_ttmf += 5L;
-				Bukkit.broadcastMessage(Settings.prefix + ChatColor.GREEN + "Chat has been unmuted!");
+				Bukkit.broadcastMessage(Language.prefix + ChatColor.GREEN + "Chat has been unmuted!");
 			}
 			
 		}, 20L * GD.cf_ttmf);

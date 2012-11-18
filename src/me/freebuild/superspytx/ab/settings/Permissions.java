@@ -7,7 +7,6 @@ public enum Permissions
 {
 
     //checks?
-    NOTIFY("notify", 1),
     JOIN("join", 1),
     VOICE("voice", 1),
     CHATSPAM("chatspam", 1),
@@ -20,10 +19,11 @@ public enum Permissions
     ADMIN("admin", 3),
 
     //individual permissions.
-    ADMIN_RELOAD("admin.reload", 3),
+    ADMIN_RELOAD("admin.reload", 2),
     ADMIN_INFO("admin.info", 2),
     ADMIN_NOTIFY("admin.notify", 2),
     ADMIN_CHATMUTE("admin.chatmute", 2),
+    ADMIN_FLUSH("admin.flush", 3),
     ADMIN_TOGGLE("admin.toggle", 3),
     ADMIN_DEBUG("admin.debug", 3);
 
@@ -31,11 +31,11 @@ public enum Permissions
     String baseperm = "";
     int level = 0;
 
-    Permissions(String permission, int levelsofpenis)
+    Permissions(String permission, int leveld)
     {
         perm = "antibot." + permission;
         baseperm = permission;
-        level = levelsofpenis;
+        level = leveld;
     }
 
     public boolean isLevelPermission()
@@ -47,7 +47,7 @@ public enum Permissions
     {
         if (!this.getPermission(pl))
         {
-            sender.sendMessage(Settings.prefix + "\247cSorry, you don't have privileges.");
+            sender.sendMessage(Language.prefix + "\247cSorry, you don't have privileges.");
             return false;
         }
         else

@@ -24,29 +24,16 @@ public class Settings {
 	public static boolean useOpPerms = false;
 	public static boolean enabled = true;
 	public static boolean debugmode = false; // TODO: set to false!
-	public static boolean whiteList = false;
 	public static boolean enableAntiSpam = true;
-	public static boolean enableMultiAccs = false;
-	public static boolean banUsers = false;
 	public static boolean geoIP = true;
 	public static boolean whiteListCountry = false;
 	public static boolean logindelayEnabled = true;
 	public static boolean checkupdates = true;
 	public static boolean delayedStart = true;
 	public static boolean captchaEnabled = true;
-	public static boolean forceCaptchaOnJoin = false;
 	public static boolean forceCaptchaOnChatSpam = true;
 	public static boolean forceCaptchaOnChatFlow = true;
-	public static boolean forceCaptchaOnMultiAcc = true;
 	public static boolean forceCaptchaOnBotSpam = true;
-	public static String kickMsg = "[AntiBot] Tripwired protection!";
-	public static String captchafail = "[AntiBot] CAPTCHA Failed!";
-	public static String countryBanMsg = "Your country is banned from this server!";
-	public static String connectMsg = "You are not on the whitelist!";
-	public static String connectInvasion = "The server is currently under attack.";
-	public static String overflowedmessage = "SILENCE! Let's cool it down for %sec% seconds.";
-	public static String loginDelayMsg = "You logged in too quickly! Please wait &sec& second(s).";
-	public static String prefix = "\247f[\247bAntiBot\247f] ";
 	private static boolean setup = false;
 	
 	public static boolean isSet() {

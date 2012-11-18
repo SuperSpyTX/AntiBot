@@ -5,6 +5,7 @@ import me.freebuild.superspytx.ab.Metrics.Graph;
 import me.freebuild.superspytx.ab.abs.CommandEvent;
 import me.freebuild.superspytx.ab.callunits.CallUnit;
 import me.freebuild.superspytx.ab.handlers.Handlers;
+import me.freebuild.superspytx.ab.settings.Language;
 import me.freebuild.superspytx.ab.settings.Permissions;
 import me.freebuild.superspytx.ab.settings.Settings;
 import me.freebuild.superspytx.ab.settings.SettingsCore;
@@ -114,7 +115,7 @@ public class AntiBot extends JavaPlugin {
 				public void run() {
 					AB.log("System has been enabled!");
 					for (Player pl : Bukkit.getOnlinePlayers()) {
-						if (Permissions.ADMIN_NOTIFY.getPermission(pl)) pl.sendMessage(Settings.prefix + ChatColor.GREEN + "System has been enabled!");
+						if (Permissions.ADMIN_NOTIFY.getPermission(pl)) pl.sendMessage(Language.prefix + ChatColor.GREEN + "System has been enabled!");
 					}
 					Settings.enabled = true;
 					Settings.delayedStart = false;
@@ -175,6 +176,19 @@ public class AntiBot extends JavaPlugin {
 		return settingscore;
 	}
 	
+	public static void reload() {
+		/* Cancel Tasks */
+		Bukkit.getScheduler().cancelTasks(AB.getInstance());
+		
+		/* Reset GD (Global Data) */
+		GD.reset();
+		
+		/* Register players on server */
+		for (Player pl : AB.getInstance().getServer().getOnlinePlayers()) {
+			GD.getPI(pl).ab_alreadyin = true;
+		}
+	}
+	
 	public static void debug(String e) {
 		if (Settings.debugmode) {
 			getInstance().getLogger().info("Debug: " + e);
@@ -183,7 +197,7 @@ public class AntiBot extends JavaPlugin {
 				if (Permissions.ADMIN_DEBUG.getPermission(pl)) pl.sendMessage("[AntiBot] Debug: " + e);
 			}
 			// TODO: Permission node based debug logs?
-			Bukkit.broadcastMessage(Settings.prefix + "Debug: " + e);
+			Bukkit.broadcastMessage(Language.prefix + "Debug: " + e);
 		}
 	}
 	
@@ -195,6 +209,18 @@ public class AntiBot extends JavaPlugin {
 		if (cmd.getName().startsWith("ab") || cmd.getName().startsWith("antibot")) { return WorkflowAgent.dispatchUnit(new CommandEvent(sender, cmd, label, args), Handlers.COMMAND, true); }
 		
 		return false;
+	}
+	
+	public static void kickPlayer(final Player e, final String reason) {
+		Bukkit.getScheduler().scheduleSyncDelayedTask(getInstance(), new Runnable() {
+			public void run() {
+				e.kickPlayer(reason);
+			}
+		}, 10L);
+	}
+	
+	public static void kickPlayer(final Player e) {
+		kickPlayer(e, Language.kickMsg);
 	}
 	
 	

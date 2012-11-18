@@ -19,18 +19,18 @@ public class ChatUnit extends CallUnit {
 		if (WorkflowAgent.dispatchUnit(e, Handlers.CHATSPAM, true)) e.setCancelled(true);
 	}
 	
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
 	public void highest(AsyncPlayerChatEvent e) {
 		if (WorkflowAgent.dispatchUnit(e, Handlers.CHATFLOW, false)) e.setCancelled(true);
 	}
 	
-	@EventHandler(priority = EventPriority.LOW)
+	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void low(AsyncPlayerChatEvent e) {
 		if (GD.cf_gm) e.setCancelled(true);
 		
 		if ((GD.getPI(e.getPlayer()).cp_haspuzzle)) {
+			WorkflowAgent.asyncDispatchUnit(e, Handlers.CAPTCHA, true);
 			e.setCancelled(true);
-			WorkflowAgent.asyncDispatchUnit(e, Handlers.CAPTCHA);
 		}
 	}
 }

@@ -41,7 +41,7 @@ public class EventAction {
 		
 		if (e instanceof PlayerEvent) {
 			player = ((PlayerEvent) e).getPlayer();
-			pi = GD.getPI(player);
+			pi = GD.getUpdatedPI(player);
 		}
 		try {
 			message = ((AsyncPlayerChatEvent) e).getMessage();

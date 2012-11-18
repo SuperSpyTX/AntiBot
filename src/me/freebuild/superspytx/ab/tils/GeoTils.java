@@ -8,7 +8,6 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.zip.GZIPInputStream;
-import org.bukkit.Bukkit;
 import me.freebuild.superspytx.ab.AB;
 import me.freebuild.superspytx.ab.settings.Settings;
 import me.freebuild.superspytx.ab.workflow.GD;
@@ -23,36 +22,30 @@ public class GeoTils {
 		if (Settings.isSet() && dlSuccessful) return;
 		try {
 			if (!checkIfDownloaded()) {
-				AB.log("Our memogram tells us to install GeoIP. Lets try dis.");
+				AB.log("Downloading GeoIP country data.");
 				dlSuccessful = preDownload();
 				if (dlSuccessful) {
-					AB.log("GeoIP, by Maximind!  Now installed.  Never to be seen again!");
+					AB.log("GeoIP, by Maximind installed.  Never to be seen again!");
 				} else {
-					AB.log("GeoIP servers derped and failed to load GeoIP.  No country bans :(");
-					AB.log("Trying again in one minute");
-					Bukkit.getScheduler().scheduleSyncDelayedTask(AB.getInstance(), new Runnable() {
-						public void run() {
-							GeoTils.initialize();
-						}
-					}, 1200L);
+					AB.log("GeoIP servers derped and failed to load GeoIP.  Country Bans functionality is broken until this is done.");
 				}
 			} else {
 				dlSuccessful = true;
 			}
 			
-			if(dlSuccessful) {
+			if (dlSuccessful) {
 				AB.log("Loading GeoIP..");
 				lkup = new LookupService(db, LookupService.GEOIP_MEMORY_CACHE);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			AB.log("Loading failed!");
+			AB.log("GeoIP Loading failed!");
 		}
 	}
 	
-	public static boolean skidtector(String ip) {
-		if(lkup == null) return false;
+	public static boolean detect(String ip) {
+		if (lkup == null) return false;
 		String cd = lkup.getCountry(ip).getCode();
 		if (GD.cb_cds.contains(cd)) {
 			if (Settings.whiteListCountry)
@@ -76,7 +69,7 @@ public class GeoTils {
 	
 	private static boolean preDownload() {
 		try {
-			String URL = "https://raw.github.com/SuperSpyTX/AntiBot/blob/master/dl/GeoIP.dat.gz"; //Temporary until Geolite stops being gay.
+			String URL = "https://raw.github.com/SuperSpyTX/AntiBot/blob/master/dl/GeoIP.dat.gz"; // Temporary until Geolite stops being gay.
 			URL downloadUrl = new URL(URL);
 			URLConnection conn = downloadUrl.openConnection();
 			conn.setConnectTimeout(10000);

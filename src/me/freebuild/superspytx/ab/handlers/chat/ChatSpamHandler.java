@@ -6,8 +6,7 @@ import me.freebuild.superspytx.ab.abs.Handler;
 import me.freebuild.superspytx.ab.abs.PI;
 import me.freebuild.superspytx.ab.settings.Settings;
 import me.freebuild.superspytx.ab.tils.CaptchaTils;
-import me.freebuild.superspytx.ab.tils.MathTils;
-import me.freebuild.superspytx.ab.tils.StringTils;
+import me.freebuild.superspytx.ab.tils.Tils;
 import me.freebuild.superspytx.ab.workflow.GD;
 
 public class ChatSpamHandler implements Handler {
@@ -16,37 +15,38 @@ public class ChatSpamHandler implements Handler {
 		if (info.message == null) return false;
 		
 		PI pli = GD.getPI(info.player);
+		
 		pli.cs_trig = false;
-		if (MathTils.getLongDiff(pli.b_connectfor) < 2000L && !pli.ab_alreadyin) pli.cs_ct += 2;
+		if (Tils.getLongDiff(pli.b_connectfor) < 2000L && !pli.ab_alreadyin) pli.cs_ct += 2;
 		
 		AB.debug("Chat spam check for " + info.player.getName());
 		if (pli.cs_lmt != 0L) {
 			AB.debug("CS_LMT > 0");
 			int ct = 0;
-			if (StringTils.strDiffCounter(info.message, pli.cs_lm) < Settings.spamdiffct) {
-				AB.debug("Str Diff L: " + StringTils.strDiffCounter(info.message, pli.cs_lm));
+			if (Tils.strDiffCounter(info.message, pli.cs_lm) < Settings.spamdiffct) {
+				AB.debug("Str Diff L: " + Tils.strDiffCounter(info.message, pli.cs_lm));
 				pli.cs_ct++;
 				ct++;
 				AB.debug("VL: " + pli.cs_ct);
 			}
-			if (StringTils.strDiffCounter(info.message, GD.cf_lm) < Settings.spamdiffct) {
-				AB.debug("Str Diff G: " + StringTils.strDiffCounter(info.message, pli.cs_lm));
+			if (Tils.strDiffCounter(info.message, GD.cf_lm) < Settings.spamdiffct) {
+				AB.debug("Str Diff G: " + Tils.strDiffCounter(info.message, pli.cs_lm));
 				pli.cs_ct++;
 				ct++;
 				AB.debug("VL: " + pli.cs_ct);
 			}
-			if (StringTils.strDiffCounter(info.message, GD.cf_lm) < 0) {
-				AB.debug("Str Diff HG: " + StringTils.strDiffCounter(info.message, pli.cs_lm));
+			if (Tils.strDiffCounter(info.message, GD.cf_lm) < 1) {
+				AB.debug("Str Diff HG: " + Tils.strDiffCounter(info.message, pli.cs_lm));
 				pli.cs_ct += 2;
 				ct += 2;
 				AB.debug("VL: " + pli.cs_ct);
 			}
-			if (MathTils.getLongDiff(pli.cs_lmt) < Settings.spamtime) {
-				AB.debug("Time diff: " + MathTils.getLongDiff(pli.cs_lmt));
+			if (Tils.getLongDiff(pli.cs_lmt) < Settings.spamtime) {
+				AB.debug("Time diff: " + Tils.getLongDiff(pli.cs_lmt));
 				pli.cs_ct++;
 				ct++;
 				AB.debug("VL: " + pli.cs_ct);
-			} else if (MathTils.consistency(pli, pli.cs_lmt)) {
+			} else if (Tils.consistency(pli, pli.cs_lmt)) {
 				pli.cs_ct += 2;
 				ct += 2;
 				AB.debug("TC VL: " + pli.cs_ct);
@@ -79,7 +79,7 @@ public class ChatSpamHandler implements Handler {
 		if (Settings.captchaEnabled && Settings.forceCaptchaOnChatSpam) {
 			CaptchaTils.sendCaptchaToPlayer(info.player);
 		} else {
-			info.player.kickPlayer(Settings.kickMsg);
+			AB.kickPlayer(info.player);
 		}
 	}
 	

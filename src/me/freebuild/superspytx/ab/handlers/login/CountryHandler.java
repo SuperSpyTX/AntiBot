@@ -16,7 +16,7 @@ public class CountryHandler implements Handler {
 			return false;
 		}
 		
-		return GeoTils.skidtector(info.ip);
+		return GeoTils.detect(info.ip);
 	}
 	
 	@Override

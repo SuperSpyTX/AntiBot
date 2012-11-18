@@ -19,18 +19,16 @@ public class SettingsCore {
 	public Map<String, Object> langs = new HashMap<String, Object>();
 	
 	public void loadDefaults() {
-		config.put("AntiBot.Main.Prefix", Settings.prefix);
+		/* Main Configuration */
+		config.put("AntiBot.Main.Prefix", Language.prefix);
 		config.put("AntiBot.Main.EnableByDefault", Settings.enabled);
 		config.put("AntiBot.Main.Notifications", Settings.notify);
-		config.put("AntiBot.Main.OldBehavior", Settings.whiteList);
-		config.put("AntiBot.Main.BanPlayers", Settings.banUsers);
 		config.put("AntiBot.PermissionModes.UseOp", Settings.useOpPerms);
 		config.put("AntiBot.PermissionModes.UseBukkitWhiteList", Settings.useWhiteListPerms);
 		config.put("AntiBot.DelayedStart.Enabled", Settings.delayedStart);
 		config.put("AntiBot.DelayedStart.Time", Settings.startdelay);
 		config.put("AntiBot.Bot.Accounts", Settings.accounts);
 		config.put("AntiBot.Bot.Seconds", Settings.interval);
-		config.put("AntiBot.Bot.EnableMultiAccDetector", Settings.enableMultiAccs);
 		config.put("AntiBot.Bot.ConnectionTime", Settings.connectFor);
 		config.put("AntiBot.AntiSpam.Enabled", Settings.enableAntiSpam);
 		config.put("AntiBot.AntiSpam.Amount", Settings.spamam);
@@ -41,28 +39,28 @@ public class SettingsCore {
 		config.put("AntiBot.ChatFlow.Time", Settings.timetooverflow);
 		config.put("AntiBot.Captcha.Enabled", Settings.captchaEnabled);
 		config.put("AntiBot.Captcha.MaxAttempts", Settings.captchaAttempts);
-		config.put("AntiBot.Captcha.Triggers.PlayerJoin", Settings.forceCaptchaOnJoin);
 		config.put("AntiBot.Captcha.Triggers.ChatOverflow", Settings.forceCaptchaOnChatFlow);
 		config.put("AntiBot.Captcha.Triggers.ChatSpam", Settings.forceCaptchaOnChatSpam);
 		config.put("AntiBot.Captcha.Triggers.BotSpam", Settings.forceCaptchaOnBotSpam);
-		config.put("AntiBot.Captcha.Triggers.MultiAccount", Settings.forceCaptchaOnMultiAcc);
 		config.put("AntiBot.CountryBans.Enabled", Settings.geoIP);
 		config.put("AntiBot.CountryBans.WhitelistMode", Settings.whiteListCountry);
 		config.put("AntiBot.CountryBans.Countries", Arrays.asList(new String[0]));
 		config.put("AntiBot.LoginDelay.Enabled", Settings.logindelayEnabled);
 		config.put("AntiBot.LoginDelay.Delay", Settings.loginDelay);
 		config.put("AntiBot.LoginDelay.HoldTime", Settings.loginHold);
-		langs.put("AntiBot.Messages.Kick", Settings.kickMsg);
-		langs.put("AntiBot.Messages.Connect", Settings.connectMsg);
-		langs.put("AntiBot.Messages.CaptchaFailure", Settings.captchafail);
-		langs.put("AntiBot.Messages.ChatOverflow", Settings.overflowedmessage);
-		langs.put("AntiBot.Messages.CountryBan", Settings.countryBanMsg);
-		langs.put("AntiBot.Messages.ConnectInvasion", Settings.connectInvasion);
-		langs.put("AntiBot.Messages.LoginDelay", Settings.loginDelayMsg);
-		config.put("AntiBot.TouchTheseAnd.MbaxterWillComeAfterYou.AndKittiesWillDie.InstallDate", Settings.installdate);
-		config.put("AntiBot.TouchTheseAnd.MbaxterWillComeAfterYou.AndKittiesWillDie.CheckUpdates", Settings.checkupdates);
-		config.put("AntiBot.TouchTheseAnd.MbaxterWillComeAfterYou.AndKittiesWillDie.DebugMode", Settings.debugmode);
-		// config.put("AntiBot.TouchTheseAnd.MbaxterWillComeAfterYou.AndKittiesWillDie.ABVersion", AB.getInstance().getVersion());
+		config.put("AntiBot.TouchTheseAnd.AWildTnTWillAppearInYourCode.AndItWillSuck.InstallDate", Settings.installdate);
+		config.put("AntiBot.TouchTheseAnd.AWildTnTWillAppearInYourCode.AndItWillSuck.CheckUpdates", Settings.checkupdates);
+		config.put("AntiBot.TouchTheseAnd.AWildTnTWillAppearInYourCode.AndItWillSuck.DebugMode", Settings.debugmode);
+	    config.put("AntiBot.TouchTheseAnd.AWildTnTWillAppearInYourCode.AndItWillSuck.ABVersion", AB.getVersion());
+	    
+	    /* Language Configuration */
+		langs.put("AntiBot.Messages.Kick", Language.kickMsg);
+		langs.put("AntiBot.Messages.Captcha.Kick", Language.captchaKick);
+		langs.put("AntiBot.Messages.Captcha.OneAttemptLeft", Language.captoneLeft);
+		langs.put("AntiBot.Messages.Captcha.AttemptsLeft", Language.captattemptsLeft);
+		langs.put("AntiBot.Messages.ChatOverflow", Language.overflowedMessage);
+		langs.put("AntiBot.Messages.CountryBan", Language.countryBanMsg);
+		langs.put("AntiBot.Messages.LoginDelay", Language.loginDelayMsg);
 		
 		AB.getInstance().getConfig().addDefaults(config);
 		FileConfiguration lang = YamlConfiguration.loadConfiguration(new File(AB.getInstance().getDataFolder(), "language.yml"));
@@ -92,15 +90,11 @@ public class SettingsCore {
 				Object duh = AB.getInstance().getConfig().get(oh.getKey());
 				
 				if (conf.equalsIgnoreCase("Main.prefix")) {
-					Settings.prefix = (String) duh;
+					Language.prefix = (String) duh;
 				} else if (conf.equalsIgnoreCase("Main.EnableByDefault") && !Settings.delayingStart) {
 					Settings.enabled = (Boolean) duh;
 				} else if (conf.equalsIgnoreCase("Main.Notifications")) {
 					Settings.notify = (Boolean) duh;
-				} else if (conf.equalsIgnoreCase("Main.OldBehavior")) {
-					Settings.whiteList = (Boolean) duh;
-				} else if (conf.equalsIgnoreCase("Main.BanPlayers")) {
-					Settings.banUsers = (Boolean) duh;
 				} else if (conf.equalsIgnoreCase("PermissionModes.UseOp")) {
 					Settings.useOpPerms = (Boolean) duh;
 				} else if (conf.equalsIgnoreCase("PermissionModes.UseBukkitWhiteList")) {
@@ -113,8 +107,6 @@ public class SettingsCore {
 					Settings.accounts = (Integer) duh;
 				} else if (conf.equalsIgnoreCase("Bot.Seconds")) {
 					Settings.interval = (Integer) duh;
-				} else if (conf.equalsIgnoreCase("Bot.EnableMultiAccDetector")) {
-					Settings.enableMultiAccs = (Boolean) duh;
 				} else if (conf.equalsIgnoreCase("Bot.ConnectionTime")) {
 					Settings.connectFor = (Integer) duh;
 				} else if (conf.equalsIgnoreCase("AntiSpam.Enabled")) {
@@ -135,16 +127,12 @@ public class SettingsCore {
 					Settings.captchaEnabled = (Boolean) duh;
 				} else if (conf.equalsIgnoreCase("Captcha.MaxAttempts")) {
 					Settings.captchaAttempts = (Integer) duh;
-				} else if (conf.equalsIgnoreCase("Captcha.Triggers.PlayerJoin")) {
-					Settings.forceCaptchaOnJoin = (Boolean) duh;
 				} else if (conf.equalsIgnoreCase("Captcha.Triggers.ChatOverflow")) {
 					Settings.forceCaptchaOnChatFlow = (Boolean) duh;
 				} else if (conf.equalsIgnoreCase("Captcha.Triggers.ChatSpam")) {
 					Settings.forceCaptchaOnChatSpam = (Boolean) duh;
 				} else if (conf.equalsIgnoreCase("Captcha.Triggers.BotSpam")) {
 					Settings.forceCaptchaOnBotSpam = (Boolean) duh;
-				} else if (conf.equalsIgnoreCase("Captcha.Triggers.MultiAccount")) {
-					Settings.forceCaptchaOnMultiAcc = (Boolean) duh;
 				} else if (conf.equalsIgnoreCase("CountryBans.Enabled")) {
 					Settings.geoIP = (Boolean) duh;
 				} else if (conf.equalsIgnoreCase("CountryBans.WhitelistMode")) {
@@ -162,13 +150,17 @@ public class SettingsCore {
 					Settings.loginDelay = (Integer) duh;
 				} else if (conf.equalsIgnoreCase("LoginDelay.HoldTime")) {
 					Settings.loginHold = (Integer) duh;
-				} else if (conf.equalsIgnoreCase("TouchTheseAnd.MbaxterWillComeAfterYou.AndKittiesWillDie.InstallDate")) {
-					Settings.installdate = ((Long) duh);
-				} else if (conf.equalsIgnoreCase("TouchTheseAnd.MbaxterWillComeAfterYou.AndKittiesWillDie.CheckUpdates")) {
+				} else if (conf.equalsIgnoreCase("TouchTheseAnd.AWildTnTWillAppearInYourCode.AndItWillSuck.InstallDate")) {
+					try {
+						Settings.installdate = ((Long) duh);
+					} catch (Exception e) {
+						Settings.installdate = ((Integer) duh);
+					}
+				} else if (conf.equalsIgnoreCase("TouchTheseAnd.AWildTnTWillAppearInYourCode.AndItWillSuck.CheckUpdates")) {
 					Settings.checkupdates = (Boolean) duh;
-				} else if (conf.equalsIgnoreCase("TouchTheseAnd.MbaxterWillComeAfterYou.AndKittiesWillDie.DebugMode")) {
+				} else if (conf.equalsIgnoreCase("TouchTheseAnd.AWildTnTWillAppearInYourCode.AndItWillSuck.DebugMode")) {
 					Settings.debugmode = (Boolean) duh;
-				} else if (conf.equalsIgnoreCase("TouchTheseAnd.MbaxterWillComeAfterYou.AndKittiesWillDie.ABVersion")) {
+				} else if (conf.equalsIgnoreCase("TouchTheseAnd.AWildTnTWillAppearInYourCode.AndItWillSuck.ABVersion")) {
 					// TODO: Configuration Updates or deprecate.
 				}
 				
@@ -195,7 +187,7 @@ public class SettingsCore {
 			
 			if (Settings.installdate < 1000L) {
 				Settings.installdate = System.currentTimeMillis();
-				AB.getInstance().getConfig().set("AntiBot.TouchTheseAnd.MbaxterWillComeAfterYou.AndKittiesWillDie.InstallDate", Settings.installdate);
+				AB.getInstance().getConfig().set("AntiBot.TouchTheseAnd.AWildTnTWillAppearInYourCode.AndItWillSuck.InstallDate", Settings.installdate);
 				AB.getInstance().saveConfig();
 			}
 			
@@ -206,19 +198,15 @@ public class SettingsCore {
 					String duh = lang.getString(oh.getKey());
 					
 					if (conf.equalsIgnoreCase("Messages.Kick")) {
-						Settings.kickMsg = duh;
-					} else if (conf.equalsIgnoreCase("Messages.Connect")) {
-						Settings.connectMsg = duh;
-					} else if (conf.equalsIgnoreCase("Messages.CaptchaFailure")) {
-						Settings.captchafail = duh;
+						Language.kickMsg = duh;
+					} else if (conf.equalsIgnoreCase("Messages.CaptchaKick")) {
+						Language.captchaKick = duh;
 					} else if (conf.equalsIgnoreCase("Messages.ChatOverflow")) {
-						Settings.overflowedmessage = duh;
+						Language.overflowedMessage = duh;
 					} else if (conf.equalsIgnoreCase("Messages.CountryBan")) {
-						Settings.countryBanMsg = duh;
-					} else if (conf.equalsIgnoreCase("Messages.ConnectInvasion")) {
-						Settings.connectInvasion = duh;
+						Language.countryBanMsg = duh;
 					} else if (conf.equalsIgnoreCase("Messages.LoginDelay")) {
-						Settings.loginDelayMsg = duh;
+						Language.loginDelayMsg = duh;
 					}
 				}
 			} catch (Exception e) {

@@ -50,6 +50,14 @@ public class PI {
 		if (pl == null) pl = Bukkit.getPlayerExact(p_name);
 	}
 	
+	public void resetSpamData() {
+		this.cs_ct = 0;
+		this.cs_lm = "";
+		this.cs_lmt = 0L;
+		this.cs_rd = 0L;
+		this.cs_trig = false;
+	}
+	
 	private void clean() {
 		this.b_connectfor = System.currentTimeMillis();
 		// this.ab_lastdc = 0L; -- This would make login delay break.
@@ -57,11 +65,7 @@ public class PI {
 		this.ab_online = true;
 		this.cp_haspuzzle = false;
 		this.cp_solvedpuzzle = false;
-		this.cs_ct = 0;
-		this.cs_lm = "";
-		this.cs_lmt = 0L;
-		this.cs_rd = 0L;
-		this.cs_trig = false;
+		resetSpamData();
 	}
 	
 }

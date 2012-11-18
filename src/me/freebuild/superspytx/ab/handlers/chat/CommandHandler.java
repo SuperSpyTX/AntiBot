@@ -10,8 +10,10 @@ import org.bukkit.entity.Player;
 import me.freebuild.superspytx.ab.AB;
 import me.freebuild.superspytx.ab.abs.EventAction;
 import me.freebuild.superspytx.ab.abs.Handler;
+import me.freebuild.superspytx.ab.settings.Language;
 import me.freebuild.superspytx.ab.settings.Permissions;
 import me.freebuild.superspytx.ab.settings.Settings;
+import me.freebuild.superspytx.ab.tils.Tils;
 import me.freebuild.superspytx.ab.workflow.GD;
 
 public class CommandHandler implements Handler {
@@ -42,31 +44,34 @@ public class CommandHandler implements Handler {
 		}
 		
 		if (args[0].compareToIgnoreCase("help") == 0) {
-			sender.sendMessage(Settings.prefix + "AntiBot Help:");
-			sender.sendMessage(Settings.prefix + "");
-			sender.sendMessage(Settings.prefix + "/antibot help - Help Menu");
+			sender.sendMessage(Language.prefix + "AntiBot Help:");
+			sender.sendMessage(Language.prefix + "");
+			sender.sendMessage(Language.prefix + "/antibot help - Help Menu");
 			if (Permissions.ADMIN_RELOAD.getPermission(player)) {
-				sender.sendMessage(Settings.prefix + "/antibot reload - Reload configuration");
+				sender.sendMessage(Language.prefix + "/antibot reload - Reload configuration");
 			}
 			if (Permissions.ADMIN_INFO.getPermission(player)) {
-				sender.sendMessage(Settings.prefix + "/antibot info - Check current status of AB.getInstance().");
+				sender.sendMessage(Language.prefix + "/antibot info - Check current status of AntiBot.");
 			}
 			if (Permissions.ADMIN_CHATMUTE.getPermission(player)) {
-				sender.sendMessage(Settings.prefix + "/antibot chatmute - Toggle chat flow's global chat mute.");
+				sender.sendMessage(Language.prefix + "/antibot chatmute - Toggle chat flow's global chat mute.");
+			}
+			if (Permissions.ADMIN_FLUSH.getPermission(player)) {
+				sender.sendMessage(Language.prefix + "/antibot flush - Flushes all the data.");
 			}
 			if (Permissions.ADMIN_TOGGLE.getPermission(player)) {
-				sender.sendMessage(Settings.prefix + "/antibot off - Turn off AntiBot.");
-				sender.sendMessage(Settings.prefix + "/antibot on - Turn on AntiBot.");
+				sender.sendMessage(Language.prefix + "/antibot off - Turn off AntiBot.");
+				sender.sendMessage(Language.prefix + "/antibot on - Turn on AntiBot.");
 			}
-			sender.sendMessage(Settings.prefix + "/antibot version - Check this version of AntiBot.");
+			sender.sendMessage(Language.prefix + "/antibot version - Check this version of AntiBot.");
 			return true;
 		}
 		if (args[0].compareToIgnoreCase("reload") == 0) {
 			if (Permissions.ADMIN_RELOAD.getPermission(player, sender)) {
 				if (AB.getSettingsCore().loadSettings()) {
-					sender.sendMessage(Settings.prefix + ChatColor.GREEN + "Reloaded configuration successfully!");
+					sender.sendMessage(Language.prefix + ChatColor.GREEN + "Reloaded configuration successfully!");
 				} else {
-					sender.sendMessage(Settings.prefix + ChatColor.RED + "Configuration failed to reload.");
+					sender.sendMessage(Language.prefix + ChatColor.RED + "Configuration failed to reload.");
 				}
 			}
 			return true;
@@ -80,9 +85,9 @@ public class CommandHandler implements Handler {
 				} catch (Exception shutup) {}
 				
 				GD.cf_gm = b;
-				if (Settings.notify) {
-					if (b) AB.getInstance().getServer().broadcastMessage(Settings.prefix + ChatColor.DARK_AQUA + Settings.overflowedmessage.replace("%sec%", "infinity, and beyond"));
-					if (!b) AB.getInstance().getServer().broadcastMessage(Settings.prefix + ChatColor.GREEN + "Chat has been unmuted by " + sender.getName() + "!");
+				if (Settings.notify && Settings.enabled) {
+					if (b) AB.getInstance().getServer().broadcastMessage(Language.prefix + ChatColor.DARK_AQUA + Language.overflowedMessage.replace("%sec%", "infinity, and beyond"));
+					if (!b) AB.getInstance().getServer().broadcastMessage(Language.prefix + ChatColor.GREEN + "Chat has been unmuted by " + sender.getName() + "!");
 					
 					GD.cf_cts = 0;
 				}
@@ -94,10 +99,10 @@ public class CommandHandler implements Handler {
 		if (args[0].compareToIgnoreCase("on") == 0) {
 			if (Permissions.ADMIN_TOGGLE.getPermission(player, sender)) {
 				if (Settings.enabled) {
-					sender.sendMessage(Settings.prefix + "The system is already enabled!");
+					sender.sendMessage(Language.prefix + "The system is already enabled!");
 				} else {
 					Settings.enabled = true;
-					sender.sendMessage(Settings.prefix + ChatColor.GREEN + "System has been enabled!");
+					sender.sendMessage(Language.prefix + ChatColor.GREEN + "System has been enabled!");
 				}
 				
 			}
@@ -108,23 +113,33 @@ public class CommandHandler implements Handler {
 		if (args[0].compareToIgnoreCase("off") == 0) {
 			if (Permissions.ADMIN_TOGGLE.getPermission(player, sender)) {
 				if (!Settings.enabled) {
-					sender.sendMessage(Settings.prefix + "The system is already disabled!");
+					sender.sendMessage(Language.prefix + "The system is already disabled!");
 				} else {
 					Settings.enabled = false;
-					sender.sendMessage(Settings.prefix + ChatColor.RED + "System has been disabled!");
+					sender.sendMessage(Language.prefix + ChatColor.RED + "System has been disabled!");
 				}
+				
+				if (GD.cf_gm) sender.sendMessage(Language.prefix + ChatColor.DARK_RED + "ERROR: You have left the server chat muted! Nobody is able to talk.");
 			}
 			return true;
 			// Reload here.
 		}
 		if (args[0].compareToIgnoreCase("info") == 0) {
 			if (Permissions.ADMIN_INFO.getPermission(player, sender)) {
-				sender.sendMessage(Settings.prefix + "AntiBot System Info:");
-				sender.sendMessage(Settings.prefix + "");
-				sender.sendMessage(Settings.prefix + "Secs between last login: " + (System.currentTimeMillis() - GD.b_lc));
-				sender.sendMessage(Settings.prefix + "Current Intervals: " + Settings.interval);
-				sender.sendMessage(Settings.prefix + "Logged in: " + GD.b_cp.size());
-				sender.sendMessage(Settings.prefix + "# of Accounts: " + Settings.accounts);
+				sender.sendMessage(Language.prefix + "AntiBot System Info:");
+				sender.sendMessage(Language.prefix + "");
+				sender.sendMessage(Language.prefix + "Secs between last login: " + Tils.getLongDiff(GD.b_lc));
+				sender.sendMessage(Language.prefix + "Current Intervals: " + Settings.interval);
+				sender.sendMessage(Language.prefix + "Logged in: " + GD.b_cp.size());
+				sender.sendMessage(Language.prefix + "# of Accounts: " + Settings.accounts);
+			}
+			return true;
+		}
+		
+		if (args[0].compareToIgnoreCase("flush") == 0) {
+			if (Permissions.ADMIN_FLUSH.getPermission(player, sender)) {
+				AB.reload();
+				sender.sendMessage(Language.prefix + ChatColor.GREEN + "Flushed data successfully!");
 			}
 			return true;
 		}
@@ -133,7 +148,7 @@ public class CommandHandler implements Handler {
 			returnMotd(sender);
 			return true;
 		}
-		sender.sendMessage(Settings.prefix + ChatColor.RED + "Unknown system command.");
+		sender.sendMessage(Language.prefix + ChatColor.RED + "Unknown system command.");
 		return false;
 	}
 	
@@ -157,10 +172,10 @@ public class CommandHandler implements Handler {
 	public void returnMotd(CommandSender sender) {
 		Date localdate = new Date(Settings.installdate);
 		SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy");
-		sender.sendMessage(Settings.prefix + "AntiBot " + AB.getVersion() + " - By .SuPaH sPii");
-		sender.sendMessage(Settings.prefix + "Inspired by Wolflink289 <3");
-		sender.sendMessage(Settings.prefix + "Continued inspiration by Evenprime & Fafaffy <3");
-		sender.sendMessage(Settings.prefix + "Recontinuted interest by H31IX & horde of users affected by Chat Spam in #anticheat");
+		sender.sendMessage(Language.prefix + "AntiBot " + AB.getVersion() + " - By .SuPaH sPii");
+		sender.sendMessage(Language.prefix + "Inspired by Wolflink289 <3");
+		sender.sendMessage(Language.prefix + "Continued inspiration by Evenprime & Fafaffy <3");
+		sender.sendMessage(Language.prefix + "Recontinuted interest by H31IX & horde of users affected by Chat Spam in #anticheat");
 		
 		// return status if player has admin permissions.
 		Player player = null;
@@ -170,75 +185,75 @@ public class CommandHandler implements Handler {
 			// console!
 		}
 		if (Permissions.ADMIN_NOTIFY.getPermission(player)) {
-			sender.sendMessage(Settings.prefix + "System Status: " + returnStatus());
+			sender.sendMessage(Language.prefix + "System Status: " + returnStatus());
 		}
 		Random random = new Random();
 		switch (random.nextInt(20)) {
 			case 0:
-				sender.sendMessage(Settings.prefix + "System Installed on " + ChatColor.GREEN + sdf.format(localdate));
+				sender.sendMessage(Language.prefix + "System Installed on " + ChatColor.GREEN + sdf.format(localdate));
 				break;
 			case 1:
-				sender.sendMessage(Settings.prefix + "Keeping PWN4G3 & Paradigm out of the game since " + ChatColor.GREEN + sdf.format(localdate));
+				sender.sendMessage(Language.prefix + "Keeping PWN4G3 & Paradigm out of the game since " + ChatColor.GREEN + sdf.format(localdate));
 				break;
 			case 2:
-				sender.sendMessage(Settings.prefix + "Combatting spam since " + ChatColor.GREEN + sdf.format(localdate));
+				sender.sendMessage(Language.prefix + "Combatting spam since " + ChatColor.GREEN + sdf.format(localdate));
 				break;
 			case 3:
-				sender.sendMessage(Settings.prefix + "Supporting PWN4G3 & Paradigm Bots since " + ChatColor.GREEN + sdf.format(localdate));
+				sender.sendMessage(Language.prefix + "Supporting PWN4G3 & Paradigm Bots since " + ChatColor.GREEN + sdf.format(localdate));
 				break;
 			case 4:
-				sender.sendMessage(Settings.prefix + "Running PWN4G3 & Paradigm Bots to the void since " + ChatColor.GREEN + sdf.format(localdate));
+				sender.sendMessage(Language.prefix + "Running PWN4G3 & Paradigm Bots to the void since " + ChatColor.GREEN + sdf.format(localdate));
 				break;
 			case 5:
-				sender.sendMessage(Settings.prefix + "Making people mad since " + ChatColor.GREEN + sdf.format(localdate));
+				sender.sendMessage(Language.prefix + "Making people mad since " + ChatColor.GREEN + sdf.format(localdate));
 				break;
 			case 6:
-				sender.sendMessage(Settings.prefix + "Trolling spammers since " + ChatColor.GREEN + sdf.format(localdate));
+				sender.sendMessage(Language.prefix + "Trolling spammers since " + ChatColor.GREEN + sdf.format(localdate));
 				break;
 			case 7:
-				sender.sendMessage(Settings.prefix + "Supporting Wolflink289's idea since " + ChatColor.GREEN + sdf.format(localdate));
+				sender.sendMessage(Language.prefix + "Supporting Wolflink289's idea since " + ChatColor.GREEN + sdf.format(localdate));
 				break;
 			case 8:
-				sender.sendMessage(Settings.prefix + "Protecting this server since " + ChatColor.GREEN + sdf.format(localdate));
+				sender.sendMessage(Language.prefix + "Protecting this server since " + ChatColor.GREEN + sdf.format(localdate));
 				break;
 			case 9:
-				sender.sendMessage(Settings.prefix + "All lights turned green since " + ChatColor.GREEN + sdf.format(localdate));
+				sender.sendMessage(Language.prefix + "All lights turned green since " + ChatColor.GREEN + sdf.format(localdate));
 				break;
 			case 10:
-				sender.sendMessage(Settings.prefix + "Corrupting ability to spam since " + ChatColor.GREEN + sdf.format(localdate));
+				sender.sendMessage(Language.prefix + "Corrupting ability to spam since " + ChatColor.GREEN + sdf.format(localdate));
 				break;
 			case 11:
-				sender.sendMessage(Settings.prefix + "Minecraft PWN4G3 & Paradigm dun goof'd on " + ChatColor.GREEN + sdf.format(localdate));
+				sender.sendMessage(Language.prefix + "Minecraft PWN4G3 & Paradigm dun goof'd on " + ChatColor.GREEN + sdf.format(localdate));
 				break;
 			case 12:
-				sender.sendMessage(Settings.prefix + "Making .SuPaH sPii proud since " + ChatColor.GREEN + sdf.format(localdate));
+				sender.sendMessage(Language.prefix + "Making .SuPaH sPii proud since " + ChatColor.GREEN + sdf.format(localdate));
 				break;
 			case 13:
-				sender.sendMessage(Settings.prefix + "Injected the Vaccine on " + ChatColor.GREEN + sdf.format(localdate));
+				sender.sendMessage(Language.prefix + "Injected the Vaccine on " + ChatColor.GREEN + sdf.format(localdate));
 				break;
 			case 14:
-				sender.sendMessage(Settings.prefix + "Giving AIDS to spammers since " + ChatColor.GREEN + sdf.format(localdate));
+				sender.sendMessage(Language.prefix + "Giving AIDS to spammers since " + ChatColor.GREEN + sdf.format(localdate));
 				break;
 			case 15:
-				sender.sendMessage(Settings.prefix + "Turning spammer users to WTF faces since " + ChatColor.GREEN + sdf.format(localdate));
+				sender.sendMessage(Language.prefix + "Turning spammer users to WTF faces since " + ChatColor.GREEN + sdf.format(localdate));
 				break;
 			case 16:
-				sender.sendMessage(Settings.prefix + "Chinese secret happened on " + ChatColor.GREEN + sdf.format(localdate));
+				sender.sendMessage(Language.prefix + "Chinese secret happened on " + ChatColor.GREEN + sdf.format(localdate));
 				break;
 			case 17:
-				sender.sendMessage(Settings.prefix + "Been in Slim Shady's world since " + ChatColor.GREEN + sdf.format(localdate));
+				sender.sendMessage(Language.prefix + "Been in Slim Shady's world since " + ChatColor.GREEN + sdf.format(localdate));
 				break;
 			case 18:
-				sender.sendMessage(Settings.prefix + "Making other communities jelly since " + ChatColor.GREEN + sdf.format(localdate));
+				sender.sendMessage(Language.prefix + "Making other communities jelly since " + ChatColor.GREEN + sdf.format(localdate));
 				break;
 			case 19:
-				sender.sendMessage(Settings.prefix + "Didn't have to buy anything since " + ChatColor.GREEN + sdf.format(localdate));
+				sender.sendMessage(Language.prefix + "Didn't have to buy anything since " + ChatColor.GREEN + sdf.format(localdate));
 				break;
 			case 20:
-				sender.sendMessage(Settings.prefix + "Making Jogn shit his pants since " + ChatColor.GREEN + sdf.format(localdate));
+				sender.sendMessage(Language.prefix + "Making Jogn shit his pants since " + ChatColor.GREEN + sdf.format(localdate));
 				break;
 			default:
-				sender.sendMessage(Settings.prefix + "System Installed on " + ChatColor.GREEN + sdf.format(localdate));
+				sender.sendMessage(Language.prefix + "System Installed on " + ChatColor.GREEN + sdf.format(localdate));
 				break;
 		}
 	}

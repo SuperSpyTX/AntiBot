@@ -4,14 +4,13 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import org.bukkit.Bukkit;
 import me.freebuild.superspytx.ab.AB;
-import me.freebuild.superspytx.ab.AntiBot;
 import me.freebuild.superspytx.ab.abs.EventAction;
 import me.freebuild.superspytx.ab.abs.Handler;
 import me.freebuild.superspytx.ab.abs.PI;
-import me.freebuild.superspytx.ab.settings.Permissions;
+import me.freebuild.superspytx.ab.settings.Language;
 import me.freebuild.superspytx.ab.settings.Settings;
 import me.freebuild.superspytx.ab.tils.CaptchaTils;
-import me.freebuild.superspytx.ab.tils.MathTils;
+import me.freebuild.superspytx.ab.tils.Tils;
 import me.freebuild.superspytx.ab.workflow.GD;
 
 public class BotHandler implements Handler {
@@ -26,7 +25,7 @@ public class BotHandler implements Handler {
 		
 		if (GD.b_lc != 0L) {
 			AB.debug("Lastlogin > 0");
-			if (MathTils.getLongDiff(GD.b_lc) < Settings.interval) {
+			if (Tils.getLongDiff(GD.b_lc) < Settings.interval) {
 				GD.b_cts++;
 				AB.debug("Counting!");
 				if (GD.b_cts >= Settings.accounts) {
@@ -43,7 +42,7 @@ public class BotHandler implements Handler {
 			AB.debug("Initial join");
 		}
 		
-		AB.debug("Current Time: " + MathTils.getLongDiff(GD.b_lc));
+		AB.debug("Current Time: " + Tils.getLongDiff(GD.b_lc));
 		GD.b_lc = System.currentTimeMillis();
 		
 		return false;
@@ -52,7 +51,7 @@ public class BotHandler implements Handler {
 	@Override
 	public void performActions(EventAction info) {
 		if (GD.b_kicking) {
-			info.player.kickPlayer(Settings.kickMsg);
+			info.player.kickPlayer(Language.kickMsg);
 			return;
 		}
 		GD.b_kicking = true;
@@ -65,11 +64,11 @@ public class BotHandler implements Handler {
 				if (pl == null || pl.pl == null) continue;
 				if (Bukkit.getPlayerExact(pl.pl.getName()) == null) continue;
 				AB.debug("Kicking " + pl.p_name);
-				if (MathTils.getLongDiff(pl.b_connectfor) < Settings.connectFor) { // TODO: Remove check after things are working.
+				if (Tils.getLongDiff(pl.b_connectfor) < Settings.connectFor) { // TODO: Remove check after things are working.
 					if (Settings.captchaEnabled && Settings.forceCaptchaOnBotSpam)
 						CaptchaTils.sendCaptchaToPlayer(pl.pl);
 					else
-						pl.pl.kickPlayer(Settings.kickMsg);
+						pl.pl.kickPlayer(Language.kickMsg);
 					GD.b_blks++;
 				}
 			} catch (NullPointerException e) {
