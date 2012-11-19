@@ -46,13 +46,17 @@ public class GeoTils {
 	
 	public static boolean detect(String ip) {
 		if (lkup == null) return false;
+		AB.debug("Lookup Service not null!");
 		String cd = lkup.getCountry(ip).getCode();
+		AB.debug("Checking country!");
 		if (GD.cb_cds.contains(cd)) {
+			AB.debug("Country is in list! Determining decision.");
 			if (Settings.whiteListCountry)
 				return false; // no ban
 			else
 				return true; // ban hammer
 		} else {
+			AB.debug("Country is not in list! Determining decision.");
 			if (Settings.whiteListCountry) return true; // ban hammer
 		}
 		

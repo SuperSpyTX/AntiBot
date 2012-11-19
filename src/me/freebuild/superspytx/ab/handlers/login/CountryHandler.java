@@ -12,9 +12,11 @@ public class CountryHandler implements Handler {
 	@Override
 	public boolean run(EventAction info) {
 		if (!Settings.geoIP) return false;
-		if (GeoTils.isLoaded()) return false;
+		AB.debug("Country Bans check!");
+		if (!GeoTils.isLoaded()) return false;
+		AB.debug("GeoTools loaded!");
 		if (info.ip == null) {
-			AB.log("CB: IP is null.");
+			AB.debug("CB: IP is null.");
 			return false;
 		}
 		
