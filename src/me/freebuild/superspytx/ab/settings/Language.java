@@ -13,6 +13,7 @@ public class Language {
 	/* Admin Notifications */
 	public static String adminDSNotify = "\247cAntiBot is currently under delayed start.  Chat Spam is not protected yet.";
 	public static String adminNVNotify = "\247aAntiBot has a new version available! New version: &nv& Your version: &ov&";
+	public static String adminNBNotify = "\247aAntiBot has a new development build available! New build #&nv& Your build #&ov&";
 	
 	/* Country Ban */
 	public static String countryBanMsg = "Your country is banned from this server!";

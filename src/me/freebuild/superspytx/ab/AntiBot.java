@@ -24,6 +24,7 @@ public class AntiBot extends JavaPlugin {
 	private static AntiBot instance;
 	private static SettingsCore settingscore;
 	private static String version;
+	private static int buildnum = 0;
 	private static boolean development;
 	private Updates updates;
 	
@@ -102,6 +103,8 @@ public class AntiBot extends JavaPlugin {
 				
 			});
 			
+			metrics.start();
+			
 		} catch (IOException e) {
 			AB.log("Metrics haz failed.");
 		}
@@ -149,13 +152,13 @@ public class AntiBot extends JavaPlugin {
 		
 		/* Almost finished */
 		PluginDescriptionFile pdfFile = getDescription();
-		version = pdfFile.getVersion();
+		version = pdfFile.getVersion().replace("${BUILD_NUMBER}", "0");
 		development = (version.contains("-SNAPSHOT"));
 		
 		if (development) {
 			getLogger().info("This is a development version of AntiBot and not a official release.  Please be careful.  Please report bugs as you find them.");
+			buildnum = Integer.parseInt(version.split("-")[2].replace("b", ""));
 		} else {
-			if (metrics != null) metrics.start();
 			getLogger().info("If you have any issues with AntiBot.  Or there is a false positive! Don't be afraid to make a ticket!");
 		}
 		
@@ -178,6 +181,10 @@ public class AntiBot extends JavaPlugin {
 	
 	public static boolean isDevelopment() {
 		return development;
+	}
+	
+	public static int getBuildNumber() {
+		return buildnum;
 	}
 	
 	public static SettingsCore getSettingsCore() {

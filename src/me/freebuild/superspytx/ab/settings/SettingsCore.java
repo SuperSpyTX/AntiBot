@@ -51,9 +51,9 @@ public class SettingsCore {
 		config.put("AntiBot.TouchTheseAnd.AWildTnTWillAppearInYourCode.AndItWillSuck.InstallDate", Settings.installdate);
 		config.put("AntiBot.TouchTheseAnd.AWildTnTWillAppearInYourCode.AndItWillSuck.CheckUpdates", Settings.checkupdates);
 		config.put("AntiBot.TouchTheseAnd.AWildTnTWillAppearInYourCode.AndItWillSuck.DebugMode", Settings.debugmode);
-	    config.put("AntiBot.TouchTheseAnd.AWildTnTWillAppearInYourCode.AndItWillSuck.ABVersion", AB.getVersion());
-	    
-	    /* Language Configuration */
+		config.put("AntiBot.TouchTheseAnd.AWildTnTWillAppearInYourCode.AndItWillSuck.ABVersion", AB.getVersion());
+		
+		/* Language Configuration */
 		langs.put("AntiBot.Messages.Kick", Language.kickMsg);
 		langs.put("AntiBot.Messages.Captcha.Kick", Language.captchaKick);
 		langs.put("AntiBot.Messages.Captcha.OneAttemptLeft", Language.captoneLeft);
@@ -63,6 +63,7 @@ public class SettingsCore {
 		langs.put("AntiBot.Messages.LoginDelay", Language.loginDelayMsg);
 		langs.put("AntiBot.Messages.Admins.DSNotify", Language.adminDSNotify);
 		langs.put("AntiBot.Messages.Admins.NVNotify", Language.adminNVNotify);
+		langs.put("AntiBot.Messages.Admins.NBNotify", Language.adminNBNotify);
 		
 		AB.getInstance().getConfig().addDefaults(config);
 		FileConfiguration lang = YamlConfiguration.loadConfiguration(new File(AB.getInstance().getDataFolder(), "language.yml"));
@@ -217,6 +218,8 @@ public class SettingsCore {
 						Language.adminDSNotify = duh;
 					} else if (conf.equalsIgnoreCase("Messages.Admins.NVNotify")) {
 						Language.adminNVNotify = duh;
+					} else if (conf.equalsIgnoreCase("Messages.Admins.NBNotify")) {
+						Language.adminNBNotify = duh;
 					}
 					
 				}
