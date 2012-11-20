@@ -35,6 +35,11 @@ public class AntiBot extends JavaPlugin {
 	public void onEnable() {
 		instance = this;
 		
+		/* Make plugin directory if it doesn't exist.*
+		 * This should fix the GeoIP problem */
+		if (!getDataFolder().exists())
+			getDataFolder().mkdir();
+		
 		/* Initialize GeoIP utilities */
 		GeoTils.initialize();
 		
