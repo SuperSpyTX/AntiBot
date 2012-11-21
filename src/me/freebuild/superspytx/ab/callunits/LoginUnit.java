@@ -37,12 +37,12 @@ public class LoginUnit extends CallUnit {
 	
 	@EventHandler
 	public void country(PlayerLoginEvent e) {
-		if (WorkflowAgent.dispatchUnit(e, Handlers.COUNTRYBANS, false)) e.disallow(PlayerLoginEvent.Result.KICK_BANNED, Language.countryBanMsg);
+		if (WorkflowAgent.dispatchUnit(e, Handlers.COUNTRYBANS, false)) e.disallow(PlayerLoginEvent.Result.KICK_OTHER, Language.countryBanMsg);
 	}
 	
 	@EventHandler(priority = EventPriority.LOW)
 	public void logindelay(PlayerLoginEvent e) {
-		if (WorkflowAgent.dispatchUnit(e, Handlers.LOGINDELAY, false)) e.disallow(PlayerLoginEvent.Result.KICK_FULL, Language.loginDelayMsg);
+		if (WorkflowAgent.dispatchUnit(e, Handlers.LOGINDELAY, false)) e.disallow(PlayerLoginEvent.Result.KICK_OTHER, Language.loginDelayMsg);
 	}
 	
 }
