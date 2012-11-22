@@ -21,6 +21,7 @@ public class Settings {
 	public static boolean newVersion = false;
 	public static boolean delayingStart = false;
 	public static boolean flowEnabled = true;
+	public static boolean synchronizedKick = true;
 	public static boolean notify = true;
 	public static boolean useWhiteListPerms = false;
 	public static boolean useOpPerms = true; // Because of new race condition fix.

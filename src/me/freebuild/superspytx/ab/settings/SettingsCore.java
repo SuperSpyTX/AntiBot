@@ -22,6 +22,7 @@ public class SettingsCore {
 		/* Main Configuration */
 		config.put("AntiBot.Main.Prefix", Language.prefix);
 		config.put("AntiBot.Main.EnableByDefault", Settings.enabled);
+		config.put("AntiBot.Main.SyncKick", Settings.synchronizedKick);
 		config.put("AntiBot.Main.Notifications", Settings.notify);
 		config.put("AntiBot.PermissionModes.UseOp", Settings.useOpPerms);
 		config.put("AntiBot.PermissionModes.UseBukkitWhiteList", Settings.useWhiteListPerms);
@@ -98,6 +99,8 @@ public class SettingsCore {
 					Settings.enabled = (Boolean) duh;
 				} else if (conf.equalsIgnoreCase("Main.Notifications")) {
 					Settings.notify = (Boolean) duh;
+				} else if (conf.equalsIgnoreCase("Main.SyncKick")) {
+					Settings.synchronizedKick = (Boolean) duh;
 				} else if (conf.equalsIgnoreCase("PermissionModes.UseOp")) {
 					Settings.useOpPerms = (Boolean) duh;
 				} else if (conf.equalsIgnoreCase("PermissionModes.UseBukkitWhiteList")) {

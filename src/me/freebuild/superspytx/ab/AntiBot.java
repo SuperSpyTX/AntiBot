@@ -37,8 +37,7 @@ public class AntiBot extends JavaPlugin {
 		
 		/* Make plugin directory if it doesn't exist.*
 		 * This should fix the GeoIP problem */
-		if (!getDataFolder().exists())
-			getDataFolder().mkdir();
+		if (!getDataFolder().exists()) getDataFolder().mkdir();
 		
 		/* Initialize GeoIP utilities */
 		GeoTils.initialize();
@@ -232,11 +231,19 @@ public class AntiBot extends JavaPlugin {
 	}
 	
 	public static void kickPlayer(final Player e, final String reason) {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(getInstance(), new Runnable() {
-			public void run() {
+		/* Because Bukkit likes to be inefficient and cause CMEs, so I found a way to synchronize it */
+		/* This is my only fix to server crashes at the moment. */
+		/* I will allow you to steal this method so you can fix kicking issues too for your plugin. */
+		/* Because it's only locally tested, I made it a configuration option to disable it. */
+		
+		if (Settings.synchronizedKick) {
+			net.minecraft.server.World world = ((org.bukkit.craftbukkit.CraftWorld) e.getWorld()).getHandle();
+			synchronized (world.players) {
 				e.kickPlayer(reason);
 			}
-		}, 10L);
+		} else {
+			e.kickPlayer(reason);
+		}
 	}
 	
 	public static void kickPlayer(final Player e) {
