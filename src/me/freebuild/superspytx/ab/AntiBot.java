@@ -231,7 +231,7 @@ public class AntiBot extends JavaPlugin {
 	}
 	
 	public static void kickPlayer(final Player e, final String reason) {
-		/* Because Bukkit likes to be inefficient and cause CMEs, so I found a way to synchronize it */
+		/* Bukkit likes to be inefficient and cause CMEs, so I found a way to synchronize it */
 		/* This is my only fix to server crashes at the moment. */
 		/* I will allow you to steal this method so you can fix kicking issues too for your plugin. */
 		/* Because it's only locally tested, I made it a configuration option to disable it. */
