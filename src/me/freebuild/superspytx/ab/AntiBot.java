@@ -17,6 +17,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -211,12 +212,10 @@ public class AntiBot extends JavaPlugin {
 	public static void debug(String e) {
 		if (Settings.debugmode) {
 			getInstance().getLogger().info("Debug: " + e);
-			// TODO: Remove Debug Code!
+			
 			for (Player pl : Bukkit.getOnlinePlayers()) {
 				if (Permissions.ADMIN_DEBUG.getPermission(pl)) pl.sendMessage("[AntiBot] Debug: " + e);
 			}
-			// TODO: Permission node based debug logs?
-			Bukkit.broadcastMessage(Language.prefix + "Debug: " + e);
 		}
 	}
 	
@@ -225,25 +224,20 @@ public class AntiBot extends JavaPlugin {
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (cmd.getName().startsWith("ab") || cmd.getName().startsWith("antibot")) { return WorkflowAgent.dispatchUnit(new CommandEvent(sender, cmd, label, args), Handlers.COMMAND, true); }
+		if (cmd.getName().startsWith("ab") || cmd.getName().startsWith("antibot")) return WorkflowAgent.dispatchUnit(new CommandEvent(sender, cmd, label, args), Handlers.COMMAND, true);
 		
 		return false;
 	}
 	
 	public static void kickPlayer(final Player e, final String reason) {
-		/* Bukkit likes to be inefficient and cause CMEs, so I found a way to synchronize it */
-		/* This is my only fix to server crashes at the moment. */
-		/* I will allow you to steal this method so you can fix kicking issues too for your plugin. */
-		/* Because it's only locally tested, I made it a configuration option to disable it. */
-		
-		if (Settings.synchronizedKick) {
-			net.minecraft.server.World world = ((org.bukkit.craftbukkit.CraftWorld) e.getWorld()).getHandle();
-			synchronized (world.players) {
+		/* After a long debate, this turned out to work just fine */
+		/* Any CMEs are because of other plugins */
+
+		Bukkit.getScheduler().scheduleSyncDelayedTask(getInstance(), new Runnable() {
+			public void run() {
 				e.kickPlayer(reason);
 			}
-		} else {
-			e.kickPlayer(reason);
-		}
+		}, 10L);
 	}
 	
 	public static void kickPlayer(final Player e) {

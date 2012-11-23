@@ -7,7 +7,6 @@ import me.freebuild.superspytx.ab.AB;
 import me.freebuild.superspytx.ab.abs.EventAction;
 import me.freebuild.superspytx.ab.abs.Handler;
 import me.freebuild.superspytx.ab.abs.PI;
-import me.freebuild.superspytx.ab.settings.Language;
 import me.freebuild.superspytx.ab.settings.Settings;
 import me.freebuild.superspytx.ab.tils.CaptchaTils;
 import me.freebuild.superspytx.ab.tils.Tils;
@@ -73,7 +72,7 @@ public class BotHandler implements Handler {
 					if (Settings.captchaEnabled && Settings.forceCaptchaOnBotSpam)
 						CaptchaTils.sendCaptchaToPlayer(pl.pl);
 					else
-						AB.kickPlayer(info.player);
+						AB.kickPlayer(pl.pl); // Fuck you one line.
 					GD.b_blks++;
 				}
 			} catch (NullPointerException e) {

@@ -45,6 +45,6 @@ public class WorkflowAgent {
 					handle.getHandler().performActions(new EventAction(event, true));
 				}
 			}
-		}, 20L);
+		}, 0L); // Run on the same tick.
 	}
 }

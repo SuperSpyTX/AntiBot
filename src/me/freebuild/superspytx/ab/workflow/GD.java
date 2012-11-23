@@ -43,6 +43,7 @@ public class GD {
 	public static List<String> cb_cds = new CopyOnWriteArrayList<String>();
 	
 	public static PI getPI(Player player) {
+		if (player == null) return null;
 		return getPI(player.getName());
 	}
 	
@@ -58,6 +59,7 @@ public class GD {
 	}
 	
 	public static PI getUpdatedPI(Player player) {
+		if (player == null) return null;
 		PI i = getPI(player);
 		i.pl = player;
 		return i;
@@ -70,6 +72,7 @@ public class GD {
 	}
 	
 	public static void unregisterPI(Player player) {
+		if (player == null) return;
 		unregisterPI(player.getName());
 	}
 	
@@ -95,12 +98,18 @@ public class GD {
 	
 	public static void updateTask() {
 		for (Entry<String, PI> g : opii.entrySet()) {
-			if (Tils.getLongDiff(g.getValue().ab_lastdc) > 60000L) opii.remove(g.getKey());
+			if (Tils.getLongDiff(g.getValue().ab_lastdc) >= 60000L) opii.remove(g.getKey());
 		}
 		
 		if (!b_kicking && b_cp.size() > 0) {
 			for (final PI pl : b_cp) {
-				if (Tils.getLongDiff(pl.b_connectfor) < Settings.connectFor) b_cp.remove(pl);
+				if (Tils.getLongDiff(pl.b_connectfor) <= Settings.connectFor) b_cp.remove(pl);
+			}
+		}
+		
+		for (Entry<String, PI> g : pii.entrySet()) {
+			if (g.getValue().cp_haspuzzle && Tils.getLongDiff(g.getValue().cp_idle) >= 60000L) {
+				g.getValue().pl.kickPlayer("You've idled on CAPTCHA for too long!");
 			}
 		}
 	}

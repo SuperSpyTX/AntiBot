@@ -24,6 +24,7 @@ public class PI {
 	
 	/* Captcha Data */
 	public boolean cp_haspuzzle = false;
+	public long cp_idle = 0L;
 	public boolean cp_solvedpuzzle = false;
 	public Puzzle cp_puzzle;
 	

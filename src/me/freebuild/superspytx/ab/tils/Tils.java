@@ -6,7 +6,11 @@ import me.freebuild.superspytx.ab.abs.PI;
 public class Tils {
 	
 	public static Long getLongDiff(Long diff) {
-		return System.currentTimeMillis() - diff;
+		long currtime = System.currentTimeMillis();
+		long dd = currtime - diff;
+		if(dd == currtime)
+			return 0L;
+		return dd;
 	}
 	
 	public static boolean consistency(PI pl, Long time) {
