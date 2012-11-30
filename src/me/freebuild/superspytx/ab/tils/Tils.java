@@ -21,13 +21,15 @@ public class Tils {
 		long round = diff - (diff % 1000); // Thanks overflowed stacks!
 		
 		
-		// begin identifying patterns.
+		// begin identifying patterns if there was a previously recorded round difference.
 		if (pl.cs_rd != 0L) {
-			long max = pl.cs_rd - 800L; // drop .8 seconds from the stored rounded difference.
-			AB.debug("Max: " + Long.toString(max) + " Round: " + Long.toString(round) + " Diff: " + Long.toString(diff));
-			if (diff <= pl.cs_rd && diff >= max) return true;
+			long min = pl.cs_rd - 400L; // drop .4 seconds from the stored round difference.
+			long max = pl.cs_rd + 200L; // add .2 seconds to the stored round difference.
+			AB.debug("Min: " + Long.toString(min) + " Max: " + Long.toString(max) + " Diff: " + Long.toString(diff) + " Round: " + pl.cs_rd);
+			if (diff <= max && diff >= min) return true;
 		}
 		
+		// record the round difference.
 		pl.cs_rd = round;
 		return false;
 	}
