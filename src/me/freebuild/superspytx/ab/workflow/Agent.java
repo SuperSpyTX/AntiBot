@@ -7,7 +7,7 @@ import me.freebuild.superspytx.ab.settings.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 
-public class WorkflowAgent {
+public class Agent {
 	
 	public static boolean dispatchUnit(final Event event, final Handlers handle, boolean handleAnyways) {
 		if (!Settings.enabled && !handle.equals(Handlers.COMMAND)) return false;

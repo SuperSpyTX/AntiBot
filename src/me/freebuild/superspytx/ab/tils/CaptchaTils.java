@@ -101,7 +101,11 @@ public class CaptchaTils {
 		
 		if (!Settings.captchaEnabled) return;
 		
-		if (p.cp_haspuzzle) return;
+		if (p.cp_haspuzzle) {
+			// This usually means they spammed again.
+			AB.kickPlayer(p.pl);
+			return;
+		}
 		
 		if (Permissions.CAPTCHA.getPermission(pl)) {
 			p.cp_solvedpuzzle = true;
@@ -123,5 +127,29 @@ public class CaptchaTils {
 			for (int i = 0; i < 5; i++)
 				pl.sendMessage(p.cp_puzzle.getPuzzle()[i]);
 		}
+	}
+	
+	public static void sendCaptchaToPlayerAPI(Player pl) {
+		PI p = GD.getPI(pl);
+		
+		if (!Settings.captchaEnabled) return;
+		
+		if (p.cp_haspuzzle) return;
+		
+		if (Permissions.CAPTCHA.getPermission(pl)) {
+			return;
+		}
+		
+		p.cp_haspuzzle = true;
+		p.cp_puzzle = new Puzzle();
+		GD.cp_caps++;
+		
+		if (p.cp_puzzle.isVersion2()) {
+			pl.sendMessage(Language.prefix + '\247' + "c" + "Please enter the numbers printed below into chat:");
+			for (int i = 0; i < 5; i++)
+				pl.sendMessage(p.cp_puzzle.getPuzzle()[i]);
+		}
+		
+		AB.log("API: Sent player(" + pl.getName() + ") a puzzle.");
 	}
 }

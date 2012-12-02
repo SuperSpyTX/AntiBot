@@ -7,10 +7,11 @@ import me.freebuild.superspytx.ab.callunits.*;
 import me.freebuild.superspytx.ab.handlers.chat.*;
 import me.freebuild.superspytx.ab.handlers.login.*;
 import me.freebuild.superspytx.ab.settings.Permissions;
+import me.freebuild.superspytx.ab.workflow.GD;
 
 public enum Handlers
 {
-	/* NOTE: Do not use formatter! */
+    /* NOTE: Do not use formatter! */
     BOT(new BotHandler(), new LoginUnit(), Permissions.JOIN),
     COMMAND(new CommandHandler(), null, null),
     CHATSPAM(new ChatSpamHandler(), new ChatUnit(), Permissions.CHATSPAM),
@@ -42,7 +43,13 @@ public enum Handlers
     
     public boolean checkUser(Player pl)
     {
-    	if(perm == null) return true;
+    	if (this.name().equals(Handlers.COMMAND.name())) return true;
+    	try {
+	    	if (GD.getPI(pl).isExempt) return false;
+	    	if (GD.getPI(pl).exemptedHandlers.contains(this)) return false;
+	    	if (GD.deactivatedHandlers.contains(this)) return false;
+	    	if (perm == null) return true;
+    	} catch (Throwable t) {}
         return !(perm.getPermission(pl));
     }
 }

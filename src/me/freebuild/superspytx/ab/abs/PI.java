@@ -1,5 +1,8 @@
 package me.freebuild.superspytx.ab.abs;
 
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import me.freebuild.superspytx.ab.handlers.Handlers;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -7,7 +10,8 @@ public class PI {
 	/* Everything player info goes here! */
 	public Player pl;
 	public String p_name;
-	public boolean online = true;
+	public boolean isExempt = false;
+	public List<Handlers> exemptedHandlers = new CopyOnWriteArrayList<Handlers>();
 	public long ab_lastdc = 0L;
 	public boolean ab_alreadyin = false; // true if already logged in.
 	public boolean ab_online = true;
@@ -16,9 +20,10 @@ public class PI {
 	public long b_connectfor = 0L;
 	
 	/* Chat Spam Data */
-	public int cs_ct = 0;
+	public double cs_ct = 0;
 	public long cs_lmt = 0L;
 	public String cs_lm = "";
+	public String cs_lsm = "";
 	public long cs_rd = 0L;
 	public boolean cs_trig = false;
 	

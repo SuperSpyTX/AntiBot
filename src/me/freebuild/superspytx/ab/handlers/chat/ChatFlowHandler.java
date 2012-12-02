@@ -7,6 +7,7 @@ import me.freebuild.superspytx.ab.AB;
 import me.freebuild.superspytx.ab.AntiBot;
 import me.freebuild.superspytx.ab.abs.EventAction;
 import me.freebuild.superspytx.ab.abs.Handler;
+import me.freebuild.superspytx.ab.abs.PI;
 import me.freebuild.superspytx.ab.settings.Language;
 import me.freebuild.superspytx.ab.settings.Permissions;
 import me.freebuild.superspytx.ab.settings.Settings;
@@ -20,6 +21,7 @@ public class ChatFlowHandler implements Handler {
 	public boolean run(EventAction info) {
 		if (!Settings.flowEnabled) return false;
 		if (GD.cf_gm || info.message == null || (GD.getPI(info.player).cs_trig) || (GD.getPI(info.player).cp_haspuzzle)) return false; // triggered spam? don't count towards chat flow.
+		if (!GD.cf_pls.contains(info.pi)) GD.cf_pls.add(info.pi);
 		AB.debug("Chat Flow debug");
 		int ct = 0;
 		if (GD.cf_lmt != 0L) {
@@ -44,6 +46,7 @@ public class ChatFlowHandler implements Handler {
 				}
 				if (ct < 1 && GD.cf_cts > 0) {
 					GD.cf_cts -= 1;
+					GD.cf_pls.remove(GD.cf_pls.size() - 1);
 				}
 				AB.debug("ChatFlow VL: " + GD.cf_cts);
 				return false;
@@ -52,6 +55,7 @@ public class ChatFlowHandler implements Handler {
 		
 		AB.debug("Chat not overflowed.");
 		GD.cf_cts = 0;
+		GD.cf_pls.clear();
 		GD.cf_lmt = System.currentTimeMillis();
 		GD.cf_lm = info.message;
 		AB.debug("Last message: " + info.message + " time: " + GD.cf_lmt);
@@ -71,14 +75,6 @@ public class ChatFlowHandler implements Handler {
 			@Override
 			public void run() {
 				Bukkit.broadcastMessage(Language.prefix + ChatColor.RED + Language.overflowedMessage.replace("%sec%", Long.toString(GD.cf_ttmf)));
-				
-				if (Settings.captchaEnabled && Settings.forceCaptchaOnChatFlow) {
-					for (Player pl : Bukkit.getOnlinePlayers()) {
-						if (!Permissions.CAPTCHA.getPermission(pl)) {
-							CaptchaTils.sendCaptchaToPlayer(pl);
-						}
-					}
-				}
 			}
 			
 		}, 20L);
@@ -96,6 +92,20 @@ public class ChatFlowHandler implements Handler {
 			}
 			
 		}, 20L * GD.cf_ttmf);
+		
+		if (Settings.captchaEnabled && Settings.forceCaptchaOnChatFlow) {
+			for (PI pl : GD.cf_pls) {
+				if (pl.pl == null) continue;
+				CaptchaTils.sendCaptchaToPlayer(pl.pl);
+			}
+		} else if (Settings.flowKicks) {
+			for (PI pl : GD.cf_pls) {
+				if (pl.pl == null) continue;
+				AB.kickPlayer(pl.pl);
+			}
+		}
+		
+		GD.cf_pls.clear();
 	}
 	
 }

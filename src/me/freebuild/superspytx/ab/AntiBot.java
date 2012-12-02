@@ -11,7 +11,7 @@ import me.freebuild.superspytx.ab.settings.Settings;
 import me.freebuild.superspytx.ab.settings.SettingsCore;
 import me.freebuild.superspytx.ab.tils.GeoTils;
 import me.freebuild.superspytx.ab.workflow.GD;
-import me.freebuild.superspytx.ab.workflow.WorkflowAgent;
+import me.freebuild.superspytx.ab.workflow.Agent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -42,13 +42,13 @@ public class AntiBot extends JavaPlugin {
 		/* Initialize GeoIP utilities */
 		GeoTils.initialize();
 		
-		/* Events */
-		(new CallUnit()).registerUnits();
-		
 		/* Configuration */
 		settingscore = new SettingsCore();
 		settingscore.loadDefaults();
 		settingscore.loadSettings();
+		
+		/* Events */
+		(new CallUnit()).registerUnits();
 		
 		/* Register players on server */
 		for (Player pl : this.getServer().getOnlinePlayers()) {
@@ -223,7 +223,7 @@ public class AntiBot extends JavaPlugin {
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (cmd.getName().startsWith("ab") || cmd.getName().startsWith("antibot")) return WorkflowAgent.dispatchUnit(new CommandEvent(sender, cmd, label, args), Handlers.COMMAND, true);
+		if (cmd.getName().startsWith("ab") || cmd.getName().startsWith("antibot")) return Agent.dispatchUnit(new CommandEvent(sender, cmd, label, args), Handlers.COMMAND, true);
 		
 		return false;
 	}
@@ -231,12 +231,12 @@ public class AntiBot extends JavaPlugin {
 	public static void kickPlayer(final Player e, final String reason) {
 		/* After a long debate, this turned out to work just fine */
 		/* Any CMEs are because of other plugins */
-
+		
 		Bukkit.getScheduler().scheduleSyncDelayedTask(getInstance(), new Runnable() {
 			public void run() {
 				e.kickPlayer(reason);
 			}
-		}, 10L);
+		}, 10L); 
 	}
 	
 	public static void kickPlayer(final Player e) {

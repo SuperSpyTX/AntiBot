@@ -10,6 +10,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import me.freebuild.superspytx.ab.AB;
 import me.freebuild.superspytx.ab.abs.PI;
+import me.freebuild.superspytx.ab.handlers.Handlers;
 import me.freebuild.superspytx.ab.settings.Language;
 import me.freebuild.superspytx.ab.settings.Settings;
 import me.freebuild.superspytx.ab.tils.Tils;
@@ -18,6 +19,7 @@ public class GD {
 	/* Global Data for AntiBot */
 	private static Map<String, PI> pii = new ConcurrentHashMap<String, PI>();
 	private static Map<String, PI> opii = new ConcurrentHashMap<String, PI>();
+	public static List<Handlers> deactivatedHandlers = new CopyOnWriteArrayList<Handlers>();
 	
 	/* Bot Throttler */
 	public static int b_cts = 0;
@@ -30,6 +32,7 @@ public class GD {
 	public static int cf_cts = 0;
 	public static long cf_ttmf = 5L;
 	public static long cf_lmt = 0L;
+	public static List<PI> cf_pls = new CopyOnWriteArrayList<PI>();
 	public static String cf_lm = "";
 	public static String cf_lp = "";
 	

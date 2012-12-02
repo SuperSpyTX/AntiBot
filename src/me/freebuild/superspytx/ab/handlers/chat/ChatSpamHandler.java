@@ -26,7 +26,7 @@ public class ChatSpamHandler implements Handler {
 			int ct = 0;
 			if (Tils.strDiffCounter(info.message, pli.cs_lm) < Settings.spamdiffct) {
 				AB.debug("Str Diff L: " + Tils.strDiffCounter(info.message, pli.cs_lm));
-				pli.cs_ct++;
+				pli.cs_ct+= 0.5D;
 				ct++;
 				AB.debug("VL: " + pli.cs_ct);
 			}
@@ -44,7 +44,7 @@ public class ChatSpamHandler implements Handler {
 			}
 			if (Tils.getLongDiff(pli.cs_lmt) < Settings.spamtime) {
 				AB.debug("Time diff: " + Tils.getLongDiff(pli.cs_lmt));
-				pli.cs_ct++;
+				pli.cs_ct+= 0.5D;
 				ct++;
 				AB.debug("VL: " + pli.cs_ct);
 			} else if (Tils.consistency(pli, pli.cs_lmt)) {
@@ -58,6 +58,8 @@ public class ChatSpamHandler implements Handler {
 				AB.debug("Chat spam detected!");
 				AB.debug("VL: " + pli.cs_ct);
 				pli.cs_trig = true;
+				pli.cs_lsm = info.message;
+				pli.cs_lmt = System.currentTimeMillis();
 				GD.cs_spams++;
 				return true;
 			}

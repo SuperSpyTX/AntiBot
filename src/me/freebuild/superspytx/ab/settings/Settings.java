@@ -7,7 +7,7 @@ public class Settings {
 	public static int interval = 5000; // Bot: Interval
 	public static int accounts = 4;
 	public static int spamam = 4;
-	public static int spamtime = 2500;
+	public static int spamtime = 1500;
 	public static int spamdiffct = 3;
 	public static int connectFor = 30000;
 	public static int timetooverflow = 5000;
@@ -21,6 +21,7 @@ public class Settings {
 	public static boolean newVersion = false;
 	public static boolean delayingStart = false;
 	public static boolean flowEnabled = true;
+	public static boolean flowKicks = true;
 	public static boolean notify = true;
 	public static boolean useWhiteListPerms = false;
 	public static boolean useOpPerms = true; // Because of new race condition fix.

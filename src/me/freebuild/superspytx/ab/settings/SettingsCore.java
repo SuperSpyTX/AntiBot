@@ -35,6 +35,7 @@ public class SettingsCore {
 		config.put("AntiBot.AntiSpam.StringDiffMin", Settings.spamdiffct);
 		config.put("AntiBot.AntiSpam.Time", Settings.spamtime);
 		config.put("AntiBot.ChatFlow.Enabled", Settings.flowEnabled);
+		config.put("AntiBot.ChatFlow.Kicking", Settings.flowKicks);
 		config.put("AntiBot.ChatFlow.Amount", Settings.overflows);
 		config.put("AntiBot.ChatFlow.Time", Settings.timetooverflow);
 		config.put("AntiBot.Captcha.Enabled", Settings.captchaEnabled);
@@ -122,6 +123,8 @@ public class SettingsCore {
 					Settings.spamtime = (Integer) duh;
 				} else if (conf.equalsIgnoreCase("ChatFlow.Enabled")) {
 					Settings.flowEnabled = (Boolean) duh;
+				} else if (conf.equalsIgnoreCase("ChatFlow.Kicking")) {
+					Settings.flowKicks = (Boolean) duh;
 				} else if (conf.equalsIgnoreCase("ChatFlow.Amount")) {
 					Settings.overflows = (Integer) duh;
 				} else if (conf.equalsIgnoreCase("ChatFlow.Time")) {

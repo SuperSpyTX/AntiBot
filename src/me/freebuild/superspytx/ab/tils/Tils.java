@@ -23,7 +23,7 @@ public class Tils {
 		
 		// begin identifying patterns if there was a previously recorded round difference.
 		if (pl.cs_rd != 0L) {
-			long min = pl.cs_rd - 400L; // drop .4 seconds from the stored round difference.
+			long min = pl.cs_rd - 200L; // drop .2 seconds from the stored round difference.
 			long max = pl.cs_rd + 200L; // add .2 seconds to the stored round difference.
 			AB.debug("Min: " + Long.toString(min) + " Max: " + Long.toString(max) + " Diff: " + Long.toString(diff) + " Round: " + pl.cs_rd);
 			if (diff <= max && diff >= min) return true;
