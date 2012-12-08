@@ -50,7 +50,6 @@ public class AntiBot extends JavaPlugin {
 		/* Events */
 		(new CallUnit()).registerUnits();
 		
-		net.minecraft.server.v1_4_5.Packet13PlayerLookMove g = new net.minecraft.server.v1_4_5.Packet13PlayerLookMove();
 		
 		/* Register players on server */
 		for (Player pl : this.getServer().getOnlinePlayers()) {
