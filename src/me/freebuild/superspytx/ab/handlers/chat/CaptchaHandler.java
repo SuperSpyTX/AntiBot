@@ -1,12 +1,12 @@
 package me.freebuild.superspytx.ab.handlers.chat;
 
 import org.bukkit.Bukkit;
-import me.freebuild.superspytx.ab.AB;
 import me.freebuild.superspytx.ab.abs.EventAction;
 import me.freebuild.superspytx.ab.abs.Handler;
 import me.freebuild.superspytx.ab.abs.PI;
 import me.freebuild.superspytx.ab.settings.Language;
 import me.freebuild.superspytx.ab.settings.Settings;
+import me.freebuild.superspytx.ab.tils.Tils;
 import me.freebuild.superspytx.ab.workflow.GD;
 
 public class CaptchaHandler implements Handler {
@@ -37,7 +37,7 @@ public class CaptchaHandler implements Handler {
 	
 	@Override
 	public void performActions(EventAction info) {
-		AB.kickPlayer(info.player, Language.captchaKick);
+		Tils.kickPlayer(info.player, Language.captchaKick);
 	}
 	
 }

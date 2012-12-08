@@ -1,8 +1,6 @@
 package me.freebuild.superspytx.ab.callunits;
 
 import me.freebuild.superspytx.ab.AB;
-import me.freebuild.superspytx.ab.api.AntiBotAPI;
-import me.freebuild.superspytx.ab.api.AntiBotAPIException;
 import me.freebuild.superspytx.ab.handlers.Handlers;
 import me.freebuild.superspytx.ab.settings.Language;
 import me.freebuild.superspytx.ab.settings.Permissions;

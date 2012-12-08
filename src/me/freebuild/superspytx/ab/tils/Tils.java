@@ -1,7 +1,10 @@
 package me.freebuild.superspytx.ab.tils;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import me.freebuild.superspytx.ab.AB;
 import me.freebuild.superspytx.ab.abs.PI;
+import me.freebuild.superspytx.ab.settings.Language;
 
 public class Tils {
 	
@@ -59,6 +62,21 @@ public class Tils {
 		if (record == 0 && now.length() < 3 && before.length() < 3) record++;
 		
 		return record;
+	}
+	
+	public static void kickPlayer(final Player e, final String reason) {
+		/* After a long debate, this turned out to work just fine */
+		/* Any CMEs are because of other plugins */
+		
+		Bukkit.getScheduler().scheduleSyncDelayedTask(AB.getInstance(), new Runnable() {
+			public void run() {
+				e.kickPlayer(reason);
+			}
+		}, 10L); 
+	}
+	
+	public static void kickPlayer(final Player e) {
+		kickPlayer(e, Language.kickMsg);
 	}
 	
 }

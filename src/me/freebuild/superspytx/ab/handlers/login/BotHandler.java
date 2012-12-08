@@ -55,7 +55,7 @@ public class BotHandler implements Handler {
 			if (Settings.captchaEnabled && Settings.forceCaptchaOnBotSpam)
 				CaptchaTils.sendCaptchaToPlayer(info.player);
 			else
-				AB.kickPlayer(info.player);
+				Tils.kickPlayer(info.player);
 			return;
 		}
 		GD.b_kicking = true;
@@ -72,7 +72,7 @@ public class BotHandler implements Handler {
 					if (Settings.captchaEnabled && Settings.forceCaptchaOnBotSpam)
 						CaptchaTils.sendCaptchaToPlayer(pl.pl);
 					else
-						AB.kickPlayer(pl.pl); // Fuck you one line.
+						Tils.kickPlayer(pl.pl); // Fuck you one line.
 					GD.b_blks++;
 				}
 			} catch (NullPointerException e) {

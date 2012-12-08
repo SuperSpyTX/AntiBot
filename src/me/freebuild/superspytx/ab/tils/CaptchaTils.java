@@ -103,7 +103,7 @@ public class CaptchaTils {
 		
 		if (p.cp_haspuzzle) {
 			// This usually means they spammed again.
-			AB.kickPlayer(p.pl);
+			Tils.kickPlayer(p.pl);
 			return;
 		}
 		
@@ -114,7 +114,7 @@ public class CaptchaTils {
 		}
 		
 		if (p.cp_solvedpuzzle) {
-			AB.kickPlayer(p.pl);
+			Tils.kickPlayer(p.pl);
 			return;
 		}
 		

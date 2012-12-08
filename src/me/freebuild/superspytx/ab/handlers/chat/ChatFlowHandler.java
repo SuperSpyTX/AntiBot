@@ -2,14 +2,12 @@ package me.freebuild.superspytx.ab.handlers.chat;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 import me.freebuild.superspytx.ab.AB;
 import me.freebuild.superspytx.ab.AntiBot;
 import me.freebuild.superspytx.ab.abs.EventAction;
 import me.freebuild.superspytx.ab.abs.Handler;
 import me.freebuild.superspytx.ab.abs.PI;
 import me.freebuild.superspytx.ab.settings.Language;
-import me.freebuild.superspytx.ab.settings.Permissions;
 import me.freebuild.superspytx.ab.settings.Settings;
 import me.freebuild.superspytx.ab.tils.CaptchaTils;
 import me.freebuild.superspytx.ab.tils.Tils;
@@ -101,7 +99,7 @@ public class ChatFlowHandler implements Handler {
 		} else if (Settings.flowKicks) {
 			for (PI pl : GD.cf_pls) {
 				if (pl.pl == null) continue;
-				AB.kickPlayer(pl.pl);
+				Tils.kickPlayer(pl.pl);
 			}
 		}
 		

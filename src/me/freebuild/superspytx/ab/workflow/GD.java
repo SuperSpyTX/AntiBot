@@ -8,7 +8,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import me.freebuild.superspytx.ab.AB;
 import me.freebuild.superspytx.ab.abs.PI;
 import me.freebuild.superspytx.ab.handlers.Handlers;
 import me.freebuild.superspytx.ab.settings.Language;
@@ -113,7 +112,7 @@ public class GD {
 		
 		for (Entry<String, PI> g : pii.entrySet()) {
 			if (g.getValue().cp_haspuzzle && Tils.getLongDiff(g.getValue().cp_idle) >= 60000L) {
-				AB.kickPlayer(g.getValue().pl, "You've idled on CAPTCHA for too long!");
+				Tils.kickPlayer(g.getValue().pl, "You've idled on CAPTCHA for too long!");
 			}
 		}
 	}

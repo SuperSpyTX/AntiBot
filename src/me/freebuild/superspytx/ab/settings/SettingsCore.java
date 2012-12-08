@@ -40,6 +40,7 @@ public class SettingsCore {
 		config.put("AntiBot.ChatFlow.Time", Settings.timetooverflow);
 		config.put("AntiBot.Captcha.Enabled", Settings.captchaEnabled);
 		config.put("AntiBot.Captcha.MaxAttempts", Settings.captchaAttempts);
+		config.put("AntiBot.Captcha.IdleKicks", Settings.captchaIdleKicks);
 		config.put("AntiBot.Captcha.Triggers.ChatOverflow", Settings.forceCaptchaOnChatFlow);
 		config.put("AntiBot.Captcha.Triggers.ChatSpam", Settings.forceCaptchaOnChatSpam);
 		config.put("AntiBot.Captcha.Triggers.BotSpam", Settings.forceCaptchaOnBotSpam);
@@ -133,6 +134,8 @@ public class SettingsCore {
 					Settings.captchaEnabled = (Boolean) duh;
 				} else if (conf.equalsIgnoreCase("Captcha.MaxAttempts")) {
 					Settings.captchaAttempts = (Integer) duh;
+				} else if (conf.equalsIgnoreCase("Captcha.IdleKicks")) {
+					Settings.captchaIdleKicks = (Boolean) duh;
 				} else if (conf.equalsIgnoreCase("Captcha.Triggers.ChatOverflow")) {
 					Settings.forceCaptchaOnChatFlow = (Boolean) duh;
 				} else if (conf.equalsIgnoreCase("Captcha.Triggers.ChatSpam")) {

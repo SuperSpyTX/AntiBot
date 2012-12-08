@@ -24,6 +24,7 @@ public class Settings {
 	public static boolean flowKicks = true;
 	public static boolean notify = true;
 	public static boolean useWhiteListPerms = false;
+	public static boolean captchaIdleKicks = true;
 	public static boolean useOpPerms = true; // Because of new race condition fix.
 	public static boolean enabled = true;
 	public static boolean debugmode = false; // TODO: set to false!
@@ -32,7 +33,7 @@ public class Settings {
 	public static boolean whiteListCountry = false;
 	public static boolean logindelayEnabled = true;
 	public static boolean checkupdates = true;
-	public static boolean delayedStart = true;
+	public static boolean delayedStart = false;
 	public static boolean captchaEnabled = true;
 	public static boolean forceCaptchaOnChatSpam = true;
 	public static boolean forceCaptchaOnChatFlow = true;

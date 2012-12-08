@@ -50,10 +50,14 @@ public class AntiBot extends JavaPlugin {
 		/* Events */
 		(new CallUnit()).registerUnits();
 		
+		net.minecraft.server.v1_4_5.Packet13PlayerLookMove g = new net.minecraft.server.v1_4_5.Packet13PlayerLookMove();
+		
 		/* Register players on server */
 		for (Player pl : this.getServer().getOnlinePlayers()) {
 			GD.getPI(pl).ab_alreadyin = true;
 		}
+		
+	
 		
 		/* Let's get our metric sticks and slap Metrics until it loads */
 		Metrics metrics = null;
@@ -227,21 +231,5 @@ public class AntiBot extends JavaPlugin {
 		
 		return false;
 	}
-	
-	public static void kickPlayer(final Player e, final String reason) {
-		/* After a long debate, this turned out to work just fine */
-		/* Any CMEs are because of other plugins */
-		
-		Bukkit.getScheduler().scheduleSyncDelayedTask(getInstance(), new Runnable() {
-			public void run() {
-				e.kickPlayer(reason);
-			}
-		}, 10L); 
-	}
-	
-	public static void kickPlayer(final Player e) {
-		kickPlayer(e, Language.kickMsg);
-	}
-	
 	
 }

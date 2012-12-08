@@ -84,7 +84,7 @@ public class ChatSpamHandler implements Handler {
 			CaptchaTils.sendCaptchaToPlayer(info.player);
 		} else {
 			AB.debug("Kicking player " + info.pi.p_name);
-			AB.kickPlayer(info.player);
+			Tils.kickPlayer(info.player);
 		}
 	}
 	
