@@ -68,7 +68,7 @@ public class ChatFlowHandler implements Handler {
 	public void performActions(EventAction info) {
 		if (GD.cf_gm) return;
 		GD.cf_gm = true;
-		Bukkit.getScheduler().scheduleAsyncDelayedTask(AntiBot.getInstance(), new Runnable() {
+		Bukkit.getScheduler().runTaskLaterAsynchronously(AntiBot.getInstance(), new Runnable() {
 			
 			@Override
 			public void run() {
@@ -76,7 +76,7 @@ public class ChatFlowHandler implements Handler {
 			}
 			
 		}, 20L);
-		Bukkit.getScheduler().scheduleAsyncDelayedTask(AntiBot.getInstance(), new Runnable() {
+		Bukkit.getScheduler().runTaskLaterAsynchronously(AntiBot.getInstance(), new Runnable() {
 			
 			@Override
 			public void run() {

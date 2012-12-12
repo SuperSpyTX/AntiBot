@@ -137,7 +137,7 @@ public class AntiBot extends JavaPlugin {
 		}
 		
 		/* Setup GD update task */
-		Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
+		Bukkit.getScheduler().runTaskTimerAsynchronously(this, new Runnable() {
 			public void run() {
 				GD.updateTask();
 			}
@@ -147,7 +147,7 @@ public class AntiBot extends JavaPlugin {
 		updates = new Updates();
 		
 		if (Settings.checkupdates) {
-			getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
+			getServer().getScheduler().runTaskTimerAsynchronously(this, new Runnable() {
 				
 				public void run() {
 					if (Settings.checkupdates) {

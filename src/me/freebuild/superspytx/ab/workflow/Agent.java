@@ -20,7 +20,7 @@ public class Agent {
 		if (!handle.checkUser((new EventAction(event, false)).player)) return false;
 		
 		if (handle.getHandler().run(new EventAction(event, false))) {
-			Bukkit.getScheduler().scheduleAsyncDelayedTask(AntiBot.getInstance(), new Runnable() {
+			Bukkit.getScheduler().runTaskLaterAsynchronously(AntiBot.getInstance(), new Runnable() {
 				public void run() {
 					handle.getHandler().performActions(new EventAction(event, false));
 				}
@@ -34,7 +34,7 @@ public class Agent {
 		/* If you know this isn't "asynchronous", I apologize, but that's the title of the method anyways :3 */
 		/* This is mainly for stuff that is going to count against the player, or stuff that won't cancel the event. */
 		if (!Settings.enabled && !handle.equals(Handlers.COMMAND)) return;
-		Bukkit.getScheduler().scheduleAsyncDelayedTask(AntiBot.getInstance(), new Runnable() {
+		Bukkit.getScheduler().runTaskLaterAsynchronously(AntiBot.getInstance(), new Runnable() {
 			public void run() {
 				if (!Settings.enabled) return;
 				if ((new EventAction(event, true).cancelled) && !handleAnyways) return;

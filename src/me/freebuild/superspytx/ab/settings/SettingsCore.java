@@ -179,15 +179,19 @@ public class SettingsCore {
 			// already.... or does it?
 			// or do we?
 			// Thanks H31IX for approving AntiBot <3 -- lul
-			AB.getInstance().getServer().getScheduler().scheduleAsyncDelayedTask(AB.getInstance(), new Runnable() {
+			AB.getInstance().getServer().getScheduler().runTaskLaterAsynchronously(AB.getInstance(), new Runnable() {
 				
 				@Override
 				public void run() {
 					if (AB.getInstance().getServer().getPluginManager().getPlugin("AntiCheat") != null) {
-						if (Settings.enableAntiSpam) {
-							net.h31ix.anticheat.api.AnticheatAPI.deactivateCheck(net.h31ix.anticheat.manage.CheckType.SPAM);
-						} else {
-							net.h31ix.anticheat.api.AnticheatAPI.activateCheck(net.h31ix.anticheat.manage.CheckType.SPAM);
+						try {
+							if (Settings.enableAntiSpam) {
+								net.h31ix.anticheat.api.AnticheatAPI.deactivateCheck(net.h31ix.anticheat.manage.CheckType.SPAM);
+							} else {
+								net.h31ix.anticheat.api.AnticheatAPI.activateCheck(net.h31ix.anticheat.manage.CheckType.SPAM);
+							}
+						} catch (Throwable e) {
+							// Sounds like a different plugin.
 						}
 					}
 				}
