@@ -110,9 +110,11 @@ public class GD {
 			}
 		}
 		
-		for (Entry<String, PI> g : pii.entrySet()) {
-			if (g.getValue().cp_haspuzzle && Tils.getLongDiff(g.getValue().cp_idle) >= 60000L) {
-				Tils.kickPlayer(g.getValue().pl, "You've idled on CAPTCHA for too long!");
+		if (Settings.captchaIdleKicks) {
+			for (Entry<String, PI> g : pii.entrySet()) {
+				if (g.getValue().cp_haspuzzle && Tils.getLongDiff(g.getValue().cp_idle) >= 60000L) {
+					Tils.kickPlayer(g.getValue().pl, "You've idled on CAPTCHA for too long!");
+				}
 			}
 		}
 	}
