@@ -40,7 +40,7 @@ public enum Permissions
 
     public boolean isLevelPermission()
     {
-        return baseperm == ADMIN.baseperm || baseperm == ADMIN_BASIC.baseperm;
+        return this == ADMIN || this == ADMIN_BASIC;
     }
 
     public boolean getPermission(Player pl, CommandSender sender)
@@ -81,7 +81,7 @@ public enum Permissions
                 return false;
             }
 
-            if (ADMIN.getPermission(pl) && level >= 3)
+            if (ADMIN.getPermission(pl) && level <= 3)
             {
                 return true;
             }
