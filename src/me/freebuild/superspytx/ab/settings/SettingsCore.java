@@ -23,8 +23,6 @@ public class SettingsCore {
 		config.put("AntiBot.Main.Prefix", Language.prefix);
 		config.put("AntiBot.Main.EnableByDefault", Settings.enabled);
 		config.put("AntiBot.Main.Notifications", Settings.notify);
-		config.put("AntiBot.PermissionModes.UseOp", Settings.useOpPerms);
-		config.put("AntiBot.PermissionModes.UseBukkitWhiteList", Settings.useWhiteListPerms);
 		config.put("AntiBot.DelayedStart.Enabled", Settings.delayedStart);
 		config.put("AntiBot.DelayedStart.Time", Settings.startdelay);
 		config.put("AntiBot.Bot.Accounts", Settings.accounts);
@@ -100,10 +98,6 @@ public class SettingsCore {
 					Settings.enabled = (Boolean) duh;
 				} else if (conf.equalsIgnoreCase("Main.Notifications")) {
 					Settings.notify = (Boolean) duh;
-				} else if (conf.equalsIgnoreCase("PermissionModes.UseOp")) {
-					Settings.useOpPerms = (Boolean) duh;
-				} else if (conf.equalsIgnoreCase("PermissionModes.UseBukkitWhiteList")) {
-					Settings.useWhiteListPerms = (Boolean) duh;
 				} else if (conf.equalsIgnoreCase("DelayedStart.Enabled") && reloads < 1) {
 					Settings.delayedStart = (Boolean) duh;
 				} else if (conf.equalsIgnoreCase("DelayedStart.Time")) {

@@ -60,18 +60,7 @@ public enum Permissions
     {
         if (pl != null)
         {
-            if (pl.hasPermission(perm) && !pl.isOp())
-            {
-                return true;
-            }
-
-            if (pl.isOp() && Settings.useOpPerms)
-            {
-                return true;
-            }
-            
-            //BUG: May not work with equals().
-            if (pl.isWhitelisted() && Settings.useWhiteListPerms && this.equals(JOIN))
+            if (pl.hasPermission(perm))
             {
                 return true;
             }
