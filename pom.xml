@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   
   
-  <groupId>me.freebuild.superspytx</groupId>
+  <groupId>com.superspytx.ab</groupId>
   <artifactId>AntiBot</artifactId>
   <packaging>jar</packaging>
   <name>AntiBot</name>
@@ -61,9 +61,9 @@
   
   <dependencies>
   	<dependency>
-  		<groupId>org.bukkit</groupId>
-  		<artifactId>craftbukkit</artifactId>
-  		<version>1.4.5-R0.3-SNAPSHOT</version>
+        <groupId>org.bukkit</groupId>
+        <artifactId>bukkit</artifactId>
+        <version>1.4.7-R1.1-SNAPSHOT</version>
   	</dependency>
     <dependency>
         <groupId>net.h31ix.anticheat</groupId>

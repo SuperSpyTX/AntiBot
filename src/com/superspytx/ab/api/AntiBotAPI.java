@@ -1,10 +1,9 @@
-package me.freebuild.superspytx.ab.api;
+package com.superspytx.ab.api;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import com.superspytx.ab.AB;
 import com.superspytx.ab.abs.PI;
-import com.superspytx.ab.api.AntiBotAPIException;
 import com.superspytx.ab.handlers.Handlers;
 import com.superspytx.ab.settings.Language;
 import com.superspytx.ab.tils.CaptchaTils;
@@ -14,9 +13,7 @@ import com.superspytx.ab.workflow.GD;
  * The only file in AntiBot ever documented. The official AntiBot API.
  * 
  * @author SuperSpyTX
- * @deprecated Please use {@link com.superspytx.ab.api.AntiBotAPI} instead. This class is for compatibility purposes only.
  */
-@Deprecated
 public class AntiBotAPI {
     
     /**
