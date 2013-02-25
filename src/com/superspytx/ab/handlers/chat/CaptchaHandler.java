@@ -1,6 +1,5 @@
 package com.superspytx.ab.handlers.chat;
 
-import org.bukkit.Bukkit;
 import com.superspytx.ab.abs.EventAction;
 import com.superspytx.ab.abs.Handler;
 import com.superspytx.ab.abs.PI;
@@ -26,8 +25,8 @@ public class CaptchaHandler implements Handler {
 				} else {
 					pli.cp_haspuzzle = false;
 					pli.cp_solvedpuzzle = true;
-					Bukkit.broadcastMessage("<" + info.player.getDisplayName() + "> " + pli.cs_lsm);
 					pli.resetSpamData();
+					info.player.chat(pli.cs_lsm);
 					info.player.sendMessage(Language.prefix + '\247' + "a" + "Correct! Thanks for not being a bot. You can now speak again.");
 				}
 			}
