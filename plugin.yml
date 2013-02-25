@@ -1,6 +1,6 @@
 name: AntiBot
 main: com.superspytx.ab.AntiBot
-version: ${project.version}-SNAPSHOT-${BUILD_NUMBER}
+version: ${project.version}
 description: The ultimate spam protection for Minecraft.
 softdepend: [AntiCheat]
 commands:

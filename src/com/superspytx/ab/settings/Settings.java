@@ -19,6 +19,7 @@ public class Settings {
 	public static long installdate = 0L;
 	public static String version = "";
 	public static boolean newVersion = false;
+	public static boolean spamBotProtection = true;
 	public static boolean delayingStart = false;
 	public static boolean flowEnabled = true;
 	public static boolean flowKicks = true;

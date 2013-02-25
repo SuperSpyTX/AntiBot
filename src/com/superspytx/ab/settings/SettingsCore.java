@@ -25,6 +25,7 @@ public class SettingsCore {
 		config.put("AntiBot.Main.Notifications", Settings.notify);
 		config.put("AntiBot.DelayedStart.Enabled", Settings.delayedStart);
 		config.put("AntiBot.DelayedStart.Time", Settings.startdelay);
+		config.put("AntiBot.Bot.Enabled", Settings.spamBotProtection);
 		config.put("AntiBot.Bot.Accounts", Settings.accounts);
 		config.put("AntiBot.Bot.Seconds", Settings.interval);
 		config.put("AntiBot.Bot.ConnectionTime", Settings.connectFor);
@@ -102,6 +103,8 @@ public class SettingsCore {
 					Settings.delayedStart = (Boolean) duh;
 				} else if (conf.equalsIgnoreCase("DelayedStart.Time")) {
 					Settings.startdelay = Long.parseLong(Integer.toString((Integer) duh));
+				} else if (conf.equalsIgnoreCase("Bot.Enabled")) {
+					Settings.spamBotProtection = (Boolean) duh;
 				} else if (conf.equalsIgnoreCase("Bot.Accounts")) {
 					Settings.accounts = (Integer) duh;
 				} else if (conf.equalsIgnoreCase("Bot.Seconds")) {
