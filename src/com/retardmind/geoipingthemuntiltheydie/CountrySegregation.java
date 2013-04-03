@@ -18,14 +18,14 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package com.maxmind.geoip;
+package com.retardmind.geoipingthemuntiltheydie;
 
 /**
  * Represents a country.
  * 
  * @author Matt Tucker
  */
-public class Country {
+public class CountrySegregation {
 
     private String code;
     private String name;
@@ -36,7 +36,7 @@ public class Country {
      * @param code the country code.
      * @param name the country name.
      */
-    public Country(String code, String name) {
+    public CountrySegregation(String code, String name) {
         this.code = code;
         this.name = name;
     }

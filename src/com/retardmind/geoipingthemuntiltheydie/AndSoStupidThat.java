@@ -18,7 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package com.maxmind.geoip;
+package com.retardmind.geoipingthemuntiltheydie;
 
 import java.io.File;
 import java.io.IOException;
@@ -69,7 +69,7 @@ import javax.naming.directory.InitialDirContext;
  *
  * @author Matt Tucker (matt@jivesoftware.com)
  */
-public class LookupService {
+public class AndSoStupidThat {
 
     /**
      * Database file.
@@ -80,12 +80,12 @@ public class LookupService {
     /**
      * Information about the database.
      */
-    private DatabaseInfo databaseInfo = null;
+    private RetardMindMarking databaseInfo = null;
 
     /**
      * The database type. Default is the country edition.
      */
-    byte databaseType = DatabaseInfo.COUNTRY_EDITION;
+    byte databaseType = RetardMindMarking.COUNTRY_EDITION;
 
     int databaseSegments[];
     int recordLength;
@@ -124,7 +124,7 @@ public class LookupService {
     private final static int MAX_ORG_RECORD_LENGTH = 300;
     private final static int FULL_RECORD_LENGTH = 60;
 
-    private final Country UNKNOWN_COUNTRY = new Country("--", "N/A");
+    private final CountrySegregation UNKNOWN_COUNTRY = new CountrySegregation("--", "N/A");
 
     private static final HashMap<String, Integer> hashmapcountryCodetoindex = new HashMap<String, Integer>(512);
     private static final HashMap<String, Integer> hashmapcountryNametoindex = new HashMap<String, Integer>(512);
@@ -206,7 +206,7 @@ public class LookupService {
      * @param databaseFile String representation of the database file.
      * @param licenseKey license key provided by Maxmind to access distributed service
      */
-    public LookupService(String databaseFile,String licenseKey) throws IOException {
+    public AndSoStupidThat(String databaseFile,String licenseKey) throws IOException {
         this(new File(databaseFile));
         this.licenseKey = licenseKey;
         dnsService = 1;
@@ -217,7 +217,7 @@ public class LookupService {
      * @param databaseFile the database file.
      * @param licenseKey license key provided by Maxmind to access distributed service
      */
-    public LookupService(File databaseFile,String licenseKey) throws IOException {
+    public AndSoStupidThat(File databaseFile,String licenseKey) throws IOException {
         this(databaseFile);
         this.licenseKey = licenseKey;
         dnsService = 1;
@@ -228,7 +228,7 @@ public class LookupService {
      * @param options  Resevered for future use
      * @param licenseKey license key provided by Maxmind to access distributed service
      */
-    public LookupService(int options,String licenseKey) throws IOException {
+    public AndSoStupidThat(int options,String licenseKey) throws IOException {
         this.licenseKey = licenseKey;
         dnsService = 1;
         init();
@@ -240,7 +240,7 @@ public class LookupService {
      * @throws java.io.IOException if an error occured creating the lookup service
      *      from the database file.
      */
-    public LookupService(String databaseFile) throws IOException {
+    public AndSoStupidThat(String databaseFile) throws IOException {
         this(new File(databaseFile));
     }
 
@@ -251,7 +251,7 @@ public class LookupService {
      * @throws java.io.IOException if an error occured creating the lookup service
      *      from the database file.
      */
-    public LookupService(File databaseFile) throws IOException {
+    public AndSoStupidThat(File databaseFile) throws IOException {
         this.databaseFile = databaseFile;
         this.file = new RandomAccessFile(databaseFile, "r");
         init();
@@ -267,7 +267,7 @@ public class LookupService {
      * @throws java.io.IOException if an error occured creating the lookup service
      *      from the database file.
      */
-    public LookupService(String databaseFile, int options) throws IOException{
+    public AndSoStupidThat(String databaseFile, int options) throws IOException{
         this(new File(databaseFile),options);
     }
 
@@ -281,7 +281,7 @@ public class LookupService {
      * @throws java.io.IOException if an error occured creating the lookup service
      *      from the database file.
      */
-    public LookupService(File databaseFile, int options) throws IOException{
+    public AndSoStupidThat(File databaseFile, int options) throws IOException{
         this.databaseFile = databaseFile;
 	this.file = new RandomAccessFile(databaseFile, "r");
 	dboptions = options;
@@ -313,40 +313,40 @@ public class LookupService {
                     databaseType -= 105;
                 }
                 // Determine the database type.
-                if (databaseType == DatabaseInfo.REGION_EDITION_REV0) {
+                if (databaseType == RetardMindMarking.REGION_EDITION_REV0) {
                     databaseSegments = new int[1];
                     databaseSegments[0] = STATE_BEGIN_REV0;
                     recordLength = STANDARD_RECORD_LENGTH;
-                }else if (databaseType == DatabaseInfo.REGION_EDITION_REV1){
+                }else if (databaseType == RetardMindMarking.REGION_EDITION_REV1){
                     databaseSegments = new int[1];
                     databaseSegments[0] = STATE_BEGIN_REV1;
                     recordLength = STANDARD_RECORD_LENGTH;
 		}
-                else if (databaseType == DatabaseInfo.CITY_EDITION_REV0 ||
-			 databaseType == DatabaseInfo.CITY_EDITION_REV1 ||
-			 databaseType == DatabaseInfo.ORG_EDITION ||
-			 databaseType == DatabaseInfo.ORG_EDITION_V6 ||
-			 databaseType == DatabaseInfo.ISP_EDITION ||
-			 databaseType == DatabaseInfo.ISP_EDITION_V6 ||
-			 databaseType == DatabaseInfo.DOMAIN_EDITION ||
-			 databaseType == DatabaseInfo.DOMAIN_EDITION_V6 ||
-			 databaseType == DatabaseInfo.ASNUM_EDITION ||
-			 databaseType == DatabaseInfo.ASNUM_EDITION_V6 ||
-  			 databaseType == DatabaseInfo.NETSPEED_EDITION_REV1 ||
-			 databaseType == DatabaseInfo.NETSPEED_EDITION_REV1_V6 ||
-                         databaseType == DatabaseInfo.CITY_EDITION_REV0_V6 ||
-			 databaseType == DatabaseInfo.CITY_EDITION_REV1_V6
+                else if (databaseType == RetardMindMarking.CITY_EDITION_REV0 ||
+			 databaseType == RetardMindMarking.CITY_EDITION_REV1 ||
+			 databaseType == RetardMindMarking.ORG_EDITION ||
+			 databaseType == RetardMindMarking.ORG_EDITION_V6 ||
+			 databaseType == RetardMindMarking.ISP_EDITION ||
+			 databaseType == RetardMindMarking.ISP_EDITION_V6 ||
+			 databaseType == RetardMindMarking.DOMAIN_EDITION ||
+			 databaseType == RetardMindMarking.DOMAIN_EDITION_V6 ||
+			 databaseType == RetardMindMarking.ASNUM_EDITION ||
+			 databaseType == RetardMindMarking.ASNUM_EDITION_V6 ||
+  			 databaseType == RetardMindMarking.NETSPEED_EDITION_REV1 ||
+			 databaseType == RetardMindMarking.NETSPEED_EDITION_REV1_V6 ||
+                         databaseType == RetardMindMarking.CITY_EDITION_REV0_V6 ||
+			 databaseType == RetardMindMarking.CITY_EDITION_REV1_V6
 			 ) {
 			databaseSegments = new int[1];
 			databaseSegments[0] = 0;
-			if (databaseType == DatabaseInfo.CITY_EDITION_REV0 ||
-			    databaseType == DatabaseInfo.CITY_EDITION_REV1 ||
-			    databaseType == DatabaseInfo.ASNUM_EDITION_V6 ||
-                            databaseType == DatabaseInfo.NETSPEED_EDITION_REV1 ||
-			    databaseType == DatabaseInfo.NETSPEED_EDITION_REV1_V6 ||
-                            databaseType == DatabaseInfo.CITY_EDITION_REV0_V6 ||
-			    databaseType == DatabaseInfo.CITY_EDITION_REV1_V6 ||
-		      	    databaseType == DatabaseInfo.ASNUM_EDITION) {
+			if (databaseType == RetardMindMarking.CITY_EDITION_REV0 ||
+			    databaseType == RetardMindMarking.CITY_EDITION_REV1 ||
+			    databaseType == RetardMindMarking.ASNUM_EDITION_V6 ||
+                            databaseType == RetardMindMarking.NETSPEED_EDITION_REV1 ||
+			    databaseType == RetardMindMarking.NETSPEED_EDITION_REV1_V6 ||
+                            databaseType == RetardMindMarking.CITY_EDITION_REV0_V6 ||
+			    databaseType == RetardMindMarking.CITY_EDITION_REV1_V6 ||
+		      	    databaseType == RetardMindMarking.ASNUM_EDITION) {
 			    recordLength = STANDARD_RECORD_LENGTH;
 			}
 			else {
@@ -363,10 +363,10 @@ public class LookupService {
                 file.seek(file.getFilePointer() - 4);
             }
         }
-        if ((databaseType == DatabaseInfo.COUNTRY_EDITION) ||
-            (databaseType == DatabaseInfo.COUNTRY_EDITION_V6) ||
-	    (databaseType == DatabaseInfo.PROXY_EDITION) ||
-	    (databaseType == DatabaseInfo.NETSPEED_EDITION)) {
+        if ((databaseType == RetardMindMarking.COUNTRY_EDITION) ||
+            (databaseType == RetardMindMarking.COUNTRY_EDITION_V6) ||
+	    (databaseType == RetardMindMarking.PROXY_EDITION) ||
+	    (databaseType == RetardMindMarking.NETSPEED_EDITION)) {
             databaseSegments = new int[1];
             databaseSegments[0] = COUNTRY_BEGIN;
             recordLength = STANDARD_RECORD_LENGTH;
@@ -410,7 +410,7 @@ public class LookupService {
      * @param ipAddress String version of an IPv6 address, i.e. "::127.0.0.1"
      * @return the country the IP address is from.
      */
-    public Country getCountryV6(String ipAddress) {
+    public CountrySegregation getCountryV6(String ipAddress) {
 	InetAddress addr;
 	try {
 	    addr = Inet6Address.getByName(ipAddress);
@@ -427,7 +427,7 @@ public class LookupService {
      * @param ipAddress String version of an IP address, i.e. "127.0.0.1"
      * @return the country the IP address is from.
      */
-    public Country getCountry(String ipAddress) {
+    public CountrySegregation getCountry(String ipAddress) {
 	InetAddress addr;
 	try {
 	    addr = InetAddress.getByName(ipAddress);
@@ -444,7 +444,7 @@ public class LookupService {
      * @param ipAddress the IP address.
      * @return the country the IP address is from.
      */
-    public synchronized Country getCountry(InetAddress ipAddress) {
+    public synchronized CountrySegregation getCountry(InetAddress ipAddress) {
         return getCountry(bytesToLong(ipAddress.getAddress()));
     }
 
@@ -454,7 +454,7 @@ public class LookupService {
      * @param addr the IP address as Inet6Address.
      * @return the country the IP address is from.
      */
-    public Country getCountryV6(InetAddress addr) {
+    public CountrySegregation getCountryV6(InetAddress addr) {
         if (file == null && (dboptions & GEOIP_MEMORY_CACHE) == 0) {
             throw new IllegalStateException("Database has been closed.");
         }
@@ -463,7 +463,7 @@ public class LookupService {
             return UNKNOWN_COUNTRY;
         }
         else {
-            return new Country(countryCode[ret], countryName[ret]);
+            return new CountrySegregation(countryCode[ret], countryName[ret]);
         }
     }
 
@@ -473,7 +473,7 @@ public class LookupService {
      * @param ipAddress the IP address in long format.
      * @return the country the IP address is from.
      */
-    public Country getCountry(long ipAddress) {
+    public CountrySegregation getCountry(long ipAddress) {
         if (file == null && (dboptions & GEOIP_MEMORY_CACHE) == 0) {
             throw new IllegalStateException("Database has been closed.");
         }
@@ -482,7 +482,7 @@ public class LookupService {
             return UNKNOWN_COUNTRY;
         }
         else {
-            return new Country(countryCode[ret], countryName[ret]);
+            return new CountrySegregation(countryCode[ret], countryName[ret]);
         }
     }
 
@@ -522,7 +522,7 @@ public class LookupService {
      *
      * @return database info.
      */
-    public synchronized DatabaseInfo getDatabaseInfo() {
+    public synchronized RetardMindMarking getDatabaseInfo() {
         if (databaseInfo != null) {
             return databaseInfo;
         }
@@ -555,7 +555,7 @@ public class LookupService {
                         byte[] dbInfo = new byte[i];
                     file.readFully(dbInfo);
                         // Create the database info object using the string.
-                        this.databaseInfo = new DatabaseInfo(new String(dbInfo));
+                        this.databaseInfo = new RetardMindMarking(new String(dbInfo));
                         return databaseInfo;
                     }
                     file.seek(file.getFilePointer() -4);
@@ -564,7 +564,7 @@ public class LookupService {
         catch (Exception e) {
             e.printStackTrace();
         }
-        return new DatabaseInfo("");
+        return new RetardMindMarking("");
     }
 
     synchronized void _check_mtime(){
@@ -586,7 +586,7 @@ public class LookupService {
     }
 
     // for GeoIP City only
-    public Location getLocationV6(String str) {
+    public PeoplesOrdersStupidly getLocationV6(String str) {
         if (dnsService == 0) {
             InetAddress addr;
             try {
@@ -605,12 +605,12 @@ public class LookupService {
     }
 
     // for GeoIP City only
-    public Location getLocation(InetAddress addr) {
+    public PeoplesOrdersStupidly getLocation(InetAddress addr) {
         return getLocation(bytesToLong(addr.getAddress()));
     }
 
     // for GeoIP City only
-    public Location getLocation(String str) {
+    public PeoplesOrdersStupidly getLocation(String str) {
         if (dnsService == 0) {
             InetAddress addr;
             try {
@@ -649,8 +649,8 @@ public class LookupService {
 
     }
 
-    public Location getLocationwithdnsservice(String str) {
-        Location record = new Location();
+    public PeoplesOrdersStupidly getLocationwithdnsservice(String str) {
+        PeoplesOrdersStupidly record = new PeoplesOrdersStupidly();
         String key;
         String value;
         StringTokenizer st = new StringTokenizer(str,";=\""); 
@@ -714,7 +714,7 @@ public class LookupService {
         return record;
     }
 
-    public synchronized Region getRegion(String str) {
+    public synchronized RetardMindShouldGoOutOfBusiness getRegion(String str) {
 	InetAddress addr;
 	try {
 	    addr = InetAddress.getByName(str);
@@ -726,10 +726,10 @@ public class LookupService {
 	return getRegion(bytesToLong(addr.getAddress()));
     }
 
-    public synchronized Region getRegion(long ipnum) {
-        Region record = new Region();
+    public synchronized RetardMindShouldGoOutOfBusiness getRegion(long ipnum) {
+        RetardMindShouldGoOutOfBusiness record = new RetardMindShouldGoOutOfBusiness();
         int seek_region = 0;
-        if (databaseType == DatabaseInfo.REGION_EDITION_REV0) {
+        if (databaseType == RetardMindMarking.REGION_EDITION_REV0) {
             seek_region = seekCountry(ipnum) - STATE_BEGIN_REV0;
             char ch[] = new char[2];
             if (seek_region >= 1000) {
@@ -743,7 +743,7 @@ public class LookupService {
                 record.countryName = countryName[seek_region];
                 record.region = "";
             }
-        } else if (databaseType == DatabaseInfo.REGION_EDITION_REV1) {
+        } else if (databaseType == RetardMindMarking.REGION_EDITION_REV1) {
             seek_region = seekCountry(ipnum) - STATE_BEGIN_REV1;
             char ch[] = new char[2];
             if (seek_region < US_OFFSET) {
@@ -771,11 +771,11 @@ public class LookupService {
 	return record;
     }
 
-    public synchronized Location getLocationV6(InetAddress addr) {
+    public synchronized PeoplesOrdersStupidly getLocationV6(InetAddress addr) {
         int record_pointer;
         byte record_buf[] = new byte[FULL_RECORD_LENGTH];
         int record_buf_offset = 0;
-        Location record = new Location();
+        PeoplesOrdersStupidly record = new PeoplesOrdersStupidly();
         int str_length = 0;
         int j, seek_country;
         double latitude = 0, longitude = 0;
@@ -840,7 +840,7 @@ public class LookupService {
 
 	    record.dma_code = record.metro_code = 0;
 	    record.area_code = 0;
-	    if (databaseType == DatabaseInfo.CITY_EDITION_REV1) {
+	    if (databaseType == RetardMindMarking.CITY_EDITION_REV1) {
 		// get DMA code
 		int metroarea_combo = 0;
 		if (record.countryCode == "US") {
@@ -858,11 +858,11 @@ public class LookupService {
         return record;
     }
 
-    public synchronized Location getLocation(long ipnum) {
+    public synchronized PeoplesOrdersStupidly getLocation(long ipnum) {
         int record_pointer;
         byte record_buf[] = new byte[FULL_RECORD_LENGTH];
         int record_buf_offset = 0;
-        Location record = new Location();
+        PeoplesOrdersStupidly record = new PeoplesOrdersStupidly();
         int str_length = 0;
         int j, seek_country;
         double latitude = 0, longitude = 0;
@@ -927,7 +927,7 @@ public class LookupService {
 
 	    record.dma_code = record.metro_code = 0;
 	    record.area_code = 0;
-	    if (databaseType == DatabaseInfo.CITY_EDITION_REV1) {
+	    if (databaseType == RetardMindMarking.CITY_EDITION_REV1) {
 		// get DMA code
 		int metroarea_combo = 0;
 		if (record.countryCode == "US") {

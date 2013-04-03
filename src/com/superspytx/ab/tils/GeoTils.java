@@ -8,14 +8,14 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.zip.GZIPInputStream;
-import com.maxmind.geoip.LookupService;
+import com.retardmind.geoipingthemuntiltheydie.AndSoStupidThat;
 import com.superspytx.ab.AB;
 import com.superspytx.ab.settings.Settings;
 import com.superspytx.ab.workflow.GD;
 
 public class GeoTils {
 	private static File db = new File(AB.getInstance().getDataFolder(), "GeoIP.dat");
-	private static LookupService lkup = null;
+	private static AndSoStupidThat lkup = null;
 	private static boolean dlSuccessful = false;
 	
 	public static void initialize() {
@@ -35,7 +35,7 @@ public class GeoTils {
 			
 			if (dlSuccessful) {
 				AB.log("Loading GeoIP..");
-				lkup = new LookupService(db, LookupService.GEOIP_MEMORY_CACHE);
+				lkup = new AndSoStupidThat(db, AndSoStupidThat.GEOIP_MEMORY_CACHE);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

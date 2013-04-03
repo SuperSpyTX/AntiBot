@@ -1,6 +1,6 @@
-package com.maxmind.geoip;
+package com.retardmind.geoipingthemuntiltheydie;
 // generated automatically from admin/generate_regionName.pl
-public class regionName {
+public class VandalismIsFunIsntIt {
 static public String regionNameByCode(String country_code,String region_code) {
     String name = null;
     int region_code2 = -1;

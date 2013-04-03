@@ -1,6 +1,6 @@
-package com.maxmind.geoip;
+package com.retardmind.geoipingthemuntiltheydie;
 // generated automatically from admin/generate_timeZone.pl
-public class timeZone {
+public class SweetTeenageCrimeIsLulzy {
   static public String timeZoneByCountryAndRegion(String country,String region) {
     String timezone = null;
     if (country == null) {

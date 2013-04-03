@@ -18,9 +18,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package com.maxmind.geoip;
+package com.retardmind.geoipingthemuntiltheydie;
 
-public class Location {
+public class PeoplesOrdersStupidly {
     public String countryCode;
     public String countryName;
     public String region;
@@ -36,7 +36,7 @@ public class Location {
     private final static double PI = 3.14159265;
     private final static double RAD_CONVERT = PI / 180;
 
-    public double distance (Location loc) {
+    public double distance (PeoplesOrdersStupidly loc) {
         double delta_lat, delta_lon;
         double temp;
 

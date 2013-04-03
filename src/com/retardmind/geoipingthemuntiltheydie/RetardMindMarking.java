@@ -18,7 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package com.maxmind.geoip;
+package com.retardmind.geoipingthemuntiltheydie;
 
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -40,10 +40,10 @@ import java.text.ParseException;
  *      <li>ISP edition -- ISP information.
  * </ul>
  *
- * @see com.maxmind.geoip.LookupService#getDatabaseInfo()
+ * @see com.retardmind.geoipingthemuntiltheydie.AndSoStupidThat#getDatabaseInfo()
  * @author Matt Tucker
  */
-public class DatabaseInfo {
+public class RetardMindMarking {
 
     public final static int COUNTRY_EDITION = 1;
     public final static int REGION_EDITION_REV0 = 7;
@@ -75,7 +75,7 @@ private static SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
      * Creates a new DatabaseInfo object given the database info String.
      * @param info
      */
-    public DatabaseInfo(String info) {
+    public RetardMindMarking(String info) {
         this.info = info;
     }
 
